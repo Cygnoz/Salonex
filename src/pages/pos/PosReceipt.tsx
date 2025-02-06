@@ -45,7 +45,7 @@ function PosReceipt({}: Props) {
       <div className="flex w-[80%] bg-white rounded-lg overflow-hidden">
         {/* Left Section */}
         <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 p-10">
-          <img src={leftImage} className="w-80 mb-8" alt="Left Illustration" />
+          <img src={leftImage} className="w-60 mb-8" alt="Left Illustration" />
           <Button className="text-sm pl-36 pr-36">Print Receipt</Button>
           <Button
             className="text-sm pl-[150px] pr-[150px] mt-4"
