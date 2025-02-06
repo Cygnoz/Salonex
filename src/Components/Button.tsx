@@ -15,7 +15,7 @@ const buttonVariants = cva("flex text-center items-center transition duration-25
       secondary:
         "bg-secondary_main hover:bg-secondary_hover active:bg-secondary_active disabled:bg-secondary_disabled rounded-full gap-2 border border-outlineButton_secondary text-outlineButton_secondary text-sm",
       tertiary:
-        "bg-tertiary_main hover:bg-tertiary_hover active:bg-tertiary_active disabled:bg-tertiary_disabled rounded-full gap-2 border border-outlineButton_tertiary text-outlineButton_tertiary text-sm",
+        "bg-tertiary_main hover:bg-tertiary_hover active:bg-tertiary_active disabled:bg-tertiary_disabled rounded-[8px] gap-2 border border-outlineButton_tertiary text-outlineButton_tertiary text-sm",
       fourthiary:
         "bg-fourthiary_main hover:bg-fourthiary_hover active:bg-fourthiary_active disabled:bg-fourthiary_disabled rounded-full gap-2 border border-gray-500 text-white text-sm",
     },

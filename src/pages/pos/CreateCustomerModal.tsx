@@ -1,153 +1,270 @@
-import { useState } from "react"
-import Modal from "../../Components/modal/Modal"
-import Input from "../../Components/Form/Input"
-import Button from "../../Components/Button"
-import CirclePlus from "../../assets/icons/circleplus"
+import { useState } from "react";
+import Button from "../../Components/Button";
+import CirclePlus from "../../assets/icons/circleplus";
+import Modal from "../../Components/modal/Modal";
+import CheckIcon from "../../assets/icons/CheckIcon";
+import Input from "../../Components/Form/Input";
+import DateInput from "../../Components/DateInput";
+import Select from "../../Components/Form/Select";
+import customerImage from "../../assets/images/customerImage.png"
+
+const tabs = [
+  { name: "General Info", key: "general" },
+  { name: "Reference", key: "reference" },
+  { name: "Additional Details", key: "additional" },
+  { name: "Consultation", key: "consultation" },
+];
 
 const CreateCustomerModal = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
 
-  const [formData, setFormData] = useState({
-    salutation: "Mr.",
-    firstName: "",
-    lastName: "",
-    companyName: "",
-    displayName: "",
-    email: "",
-    membershipCardNumber: "",
-    workPhone: "",
-    mobile: "",
-  })
+  const openModal = () => setModalOpen(true);
 
-  const handleInputChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const [visitedTabs, setVisitedTabs] = useState<boolean[]>(
+    Array(tabs.length).fill(false)
+  );
 
-  const handleSave = () => {
-    console.log("Saving new customer:", formData)
-    setIsModalOpen(false)
-  }
+  const handleNext = () => {
+    if (activeTab < tabs.length - 1) {
+      setVisitedTabs((prev) => {
+        const updated = [...prev];
+        updated[activeTab] = true;
+        return updated;
+      });
+      setActiveTab(activeTab + 1);
+    }
+  };
+
+  const handleBack = () => {
+    if (activeTab > 0) {
+      setVisitedTabs((prev) => {
+        const updated = [...prev];
+        updated[activeTab] = false; // Remove check from current tab
+        updated[activeTab - 1] = false; // Remove check from the previous tab as well
+        return updated;
+      });
+      setActiveTab(activeTab - 1);
+    }
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setActiveTab(0);
+    setVisitedTabs(Array(tabs.length).fill(false));
+  };
 
   return (
     <>
-      <Button className="text-xs" onClick={() => setIsModalOpen(true)}>
+      <Button className="text-xs" onClick={openModal}>
         <CirclePlus color="white" /> Create Customer
       </Button>
 
-      {isModalOpen && (
-        <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)} align="center">
-          <div className="p-4 w-full">
-            <h2 className="text-2xl font-bold mb-2">Create New Customer</h2>
-            <p className="text-gray-500 mb-6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+      <Modal
+        className="w-[65%] p-8 bg-[#fdf8f8] rounded-2xl"
+        open={isModalOpen}
+        onClose={closeModal}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center">
+          <div>
+            <span className="text-[#2C3E50] text-lg font-bold">
+              Create New Customer
+            </span>
+            <p className="text-[#8F99A9] text-xs mt-2">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt{" "}
             </p>
-
-            {/* First row - 3 columns */}
-            <div className="grid grid-cols-3 gap-3 mb-4">
-              <div>
-                <label htmlFor="salutation" className="text-sm font-medium text-gray-700 mb-3">
-                  Salutation
-                </label>
-                <select
-                  id="salutation"
-                  name="salutation"
-                  value={formData.salutation}
-                  onChange={handleInputChange}
-                  className="form-select w-full border border-gray-300 focus:outline-none rounded-3xl h-9 py-2 px-3 text-xs sm:text-sm "
-                >
-                  <option value="Mr.">Mr.</option>
-                  <option value="Mrs.">Mrs.</option>
-                  <option value="Ms.">Ms.</option>
-                  <option value="Dr.">Dr.</option>
-                </select>
-              </div>
-
-              <Input
-                label="First Name"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                placeholder="Enter First Name"
-              />
-
-              <Input
-                label="Last Name"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                placeholder="Enter Last Name"
-              />
-            </div>
-
-            {/* Remaining rows - 2 columns */}
-            <div className="grid grid-cols-2 gap-3">
-              <Input
-                label="Company Name"
-                name="companyName"
-                value={formData.companyName}
-                onChange={handleInputChange}
-                placeholder="Enter Company"
-              />
-
-              <Input
-                label="Customer Display Name"
-                name="displayName"
-                value={formData.displayName}
-                onChange={handleInputChange}
-                placeholder="Enter Display Name"
-              />
-
-              <Input
-                label="Customer Email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Enter Email"
-              />
-
-              <Input
-                label="Membership Card Number"
-                name="membershipCardNumber"
-                value={formData.membershipCardNumber}
-                onChange={handleInputChange}
-                placeholder="XXX"
-              />
-
-              <Input
-                label="Work Phone"
-                name="workPhone"
-                value={formData.workPhone}
-                onChange={handleInputChange}
-                placeholder="Enter Work Phone"
-              />
-
-              <Input
-                label="Mobile"
-                name="mobile"
-                value={formData.mobile}
-                onChange={handleInputChange}
-                placeholder="Enter Mobile Number"
-              />
-            </div>
-
-            <div className="flex justify-end mt-4 space-x-3">
-              <Button
-                variant="secondary"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={handleSave}>
-                Save
-              </Button>
-            </div>
           </div>
-        </Modal>
-      )}
+          <div className="cursor-pointer" onClick={closeModal}>
+            <span className="text-3xl">&times;</span>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex items-center justify-center mt-4">
+          {tabs.map((tab, index) => (
+            <p
+              key={tab.key}
+              className={`pb-2 px-5 cursor-pointer font-semibold text-sm flex items-center gap-2 ${
+                activeTab === index
+                  ? "text-[#303F58] font-semibold border-b-2 border-[#C96E76]"
+                  : visitedTabs[index]
+                  ? "text-black font-bold"
+                  : "text-[#303F58]"
+              }`}
+              onClick={() => setActiveTab(index)}
+            >
+              {visitedTabs[index] && <CheckIcon />} {tab.name}
+            </p>
+          ))}
+        </div>
+
+        {/* Tab Content */}
+        <div className="mt-5">
+          {activeTab === 0 && (
+            <div className="bg-white p-4 rounded-lg">
+              <div className="mt- flex items-center justify-between w-full">
+                <div className="flex flex-col w-[48%]">
+                  <label className="mb-1 text-[#495160] text-sm">
+                    Customer Name
+                  </label>
+                  <Input placeholder="Enter Customer Name" />
+                </div>
+                <div className="flex flex-col w-[48%]">
+                  <label className="mb-1 text-[#495160] text-sm">
+                    Contact Number
+                  </label>
+                  <Input placeholder="Enter Contact Number" />
+                </div>
+              </div>
+              <div className="mt-4 flex items-center justify-between w-full">
+                <div className="flex flex-col w-[48%]">
+                  <label className="mb-1 text-[#495160] text-sm">
+                    Customer Number
+                  </label>
+                  <Input placeholder="Enter membership number" />
+                </div>
+                <div className="flex flex-col w-[48%]">
+                  <label className="mb-1 text-[#495160] text-sm">
+                    Date of Birth
+                  </label>
+                  <DateInput placeholder="Select date of birth" />
+                </div>
+              </div>
+              <div className="mt-4 w-[48%]">
+                <label className="mb-1 text-[#495160] text-sm">
+                  Email Address
+                </label>
+                <Input placeholder="Enter Customer Email" />
+              </div>
+            </div>
+          )}
+
+          {activeTab === 1 && (
+            <div className="bg-white p-4 rounded-lg">
+              <div className="bg-[#F3F8FF] py-8 px-6 rounded-2xl">
+                <p className="text-[#C96E76] font-bold text-lg">
+                  Refer a friend
+                </p>
+                <p className="text-[#495160] text-xs mt-1 w-[58%]">
+                  Select referred friend from the list and he will get referral
+                  bonus, and it will be credited to his account
+                </p>
+              </div>
+              <div className="mt-4">
+                <label className=" text-[#495160] text-sm">
+                  Search Reference
+                </label>
+                <div className="mt-1 w-[50%]">
+                  <Select
+                    placeholder="Select Customer"
+                    options={[{ value: "jacob_jones", label: "Jacob Jones" }]}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          {activeTab === 2 && (
+            <div className="bg-white p-4 rounded-lg">
+              <div className="flex justify-between gap-6">
+              <div className="w-[19%]">
+                <div className="flex justify-center items-center">
+                <img src={customerImage} className="w-20" alt="" />
+                </div>
+                <div className="flex justify-center items-center mt-3">
+                <Button variant="tertiary">
+                  Upload Photo
+                </Button>
+                </div>
+              </div>
+              <div className="w-[80%]">
+              <div className="gap-4 flex items-center justify-between w-full">
+                <div className="flex flex-col w-[33%]">
+                  <label className="mb-1 text-[#495160] text-sm">
+                    GST Number
+                  </label>
+                  <Input placeholder="Enter GST Number" />
+                </div>
+                <div className="flex flex-col w-[33%]">
+                  <label className="mb-1 text-[#495160] text-sm">
+                  Anniversary
+                  </label>
+                  <Input placeholder="Enter Customer Anniversary" />
+                </div>
+                <div className="flex flex-col w-[33%]">
+                  <label className="mb-1 text-[#495160] text-sm">
+                  Profession
+                  </label>
+                  <Input placeholder="Enter Customer Profession" />
+                </div>
+              </div>
+              <div className="mt-5 flex items-center justify-between w-full">
+                <div className="flex flex-col w-[48%]">
+                  <label className="mb-1 text-[#495160] text-sm">
+                  Proof Type
+                  </label>
+                  <Select options={[]} placeholder="Select Proof" />
+                </div>
+                <div className="flex flex-col w-[48%]">
+                  <label className="mb-1 text-[#495160] text-sm">
+                    Document Number
+                  </label>
+                  <Input placeholder="Enter Document Number" />
+                </div>
+              </div>
+              </div>
+              </div>
+            </div>
+          )}
+          {activeTab === 3 && (
+            <div>
+              <p>Consultation Tab Content</p>
+            </div>
+          )}
+        </div>
+
+        {/* Buttons */}
+        <div className="mt-6 flex justify-end gap-4">
+          {activeTab === 0 ? (
+            <Button
+              onClick={closeModal}
+              variant="secondary"
+              className="pl-10 pr-10"
+            >
+              Cancel
+            </Button>
+          ) : (
+            <Button
+              onClick={handleBack}
+              variant="secondary"
+              className="pl-10 pr-10"
+            >
+              Back
+            </Button>
+          )}
+          {activeTab === 1 && (
+            <Button
+              onClick={handleNext}
+              variant="secondary"
+              className="pl-10 pr-10"
+            >
+              Skip
+            </Button>
+          )}
+          {activeTab < tabs.length - 1 ? (
+            <Button onClick={handleNext} className="pl-11 pr-11">
+              Next
+            </Button>
+          ) : (
+            <Button onClick={closeModal} className="pl-11 pr-11">
+              Finish
+            </Button>
+          )}
+        </div>
+      </Modal>
     </>
-  )
-}
+  );
+};
 
-export default CreateCustomerModal
-
+export default CreateCustomerModal;
