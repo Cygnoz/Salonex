@@ -1,12 +1,14 @@
 import { useState } from "react";
-import Button from "../../Components/Button";
-import CirclePlus from "../../assets/icons/circleplus";
-import Modal from "../../Components/modal/Modal";
-import CheckIcon from "../../assets/icons/CheckIcon";
-import Input from "../../Components/Form/Input";
-import DateInput from "../../Components/DateInput";
-import Select from "../../Components/Form/Select";
-import customerImage from "../../assets/images/customerImage.png"
+import Button from "../../../Components/Button";
+import CirclePlus from "../../../assets/icons/circleplus";
+import Modal from "../../../Components/modal/Modal";
+import CheckIcon from "../../../assets/icons/CheckIcon";
+import Input from "../../../Components/Form/Input";
+import DateInput from "../../../Components/DateInput";
+import Select from "../../../Components/Form/Select";
+import customerImage from "../../../assets/images/customerImage.png"
+import file from "../../../assets/images/file.png"
+import ConsultationModal from "./ConsultationModal";
 
 const tabs = [
   { name: "General Info", key: "general" },
@@ -86,13 +88,12 @@ const CreateCustomerModal = () => {
           {tabs.map((tab, index) => (
             <p
               key={tab.key}
-              className={`pb-2 px-5 cursor-pointer font-semibold text-sm flex items-center gap-2 ${
-                activeTab === index
-                  ? "text-[#303F58] font-semibold border-b-2 border-[#C96E76]"
-                  : visitedTabs[index]
+              className={`pb-2 px-5 cursor-pointer font-semibold text-sm flex items-center gap-2 ${activeTab === index
+                ? "text-[#303F58] font-semibold border-b-2 border-[#C96E76]"
+                : visitedTabs[index]
                   ? "text-black font-bold"
                   : "text-[#303F58]"
-              }`}
+                }`}
               onClick={() => setActiveTab(index)}
             >
               {visitedTabs[index] && <CheckIcon />} {tab.name}
@@ -168,58 +169,91 @@ const CreateCustomerModal = () => {
           {activeTab === 2 && (
             <div className="bg-white p-4 rounded-lg">
               <div className="flex justify-between gap-6">
-              <div className="w-[19%]">
-                <div className="flex justify-center items-center">
-                <img src={customerImage} className="w-20" alt="" />
+                <div className="w-[19%]">
+                  <div className="flex justify-center items-center">
+                    <img src={customerImage} className="w-20" alt="" />
+                  </div>
+                  <div className="flex justify-center items-center mt-3">
+                    <Button variant="tertiary">
+                      Upload Photo
+                    </Button>
+                  </div>
                 </div>
-                <div className="flex justify-center items-center mt-3">
-                <Button variant="tertiary">
-                  Upload Photo
-                </Button>
+                <div className="w-[80%]">
+                  <div className="gap-4 flex items-center justify-between w-full">
+                    <div className="flex flex-col w-[33%]">
+                      <label className="mb-1 text-[#495160] text-sm">
+                        GST Number
+                      </label>
+                      <Input placeholder="Enter GST Number" />
+                    </div>
+                    <div className="flex flex-col w-[33%]">
+                      <label className="mb-1 text-[#495160] text-sm">
+                        Anniversary
+                      </label>
+                      <Input placeholder="Enter Customer Anniversary" />
+                    </div>
+                    <div className="flex flex-col w-[33%]">
+                      <label className="mb-1 text-[#495160] text-sm">
+                        Profession
+                      </label>
+                      <Input placeholder="Enter Customer Profession" />
+                    </div>
+                  </div>
+                  <div className="mt-5 flex items-center justify-between w-full">
+                    <div className="flex flex-col w-[48%]">
+                      <label className="mb-1 text-[#495160] text-sm">
+                        Proof Type
+                      </label>
+                      <Select options={[]} placeholder="Select Proof" />
+                    </div>
+                    <div className="flex flex-col w-[48%]">
+                      <label className="mb-1 text-[#495160] text-sm">
+                        Document Number
+                      </label>
+                      <Input placeholder="Enter Document Number" />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="mt-4">
+                      <div
+                        className="bg-white px-6 py-8 h-[8.9375rem] border-2 border-dashed w-[50%]
+                         border-[#818894] flex flex-col justify-center items-center rounded-lg cursor-pointer"
+                        onClick={() => document.getElementById("file-input")?.click()}
+                      >
+
+                        <>
+                          <img src={file} className="w-8 mb-3" alt="Upload Icon" />
+                          <p className="text-[#303F58] text-sm font-semibold">
+                          Upload document
+                          </p>
+                        </>
+                        <input
+                          id="file-input"
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                        />
+                        <p className="text-[0.625rem] text-[#4B5C79] mt-1">
+                          Maximum File Size: 5 MB
+                        </p>
+                        <p className="text-[0.625rem] text-[#4B5C79]">
+                          Supported Format: JPEG, PNG
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="w-[80%]">
-              <div className="gap-4 flex items-center justify-between w-full">
-                <div className="flex flex-col w-[33%]">
-                  <label className="mb-1 text-[#495160] text-sm">
-                    GST Number
-                  </label>
-                  <Input placeholder="Enter GST Number" />
-                </div>
-                <div className="flex flex-col w-[33%]">
-                  <label className="mb-1 text-[#495160] text-sm">
-                  Anniversary
-                  </label>
-                  <Input placeholder="Enter Customer Anniversary" />
-                </div>
-                <div className="flex flex-col w-[33%]">
-                  <label className="mb-1 text-[#495160] text-sm">
-                  Profession
-                  </label>
-                  <Input placeholder="Enter Customer Profession" />
-                </div>
-              </div>
-              <div className="mt-5 flex items-center justify-between w-full">
-                <div className="flex flex-col w-[48%]">
-                  <label className="mb-1 text-[#495160] text-sm">
-                  Proof Type
-                  </label>
-                  <Select options={[]} placeholder="Select Proof" />
-                </div>
-                <div className="flex flex-col w-[48%]">
-                  <label className="mb-1 text-[#495160] text-sm">
-                    Document Number
-                  </label>
-                  <Input placeholder="Enter Document Number" />
-                </div>
-              </div>
-              </div>
               </div>
             </div>
           )}
           {activeTab === 3 && (
-            <div>
-              <p>Consultation Tab Content</p>
+            <div className="bg-[#EAECF05E] p-8 rounded-lg">
+              <p className="text-[#2C3E50] font-bold text-base">Client Consultation</p>
+              <p className="text-[#495160] text-xs mt-3">This section captures important details about the client’s preferences, concerns, and needs. It includes areas like skin type, hair type, health conditions, and other relevant factors to ensure personalized services. The consultation helps tailor treatments, products, and recommendations for an optimal experience.</p>
+              <div className="mt-3">
+                <ConsultationModal/>
+              </div>
             </div>
           )}
         </div>
