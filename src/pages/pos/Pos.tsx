@@ -345,6 +345,7 @@ function Pos({ }: Props) {
               ))}
             </div>
           </div>
+          {/* select staff mdoal */}
           <Modal
             className="w-[45%] p-8 bg-[#F8F4F4] rounded-2xl"
             open={isModalOpen}
