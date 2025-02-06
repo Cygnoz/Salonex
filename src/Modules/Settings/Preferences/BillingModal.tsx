@@ -1,6 +1,6 @@
 import { useState } from "react";
-import CirclePlus from "../../../assets/icons/CirclePlus";
 import Modal from "../../../Components/modal/Modal";
+import CirclePlus from "../../../assets/icons/circleplus";
 
 type Props = {};
 
@@ -23,7 +23,7 @@ function BillingModal({}: Props) {
   return (
     <div>
       <div onClick={() => openModal(true, false, false)}>
-        <CirclePlus color={"#004D4D"} />
+        <CirclePlus color={"#5A3135"} />
       </div>
 
       <Modal

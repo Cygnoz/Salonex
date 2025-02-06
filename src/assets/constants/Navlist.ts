@@ -1,17 +1,16 @@
-import HomeIcon from "../icons/HomeIcon";
-import ShirtIcon from "../icons/ShirtIcon";
-import CartIcon from "../icons/CartIcon";
-import ListIcon from "../icons/ListIcon";
-import UserIcon from "../icons/UserIcon";
 import BarChartIcon from "../icons/BarChartIcon";
+import FileBarChart from "../icons/FileBarChart";
+import HomeIcon from "../icons/HomeIcon";
+import PhoneCall from "../icons/PhoneCall";
 import PosIcon from "../icons/PosIcon";
-import ShoppingBarIcon from "../icons/ShoppingBarIcon";
+import RecieptIndianRupee from "../icons/RecieptIndianRupee";
+import Scissors from "../icons/Scissors";
+import SettingsIcon from "../icons/SettingsIcon";
+import ShoppingCart from "../icons/ShoppingCart";
 import SquarUserIcon from "../icons/SquarUserIcon";
-import WalletIcon from "../icons/WalletIcon";
 import TruckIcon from "../icons/TruckIcon";
 import TwoUserIcon from "../icons/TwoUserIcon";
-import SettingsIcon from "../icons/SettingsIcon";
-import NewsPaperIcon from "../icons/NewsPaperIcon";
+import UserIcon from "../icons/UserIcon";
 
 export const navList = [
   {
@@ -21,24 +20,19 @@ export const navList = [
   },
   {
     nav: "Item hub",
-    icon: ShirtIcon,
+    icon: Scissors,
     route: "/itemHub",
   },
   {
-    nav: "Order",
-    icon: CartIcon,
-    route: "/order",
+    nav: "Booking",
+    icon: PhoneCall,
+    route: "/booking",
   },
-  {
-    nav: "Internal Order",
-    icon: ListIcon,
-    route: "/internalOrder",
-  },
-  {
-    nav: "Customer",
-    icon: UserIcon,
-    route: "/customer",
-  },
+  // {
+  //   nav: "Sale",
+  //   icon: Flame,
+  //   route: "/order",
+  // },
   {
     nav: "Sales",
     icon: BarChartIcon,
@@ -53,10 +47,6 @@ export const navList = [
         subRoute: "/sales/receipt",
       },
       {
-        headName: "Sales Return",
-        subRoute: "/sales/salesreturn",
-      },
-      {
         headName: "Credit Note",
         subRoute: "/sales/credit-note",
       },
@@ -68,10 +58,26 @@ export const navList = [
     route: "/pos",
   },
   {
+    nav: "Customer",
+    icon: UserIcon,
+    route: "/customer",
+  },
+  {
+    nav: "Staffs",
+    icon: TwoUserIcon,
+    route: "/staffs",
+  },
+  {
+    nav: "Expense",
+    icon: RecieptIndianRupee,
+    route: "/expense",
+  },
+
+  {
     nav: "Purchase",
-    icon: ShoppingBarIcon,
+    icon: ShoppingCart,
     route: "/purchase/bills",
-    subhead:[
+    subhead: [
       {
         headName: "Bills",
         subRoute: "/purchase/bills",
@@ -84,8 +90,15 @@ export const navList = [
         headName: "Debit Note",
         subRoute: "/purchase/debitnote",
       },
-    ]
+    ],
   },
+  
+  {
+    nav: "Supplier",
+    icon: TruckIcon,
+    route: "/supplier",
+  },
+  
   {
     nav: "Accountant",
     icon: SquarUserIcon,
@@ -107,26 +120,7 @@ export const navList = [
         headName: "Cash",
         subRoute: "/accountant/cash",
       },
-      {
-        headName: "Day Book",
-        subRoute: "/accountant/daybook",
-      },
     ],
-  },
-  {
-    nav: "Expense",
-    icon: WalletIcon,
-    route: "/expense",
-  },
-  {
-    nav: "Supplier",
-    icon: TruckIcon,
-    route: "/supplier",
-  },
-  {
-    nav: "Staffs",
-    icon: TwoUserIcon,
-    route: "/staffs",
   },
   {
     nav: "Settings",
@@ -135,7 +129,7 @@ export const navList = [
   },
   {
     nav: "Report",
-    icon: NewsPaperIcon,
+    icon: FileBarChart,
     route: "/report",
   },
 ];

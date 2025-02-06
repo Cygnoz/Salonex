@@ -2,7 +2,6 @@ import { useState } from "react";
 import Button from "../../Components/Button";
 import Modal from "../../Components/modal/Modal";
 import SearchBar from "../../Components/SearchBar";
-import PencilLine from "../../assets/icons/PencilLine";
 import Trash from "../../assets/icons/Trash";
 
 
@@ -100,7 +99,7 @@ function AddExpenseCategory({}: Props) {
         size="md"
         onClick={() => openModal(true, false, false)}
       >
-        <CirclePlus color={"#0B9C56"} />
+        <CirclePlus color={"#C96E76"} />
         <p className="text-md">Add Category</p>
       </Button>
 
@@ -110,7 +109,7 @@ function AddExpenseCategory({}: Props) {
         className="w-[65%]"
       >
         <div className="p-5 mt-3 bg-[#F9F7F5]">
-          <div className="mb-5 flex p-4 rounded-xl bg-CreamBg relative overflow-hidden  bg-[#FFFFFF]">
+          <div className="mb-5 flex p-4 rounded-xl bg-CreamBg relative overflow-hidden">
             <div className="relative z-10">
               <h3 className="text-xl font-bold text-textColor">Category</h3>
             </div>
@@ -125,7 +124,7 @@ function AddExpenseCategory({}: Props) {
           <div className="flex justify-evenly">
             <div className=" flex gap-[200px]">
               <SearchBar
-                placeholder="Search Name or Description"
+                placeholder="Search category"
                 searchValue={searchValue}
                 onSearchChange={setSearchValue}
                 
@@ -195,12 +194,13 @@ function AddExpenseCategory({}: Props) {
           <Modal
             open={isOpen.add || isOpen.edit}
             onClose={() => closeModal(true, false, false)}
-            style={{ width: "35%" }}
+            style={{ width: "40%" }}
+            className="bg-[#F9F7F5]"
           >
-            <div className="p-5">
-              <div className="flex p-4 rounded-xl relative overflow-hidden h-24">
+            <div className="p-8">
+              <div className="flex rounded-xl ">
                 <div className="relative z-10">
-                  <h3 className="text-xl font-bold text-textColor">
+                  <h3 className="text-lg text-[#0B1320] font-bold text-textColor">
                     {isOpen.edit ? "Edit" : "Add"} Category
                   </h3>
                 </div>
@@ -212,14 +212,14 @@ function AddExpenseCategory({}: Props) {
                 </div>
               </div>
 
-              <form className="grid gap-5">
+              <form className="grid gap-5 mt-6">
                 <div className="w-full">
                   <label className="block text-sm mb-1 text-labelColor">
-                    Name
+                  Expense head
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter category name"
+                    placeholder="Transportation"
                     name="expenseCategory"
                     value={categories.expenseCategory}
                     onChange={handleInputChange}

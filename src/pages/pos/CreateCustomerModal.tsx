@@ -2,7 +2,7 @@ import { useState } from "react"
 import Modal from "../../Components/modal/Modal"
 import Input from "../../Components/Form/Input"
 import Button from "../../Components/Button"
-import PlusCircle from "../../assets/icons/Plus"
+import CirclePlus from "../../assets/icons/circleplus"
 
 const CreateCustomerModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -30,8 +30,8 @@ const CreateCustomerModal = () => {
 
   return (
     <>
-      <Button className="text-xs h-[32px]" onClick={() => setIsModalOpen(true)}>
-        <PlusCircle color="white" /> Create Customer
+      <Button className="text-xs" onClick={() => setIsModalOpen(true)}>
+        <CirclePlus color="white" /> Create Customer
       </Button>
 
       {isModalOpen && (

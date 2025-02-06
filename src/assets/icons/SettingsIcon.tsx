@@ -1,11 +1,11 @@
-type Props = { color?: string; width?: string , strokeWidth?:string};
+type Props = { color?: string; width?: string , strokeWidth?:string,height?:string};
 
-function SettingsIcon({ color, width,strokeWidth }: Props) {
+function SettingsIcon({ color, width,strokeWidth,height }: Props) {
   return (
     <div>
       <svg
         width={width ? width : "20"}
-        height="24"
+        height={height ? height :"20"}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

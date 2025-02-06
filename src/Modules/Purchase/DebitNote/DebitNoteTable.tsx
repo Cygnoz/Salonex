@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import Trash2 from "../../../assets/icons/Trash2";
 import CheveronDown from "../../../assets/icons/CheveronDown";
 import SearchBar from "../../../Components/SearchBar";
 import toast from "react-hot-toast";
 import useApi from "../../../Hooks/useApi";
 import { endpoints } from "../../../Services/apiEdpoints";
 import CirclePlus from "../../../assets/icons/circleplus";
+import TrashIcon from "../../../assets/icons/TrashIcon";
 
 type Row = {
   itemImage?: string;
@@ -632,7 +632,7 @@ const DebitNoteTable = ({
                     className="text-center flex justify-center gap-2"
                     onClick={() => removeRow(index)}
                   >
-                    <Trash2 color="darkRed" />
+                    <TrashIcon color="#EA1E4F" />
                   </div>
                 </td>
               </tr>
@@ -643,10 +643,10 @@ const DebitNoteTable = ({
       <div className="w-[60%] mt-0">
         <button
           type="button"
-          className="bg-darkGreen text-[#0b9d56] rounded-lg py-4 px-1 flex items-center text-sm font-bold"
+          className="bg-darkGreen text-[#975359] rounded-lg py-4 px-1 flex items-center text-sm font-bold"
           onClick={addRow}
         >
-          <CirclePlus color="#0b9d56" size={20} />
+          <CirclePlus color="#975359" size={20} />
           Add Item
         </button>
       </div>

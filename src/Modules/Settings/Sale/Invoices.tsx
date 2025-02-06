@@ -173,7 +173,7 @@ function Invoices({}: Props) {
                 >
                   <p
                     id="qrCodeType"
-                    className={`appearance-none w-full text-slate-600 bg-white text-sm h-[39px] pl-3 pr-8 rounded-sm leading-tight focus:outline-none border focus:bg-white ${
+                    className={`appearance-none rounded-full w-full text-slate-600 bg-white text-sm h-[39px] pl-3 pr-8  leading-tight focus:outline-none border focus:bg-white ${
                       invoiceURLDropdown
                         ? "border-darkRed"
                         : "border-inputBorder"

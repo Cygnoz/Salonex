@@ -52,14 +52,14 @@ function AccountantViewOne({}: Props) {
         <p className="text-[#303F58] font-bold text-base">Recent Transaction</p>
         <div className="mt-6">
           <table className="w-full text-left border-collapse">
-            <thead className="bg-[#F9F9F9] text-sm  text-[#4F5152] text-center">
+            <thead className="bg-[#F7ECD9] text-xs font-bold  text-[#4F5152] text-center">
               <tr>
                 {dummyColumns.map(
                   (column) =>
                     column.visible && (
                       <th
                         key={column.id}
-                        className="py-3 px-4 font-medium"
+                        className="py-3 px-4 font-bold text-xs"
                       >
                         {column.label}
                       </th>
@@ -67,7 +67,7 @@ function AccountantViewOne({}: Props) {
                 )}
               </tr>
             </thead>
-            <tbody className="text-sm text-center text-[#667085]">
+            <tbody className="text-xs text-center text-[#818894]">
               {tableData.map((row, rowIndex) => (
                 <tr key={rowIndex} className="hover:bg-[#FAFAFA]">
                   {dummyColumns.map((column) => {
@@ -97,6 +97,10 @@ function AccountantViewOne({}: Props) {
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="rounded-2xl flex justify-between items-center px-4 py-3 bg-[#EED2D5] w-[30%] ms-auto mt-7">
+            <p className="text-[#0B1320] text-sm">Total:</p>
+            <p className="text-[#202224] font-bold text-xl">870.00 (Dr)</p>
       </div>
     </div>
   );

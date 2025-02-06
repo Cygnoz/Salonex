@@ -15,6 +15,7 @@ import ReportRoutes from "./Routes/ReportRoutes";
 import Login from "./pages/Login/Login";
 import Otp from "./pages/Login/Otp";
 import PosReceipt from "./pages/pos/PosReceipt";
+import BookingRoutes from "./Routes/BookingRoutes";
 
 const Layout = lazy(() => import("./layout/Layout"));
 const Dashboard = lazy(() => import("./pages/DashBoard"));
@@ -39,6 +40,7 @@ const App: React.FC = () => {
         { path: "supplier/*", element: <SupplierRoutes /> },
         { path: "staffs/*", element: <StaffRoutes /> },
         { path: "report/*", element: <ReportRoutes /> },  
+        { path: "booking/*", element: <BookingRoutes /> },  
       ],
     },
     {

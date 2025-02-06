@@ -28,7 +28,7 @@ const NewDebitNote = ({}: Props) => {
           </div>
         </Link>
         <div className="flex justify-center items-center">
-          <h4 className="font-bold text-xl text-textColor ">Create Debit Note</h4>
+        <h4 className="font-bold text-base text-[#0B1320]">Create Debit Note</h4>
         </div>
       </div>
       <div className="grid grid-cols-12 gap-4 max-h-[90vh] overflow-scroll hide-scrollbar ">
@@ -169,9 +169,6 @@ const NewDebitNote = ({}: Props) => {
       </div>
       <div
         className=" flex bg-white p-4 rounded-b-2xl  sticky"
-        style={{
-          boxShadow: "0px -1px 4px 0px rgba(0, 0, 0, 0.23)",
-        }}
       >
         <div className="flex gap-2 ml-auto">
           <Button variant="secondary">Cancel</Button>

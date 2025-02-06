@@ -106,11 +106,11 @@ function AddItemsPos({ selectedItems, onRemoveItem ,selectedCustomer}: Props) {
   const total = subtotal + tax - discountValue;
 
   return (
-    <div className="bg-white p-6 mt-3 rounded-lg h-auto">
+    <div className="bg-white p-6  rounded-lg h-auto">
      <div>
      <div className="flex justify-between items-center">
-        <p className="text-textColor text-sm font-bold">Selected Item</p>
-        <p className="text-dropdownText text-sm font-semibold">Invoice No: {prefix}</p>
+        <p className="text-[#2C3E50] text-sm font-bold">Selected Item</p>
+        <p className="text-[#495160] text-sm font-semibold">Invoice No: {prefix}</p>
       </div>
 
       {/* Selected Items */}
@@ -124,10 +124,10 @@ function AddItemsPos({ selectedItems, onRemoveItem ,selectedCustomer}: Props) {
                   className="w-20 h-11 object-cover rounded-lg"
                   alt={item.itemName}
                 />
-                <p className="text-dropdownText text-xs font-semibold ms-3">
+                <p className="text-[#212F3C] text-xs font-bold ms-3">
                   {item.itemName}
                   <br />
-                  <span className="text-textColor font-bold text-xs block mt-1.5">
+                  <span className="text-[#818894] font-bold text-xs block mt-1.5">
                     ₹ {item?.sellingPrice?.toFixed(2)}
                   </span>
                 </p>
@@ -176,17 +176,17 @@ function AddItemsPos({ selectedItems, onRemoveItem ,selectedCustomer}: Props) {
       {/* Totals */}
       <div className="mt-4 bg-white rounded-lg">
         <div className="flex justify-between items-center">
-          <p className="text-xs text-dropdownText font-semibold">Sub total</p>
-          <p className="text-sm text-textColor font-semibold">₹ {subtotal.toFixed(2)}</p>
+          <p className="text-xs text-[#4B5C79] font-semibold">Sub total</p>
+          <p className="text-sm text-[#303F58] font-semibold">₹ {subtotal.toFixed(2)}</p>
         </div>
         <div className="flex justify-between items-center mt-2">
-          <p className="text-xs text-dropdownText font-semibold">Tax</p>
-          <p className="text-sm text-textColor font-semibold">₹ {tax.toFixed(2)}</p>
+          <p className="text-xs text-[#4B5C79] font-semibold">Tax</p>
+          <p className="text-sm text-[#303F58] font-semibold">₹ {tax.toFixed(2)}</p>
         </div>
         <hr style={{ borderTop: "2px dashed #CECECE", fontWeight: "lighter" }} className="my-3" />
         <div className="flex justify-between items-center">
-          <p className="text-base text-[#2C3E50] font-bold">Total</p>
-          <p className="text-base text-[#2C3E50] font-bold">₹ {total.toFixed(2)}</p>
+          <p className="text-base text-[#4B5C79] font-bold">Total</p>
+          <p className="text-base text-[#303F58] font-bold">₹ {total.toFixed(2)}</p>
         </div>
       </div>
 
@@ -198,7 +198,7 @@ function AddItemsPos({ selectedItems, onRemoveItem ,selectedCustomer}: Props) {
         <div key={method.id} onClick={() => handleMethodSelect(method)}>
           <div
             className={`border w-32 px-[10px] py-2 rounded-lg flex justify-center items-center 
-              cursor-pointer border-[#C7CACF] ${selectedMethod === method.id ? "bg-[#DADCCD]" : "bg-[#FFFFFF]"
+              cursor-pointer border-[#C7CACF] ${selectedMethod === method.id ? "bg-[#D9E9FF]" : "bg-[#FFFFFF]"
               }`}
           >
             <div

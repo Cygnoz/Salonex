@@ -9,13 +9,13 @@ import Upload from "../../../assets/icons/Upload";
 import Button from "../../../Components/Button";
 import PrinterIcon from "../../../assets/icons/PrinterIcon";
 import { Link } from "react-router-dom";
-import ChevronLeft from "../../../assets/icons/ChevronLeft";
 import ObjectSelect from "../../../Components/Form/ObjectSelect";
 import AddSupplierModal from "../../Supplier/AddSupplierModal";
+import BackIcon from "../../../assets/icons/BackIcon";
 
 type Props = {};
 
-const NewBill = ({}: Props) => {
+const NewBill = ({ }: Props) => {
   const [selected, setSelected] = useState<string>("Cash");
   const [isInterState] = useState<boolean>(false);
   const [state, setState] = useState<[]>([]);
@@ -104,7 +104,7 @@ const NewBill = ({}: Props) => {
       shippingFaxNum: "+14155598765",
     },
   ]);
-  
+
   const handleSelect = (option: any) => {
     setSelectedSupplier(option);
     console.log("Selected Supplier:", option);
@@ -119,11 +119,11 @@ const NewBill = ({}: Props) => {
       <div className="flex mb-3 gap-5">
         <Link to={"/purchase/bills"}>
           <div className="flex justify-center items-center h-11 w-11 bg-[white] rounded-full">
-            <ChevronLeft />
+            <BackIcon />
           </div>
         </Link>
         <div className="flex justify-center items-center">
-          <h4 className="font-bold text-xl  ">Create New Bill</h4>
+          <h4 className="font-bold text-base text-[#0B1320]">Create New Bill</h4>
         </div>
       </div>
       <div className="grid grid-cols-12 gap-4 h-[90vh] overflow-scroll hide-scrollbar ">
@@ -145,9 +145,9 @@ const NewBill = ({}: Props) => {
               NewItem={AddSupplierModal}
             />
 
-            <Input 
-            required
-             label="Invoice" placeholder="Enter Invoice No" />
+            <Input
+              required
+              label="Invoice" placeholder="Enter Invoice No" />
             <Input label="Bill Number" placeholder="Enter Bill No" />
 
             <Input label="Order No" placeholder="Enter Order No" />
@@ -227,13 +227,13 @@ const NewBill = ({}: Props) => {
             size="md"
           />
           <div className="text-xs mt-3 ">
-            <div className="border-inputBorder text-textColor border-[#c78000] w-full border-dashed border p-2 rounded flex flex-col gap-2 justify-center items-center bg-white mb-4 mt-2">
+            <div className="border-inputBorder text-textColor border-[#C96E76] w-full border-dashed border p-2 rounded flex flex-col gap-2 justify-center items-center bg-white mb-4 mt-2">
               <span className="text-center inline-flex items-center gap-2">
-                <Upload color="#c78000" />
-                Upload File <span className="text-[#c78000]">browse</span>
+                <Upload color="#C96E76" />
+                Upload File <span className="text-[#C96E76]">browse</span>
               </span>
-              <div className="text-center text-text_tertiary">
-                Support JPG,PNG
+              <div className="text-center  text-text_tertiary">
+                <span className="text-[10px]">Support JPG,PNG</span>
               </div>
             </div>
             <p className="text-xs mt-1 text-gray-600"></p>
@@ -242,7 +242,7 @@ const NewBill = ({}: Props) => {
               className="hidden"
               value=""
               name="documents"
-              // onChange={(e)=>handleFileChange(e)}
+            // onChange={(e)=>handleFileChange(e)}
             />
           </div>
 
@@ -428,14 +428,11 @@ const NewBill = ({}: Props) => {
       </div>
       <div
         className=" flex bg-white p-4 rounded-b-2xl  sticky"
-        style={{
-          boxShadow: "0px -1px 4px 0px rgba(0, 0, 0, 0.23)",
-        }}
       >
         <div className="flex gap-2 ml-auto">
           <Button variant="secondary">Cancel</Button>
           <Button variant="secondary">
-            <PrinterIcon color={"#0b9d56"}  /> Print
+            <PrinterIcon color="red" /> Print
           </Button>
           <Button variant="primary">Save & Send</Button>
         </div>

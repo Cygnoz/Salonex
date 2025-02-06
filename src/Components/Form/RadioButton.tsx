@@ -26,7 +26,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
           name={name}
           className={`col-start-1 row-start-1 appearance-none shrink-0 w-5 h-5  rounded-full border ${
             selected === id
-              ? "border-[5px] border-fourthiary_main"
+              ? "border-[5px] border-[#C96E76]"
               : "border-1 border-neutral-400"
           }`}
           checked={selected === id}

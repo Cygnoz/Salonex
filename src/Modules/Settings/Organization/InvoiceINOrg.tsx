@@ -2,7 +2,6 @@ import { useState } from "react";
 import Banner from "./Banner";
 import ChevronRight from "../../../assets/icons/ChevronRight";
 import Modal from "../../../Components/modal/Modal";
-import CirclePlus from "../../../assets/icons/CirclePlus";
 import Button from "../../../Components/Button";
 import Plus from "../../../assets/icons/Plus";
 import QrCode from "../../../assets/images/Frame 629654.png";
@@ -13,6 +12,7 @@ import linkedinlog from "../../../assets/images/linkedin logo.png";
 import facebooklogo from "../../../assets/images/Group.png";
 import Checkbox from "../../../Components/Form/Checkbox";
 import Input from "../../../Components/Form/Input";
+import CirclePlus from "../../../assets/icons/circleplus";
 
 interface InvoiceSettings {
   organizationAddressFormat?: string;
@@ -245,8 +245,8 @@ const InvoiceINOrg = () => {
             onClick={() => openModal(true, false)}
             className="text-[#004D4D] flex items-center space-x-1 font-bold text-xs cursor-pointer"
           >
-            <p>Insert Placeholders</p>
-            <CirclePlus color="#004D4D" size={14} />
+            <p className="text-[#975359]">Insert Placeholders</p>
+            <CirclePlus color="#975359" size={14} />
           </button>
           <Modal
             open={isAddPlaceHolderOpen}
@@ -273,7 +273,7 @@ const InvoiceINOrg = () => {
           </div>
           <button
             onClick={() => openModal(false, true)}
-            className="text-center text-[#004D4D] text-[12px] font-bold cursor-pointer "
+            className="text-center text-[#975359] text-[12px] font-bold cursor-pointer "
           >
             See Preview
           </button>
@@ -306,7 +306,7 @@ const InvoiceINOrg = () => {
             <div className="rounded-md p-5 bg-white grid grid-cols-12 gap-4 cursor-pointer">
               <div className="col-span-10 flex">
                 <div className="w-20 h-20 rounded-md flex items-center justify-center bg-[#F7E7CE]">
-                  <img src={QrCode} alt="Default QR Code Type 1" />
+                  <img className="w-11" src={QrCode} alt="Default QR Code Type 1" />
                 </div>
                 <div className="ms-3 flex items-center h-full text-[#303F58] ">
                   <div className="space-y-2">
@@ -396,7 +396,7 @@ const InvoiceINOrg = () => {
             <div className="rounded-md p-5 bg-white grid grid-cols-12 gap-4 cursor-pointer">
               <div className="col-span-10 flex">
                 <div className="w-20 h-20 rounded-md flex items-center justify-center bg-[#F7E7CE]">
-                  <img src={QrCode} alt="" />
+                  <img className="w-11" src={QrCode} alt="" />
                 </div>
                 <div className="ms-3 flex items-center h-full">
                   <div className="space-y-2">
@@ -490,7 +490,7 @@ const InvoiceINOrg = () => {
             <div className="rounded-md p-5 bg-white grid grid-cols-12 gap-4 cursor-pointer">
               <div className="col-span-10 flex">
                 <div className="w-20 h-20 rounded-md flex items-center justify-center bg-[#F7E7CE]">
-                  <img src={Qrsign} alt="Default Signature" />
+                  <img src={Qrsign} className="w-11" alt="Default Signature" />
                 </div>
                 <div className="ms-3 flex items-center h-full">
                   <div className="space-y-2">

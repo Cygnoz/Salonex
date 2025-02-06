@@ -11,8 +11,8 @@ interface Props {
 function ToggleButton({
   isOn = false,
   onToggle,
-  onColor = "bg-green-500",
-  offColor = "bg-gray-300",
+  onColor = "bg-[#C96E76]",
+  offColor = "bg-[#D8DCE3]",
   size = "medium",
 }: Props) {
   const [isToggled, setIsToggled] = useState(isOn);
@@ -48,12 +48,12 @@ function ToggleButton({
     <div>
       <button
         onClick={handleToggle}
-        className={`flex items-center rounded-full border border-[#A3A9B3] transition duration-300 ${
+        className={`flex items-center rounded-full  border-[#A3A9B3] transition duration-300 ${
           isToggled ? onColor : offColor
         } ${sizeClasses[size]}`}
       >
         <div
-          className={`bg-white rounded-full border border-[#A3A9B3] shadow-md transform transition-transform ${
+          className={`bg-white rounded-full  border-[#A3A9B3] shadow-md transform transition-transform ${
             isToggled ? translateClasses[size] : "translate-x-0"
           } ${circleSizeClasses[size]}`}
         ></div>

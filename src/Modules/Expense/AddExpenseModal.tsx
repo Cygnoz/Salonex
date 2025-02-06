@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../Components/Button";
-import CirclePlus from "../../assets/icons/CirclePlus";
+import CirclePlus from "../../assets/icons/circleplus";
 
 
 // import other assets as needed

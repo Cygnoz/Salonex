@@ -1,9 +1,9 @@
 import { useState } from "react";
-import CirclePlus from "../../../assets/icons/CirclePlus";
 import Button from "../../../Components/Button";
 import Table from "../../../Components/Table/Table";
 import { Link, useNavigate } from "react-router-dom";
 import DotIcon from "../../../assets/icons/DotIcon";
+import CirclePlus from "../../../assets/icons/circleplus";
 
 function Bills() {
   const navigate = useNavigate();
@@ -90,8 +90,8 @@ function Bills() {
     <div>
       <div className="flex">
         <div>
-          <p className="text-[#0B1320] font-bold">Bills</p>
-          <p className="text-[#818894] text-sm">
+        <h1 className="text-lg font-bold text-[#2C3E50]">Bills</h1>
+          <p className="text-[#818894] text-xs">
             Lorem ipsum dolor sit amet consectetur. Commodo enim odio fringilla{" "}
           </p>
         </div>

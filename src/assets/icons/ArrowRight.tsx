@@ -15,7 +15,7 @@ const ArrowRight = ({ size = 9, color }: Props) => {
       <path
         d="M0.700073 4.6001H7.70007M7.70007 4.6001L4.20007 1.1001M7.70007 4.6001L4.20007 8.1001"
         stroke={color ? color : "#565148"}
-        stroke-width="1.3"
+        stroke-width="1.1"
         stroke-linecap="round"
         stroke-linejoin="round"
       />

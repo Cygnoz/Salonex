@@ -62,7 +62,7 @@ function SelectCustomerModal({ onButtonClick }: Props) {
   return (
     <>
       <div
-        className="relative border-2 border-slate-200 flex rounded-md px-2 py-1 text-sm items-center"
+        className="relative bg-white flex rounded-xl px-3 py-[6px] text-sm items-center"
         onClick={openModal}
       >
         <span className="me-5 text-[#818894]">Select Customer</span>

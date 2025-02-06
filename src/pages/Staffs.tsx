@@ -1,8 +1,10 @@
 type Props = {}
 
-function Staffs({}: Props) {
+function Staffs({ }: Props) {
   return (
-    <div>Staffs</div>
+    <div>
+      <h1 className="text-lg font-bold text-[#2C3E50]">Staffs</h1>
+    </div>
   )
 }
 

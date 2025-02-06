@@ -8,8 +8,8 @@ import useApi from "../../../../Hooks/useApi";
 import topImg from "../../../../assets/Images/image 43.png";
 import bgImg from "../../../../assets/images/Group (1).png";
 import bgimg2 from "../../../../assets/images/Mask group (2).png";
-import CirclePlus from "../../../../assets/icons/CirclePlus";
 import Pen from "../../../../assets/icons/Pen";
+import CirclePlus from "../../../../assets/icons/circleplus";
 
 type Props = {page?:string};
 
@@ -88,7 +88,7 @@ const AddCurrency = ({page}: Props) => {
   page === "add" ? (
     <Button onClick={openModal} variant="primary" size="sm">
       <CirclePlus size={16} color={"white"} />
-      <p className="text-sm">New Currency</p>
+      <p className="text-xs">Add new currency</p>
     </Button>
   ) : (
    <button onClick={openModal} > <Pen color={"#3d7fbc"} /></button>

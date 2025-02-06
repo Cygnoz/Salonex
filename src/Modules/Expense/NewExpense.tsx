@@ -13,6 +13,8 @@ import ExpenseFilterCards from "./ExpenseFilterCards";
 import BrowseUploads from "../../assets/icons/BrowseUploads";
 
 import { List } from "../../assets/icons/List";
+import { endpoints } from "../../Services/apiEdpoints";
+import BackIcon from "../../assets/icons/BackIcon";
 // import ExpenseFilterCards from "./ExpenseFilterCards";
 // import toast from "react-hot-toast";
 // import List from "../../../assets/icons/List";
@@ -272,7 +274,7 @@ function AddExpensePage({}: Props) {
 
   const toggleDropdown = (key: string | null) => {
     setOpenDropdownIndex(key === openDropdownIndex ? null : key);
-    const supplierUrl = `${endponits.GET_ALL_SUPPLIER}`;
+    const supplierUrl = `${endpoints.GET_ALL_SUPPLIER}`;
     fetchData(supplierUrl, setSupplierData, AllSuppliers);
   };
 
@@ -657,14 +659,14 @@ function AddExpensePage({}: Props) {
         <div className="flex gap-5 items-center mb-4 ms-4">
           <Link to={"/expense"}>
             <div className="flex justify-center items-center h-11 w-11 bg-[#FFFFFF] rounded-full">
-              <CheveronLeftIcon color="#0B1320" />
+              <BackIcon />
             </div>
           </Link>
-          <h4 className="font-bold text-xl text-textColor">Add Expense</h4>
+          <h4 className="font-bold text-base text-[#2C3E50]">Create New Expense</h4>
         </div>
         <div className="px-3 mb-4">
           <label className="block mb-1">
-            <div className=" mx-2 border-dashed border-2 border-[#B47300] p-4 rounded gap-2 text-center mt-2">
+            <div className=" mx-2 border-dashed border-2 border-[#B5636A] p-4 rounded gap-2 text-center mt-2">
               {expenseData.uploadFiles ? (
                 <div className="flex justify-center ">
                   <img
@@ -675,16 +677,16 @@ function AddExpensePage({}: Props) {
                 </div>
               ) : (
                 <>
-                  <div className=" gap-1 justify-center">
+                  <div className=" gap-1 justify-center text-sm">
                     <div className="flex justify-center">
                       <BrowseUploads />
                     </div>
                     <h2>
                       Upload Receipt{" "}
-                      <span className="text-[#B47300]">browse</span>{" "}
+                      <span className="text-[#B5636A]">browse</span>{" "}
                     </h2>
                   </div>
-                  <p className="text-xs mt-1 text-[#818894]">
+                  <p className="text-[10px] mt-1 text-[#818894]">
                     Maximum file size allowed is 5MB
                   </p>
                 </>
@@ -795,8 +797,8 @@ function AddExpensePage({}: Props) {
                       className="flex justify-between items-center  gap-2"
                       onClick={handleItemizeFlase}
                     >
-                      <List />
-                      <p className="font-semibold text-[#004D4D]"> Itemize</p>
+                      <List color={"#975359"} />
+                      <p className="font-semibold text-[#975359]"> Itemize</p>
                     </button>
                   </div>
 
@@ -1558,8 +1560,8 @@ function AddExpensePage({}: Props) {
                 className="flex items-center  gap-2 mt-5"
                 onClick={handleItemizeTrue}
               >
-                <CheveronLeftIcon color="#004D4D" />{" "}
-                <p className="text-sm text-[#004D4D]">
+                <CheveronLeftIcon color="#975359" />{" "}
+                <p className="text-sm text-[#975359]">
                   Back to single expense view{" "}
                 </p>
               </button>
@@ -1883,7 +1885,7 @@ function AddExpensePage({}: Props) {
           </div>
         )}
       </div>
-      <div className="col-span-1 flex justify-end items-start mt-4 space-x-2 ">
+      <div className="col-span-1 flex justify-end items-start mt-4 space-x-2 mb-10 ">
         <Button
           onClick={() => navigate("/expense")}
           variant="secondary"

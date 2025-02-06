@@ -44,7 +44,7 @@ const SettingsSidebar = ({}: Props) => {
   return (
     <div className="overflow-y-scroll h-[100vh]  py-6 hide-scrollbar col-span-3 border-neutral-300 text-textColor border-r-2 px-7 border  bg-white w-[27%]">
       <button onClick={handleBackClick} className="flex border border-[#CECECE] py-[12px] px-[12px]  rounded-lg ">
-        <ChevronLeft color="#495160" className="h-5 w-5 me-2" strokeWidth="2" />
+        <ChevronLeft color="#495160" className="h-5 w-5 me-2" />
         <p className="text-sm text-[#495160] text-[14px] font-semibold">Back</p>
       </button>
       <div className="relative mt-6">
@@ -66,22 +66,22 @@ const SettingsSidebar = ({}: Props) => {
             <div
               className={`relative flex items-center text-lg gap-3 -mx-2 p-2 mt-5 mb-2 rounded-lg cursor-pointer ${
                 selectedMain === mainIndex || selectedSub.mainIndex === mainIndex
-                  ? "bg-[#F7ECD9]"
+                  ? "bg-[#F7E9EA]"
                   : ""
               }`}
             >
               {main.icon && <main.icon color={"#495160"} />}
-              <p className="font-bold text-sm text-[#495160]">{main.nav}</p>
+              <p className="font-semibold text-sm text-[#495160]">{main.nav}</p>
             </div>
 
             <ul>
               {main.subhead.map((sub, subIndex) => (
                 <Link to={sub.subRoute || "#"} key={sub.headName}>
                   <li
-                    className={`my-4 text-sm cursor-pointer ${
+                    className={`my-4 mb-6 text-sm cursor-pointer ${
                       selectedSub.mainIndex === mainIndex && selectedSub.subIndex === subIndex
-                        ? "text-[#004D4D] font-bold"
-                        : "font-semibold text-dropdownText text-[#495160]"
+                        ? "text-[#C96E76] font-bold text-xs"
+                        : "font-semibold text-dropdownText text-[#495160] text-xs"
                     }`}
                     onClick={() => handleSubClick(mainIndex, subIndex)}
                   >

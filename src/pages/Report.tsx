@@ -1,66 +1,90 @@
-import LineImg from '../assets/images/LineImg.png';
-import ArrowRightUpImg from '../assets/images/ArrowRightUpImg.png'
-
-import ArrowUpRight from '../assets/icons/ArrowUpRight';
+import ArrowRight from '../assets/icons/ArrowRight';
+import image94 from "../assets/images/image 94.png";
+import balanceSheet from "../assets/images/image 73.png";
+import dayBook from "../assets/images/image 84.png";
+import tradingAccount from "../assets/images/image 81.png"
+import trialBalance from "../assets/images/image 81w.png"
 
 const Report = () => {
   const cards = [
     {
       id: 1,
       title: "Profit and Loss",
-      description: "Analyze profit and loss trends over time for better decisions.",
-      arrowImage: ArrowRightUpImg,
+      description: "Summarises commission for each staff on your item list include quantity amount % of sale and average amount",
+      arrowImage: image94,
+      width: 59,
+      height: 59,
     },
-    // Remaining cards...
+    {
+      id: 2,
+      title: "Balance Sheet",
+      description: "Summarises commission for each staff on your item list include quantity amount % of sale and average amount",
+      arrowImage: balanceSheet,
+      width: 43,
+      height: 44,
+    },
+    {
+      id: 3,
+      title: "Day Book",
+      description: "Summarises commission for each staff on your item list include quantity amount % of sale and average amount",
+      arrowImage: dayBook,
+      width: 69,
+      height: 55,
+    },
+    {
+      id: 4,
+      title: "Trading Account",
+      description: "On this report we can see each product sale",
+      arrowImage: tradingAccount,
+      width: 52,
+      height: 60,
+    },
+    {
+      id: 5,
+      title: "Trail Balance",
+      description: "On this report we can see the  sale of service by each staff",
+      arrowImage: trialBalance,
+      width: 56,
+      height: 66,
+    },
   ];
 
   return (
     <div>
-  <div className=' justify-between'>
-      <h1 className="text-[#0B1320] text-[16px] font-bold">
-        Reports
-      </h1>
-      <p className="text-[#818894] text-[12px] font-normal">
-        Lorem ipsum dolor sit amet consectetur. Commodo enim odio fringilla
-      </p>
+      <div className='justify-between'>
+        <h1 className="text-lg font-bold text-[#2C3E50]">Reports</h1>
       </div>
-            <div className="grid grid-cols-3 gap-6 py-6 mb-4">
-        {cards.map((card) => (
-          <div
-            key={card.id}
-            className="bg-[#E6EDED]  h-[195px] w-[375px] rounded-[12px]  shadow-md p-4 flex flex-row items-center "
-          >
-            {/* First Column: Number and Arrow Image */}
-            <div className="flex flex-col items-center w-1/3">
-              <div className="text-[40px] font-semibold text-[#495160] mb-4">{card.id}</div>
-              <div className="w-full h-12 flex items-center justify-center">
-                <img src={card.arrowImage} className='h-[21.5px] w-[35.95px] text-[#004D4D]' alt="Arrow" /> {/* Render arrowImage directly */}
+      <br />
+      <div className='bg-white p-8 rounded-xl'>
+        <div className="grid grid-cols-5 gap-10 py- mb-4">
+          {cards.map((card) => (
+            <div
+              key={card.id}
+              className="relative bg-white p-4 rounded-[14px] border border-[#EED2D5] flex flex-col justify-between"
+            >
+              <div className="absolute left-4 bottom-[0%] cursor-pointer transform -translate-y-1/2 w-[30px] h-[30px] flex items-center justify-center rounded-full bg-[#DCDEE275]">
+                <ArrowRight size={11.67} color="#828C99" />
+              </div>
+              <div >
+                <p className="text-[#333333] text-xs font-semibold">{card.title}</p>
+                <p className="mt-4 text-[#4B5C79] text-[10px]">{card.description}</p>
+              </div>
+              <div className="flex justify-end items-center mt-2">
+                <img
+                  src={card.arrowImage}
+                  alt={card.title}
+                  style={{
+                    width: `${card.width}px`,
+                    height: `${card.height}px`,
+                  }}
+                  className="object-cover"
+                />
               </div>
             </div>
-
-            {/* Second Column: Line/Image */}
-            <div className="w-1/12 flex items-center justify-start">
-              <img src={LineImg} className="h-[150px] w-0.5" alt="Line" />
-            </div>
-
-            {/* Third Column: Title, Description, Button, and Arrow Icon */}
-            <div className="flex flex-col justify-between w-2/3">
-              <div>
-                <h2 className="text-[16px] font-bold text-[#0B1320] mt-1">{card.title}</h2>
-                <p className="text-[12px] font-normal text-[#818894] ">{card.description}</p>
-              </div>
-              <div className="flex justify-between items-center mt-4 mr-3">
-                <button className="bg-[#FFFFFF] font-bold text-[#495160] m-3 w-[163px] h-[34px] rounded-[36px]">
-                  View More
-                </button>
-                <div className="w-10 h-10 bg-white rounded-full object-cover flex items-center justify-center shadow">
-                  <ArrowUpRight size={15} />
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
+
     </div>
   );
 };

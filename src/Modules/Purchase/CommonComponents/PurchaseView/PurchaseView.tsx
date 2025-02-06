@@ -10,6 +10,7 @@ import OrderView from "./OrderView";
 import { endpoints } from "../../../../Services/apiEdpoints";
 import PDFView from "./PDFView";
 import DotIcon from "../../../../assets/icons/DotIcon";
+import BackIcon from "../../../../assets/icons/BackIcon";
 
 type Props = { page: string };
 
@@ -82,11 +83,11 @@ function Purchaseview({ page }: Props) {
                 style={{ borderRadius: "50%" }}
                 className="w-[40px] h-[40px] flex items-center justify-center bg-[#e8e8ea]"
               >
-                <ChevronLeft  />
+                <BackIcon  />
               </div>
             </Link>
 
-            <p className="text-text_fourthiry text-xl font-bold">
+            <p className="text-[#2C3E50] text-base font-bold">
               {page ==="Bills"
                 ? "View Bill"
                 : "Debit Note"}
@@ -101,33 +102,17 @@ function Purchaseview({ page }: Props) {
                   ? `Bill ${data?.billNumber || ""}`
                   : `Debit Note ${data?.debitNote}`}
               </p>
-             <div className="bg-[#DBF8EB] py-1 px-2 rounded-xl flex items-center justify-center gap-2 text-xs text-[#0b9d56] "><DotIcon size={"6"} color="#0b9d56"/>Completed</div>
+            <p className="border-r-[1px] pr-4">Bill#35226</p>
+            <p className="text-sm text-[#495160] font-semibold py-1 px-2 rounded-[4px] bg-[#F3F3F3]">Draft</p>
             </div>
             <div className="flex gap-3 items-center">
-              <div className="hidden">
-                <Button variant="secondary" className="pl-6 pr-6" size="sm">
-                  <Pen color="#0b9d56" />
-                  <p className="text-sm font-medium">Edit</p>
-                </Button>
-              </div>
               <>
                 <Button variant="secondary" className="pl-5 pr-5" size="sm">
-                  <Pen color="#0b9d56" />
+                  <Pen color="#B5636A" />
                   <p className="text-sm font-medium">Edit</p>
                 </Button>
-                {/* <select
-                  name=""
-                  id=""
-                  className="border-outlineButton border rounded-md px-[0.625rem] py-2 text-sm font-medium text-outlineButton"
-                >
-                  <option value="">More Action</option>
-                </select> */}
               </>
 
-              <Button variant="secondary" size="sm" className="px-2">
-                <PrinterIcon color="#0b9d56"  />
-                Print
-              </Button>
 
               <label className="flex items-center cursor-pointer">
                 <div className="relative">

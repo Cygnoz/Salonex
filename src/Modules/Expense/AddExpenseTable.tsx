@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-
 import CehvronDown from "../../assets/icons/CheveronDown";
-import CirclePlus from "../../assets/icons/CirclePlus";
+import CirclePlus from "../../assets/icons/circleplus";
 
 
 type Props = {
@@ -169,14 +168,14 @@ const AddExpenseTable: React.FC<Props> = ({
         <table className="w-full bg-gray-50 rounded-md">
           <thead>
             <tr className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
-              <th className="p-2 text-sm text-labelColor bg-[#FDF8F0]">
+              <th className="p-2 text-sm text-labelColor bg-[#FAF1F1]">
                 Expense Account
               </th>
-              <th className="p-2 text-sm text-labelColor bg-[#FDF8F0]">
+              <th className="p-2 text-sm text-labelColor bg-[#FAF1F1]">
                 Notes
               </th>
-              <th className="p-2 text-sm text-labelColor bg-[#FDF8F0]">Tax</th>
-              <th className="p-2 text-sm text-labelColor bg-[#FDF8F0]">
+              <th className="p-2 text-sm text-labelColor bg-[#FAF1F1]">Tax</th>
+              <th className="p-2 text-sm text-labelColor bg-[#FAF1F1]">
                 Amount
               </th>
               <th className="p-2"></th>
@@ -291,8 +290,8 @@ const AddExpenseTable: React.FC<Props> = ({
           className="hover:bg-gray-100 cursor-pointer rounded-lg py-2 flex items-center"
         >
           <div className="flex items-center space-x-2">
-            <CirclePlus color="#004D4D"  />
-            <span className="text-sm font-semibold text-darkRed">Add Row</span>
+            <CirclePlus color="#975359"  />
+            <span className="text-sm font-semibold text-[#975359]">Add Row</span>
           </div>
         </div>
         <div className="text-sm text-gray-70 min-w-[20%] text-textColor space-y-2">

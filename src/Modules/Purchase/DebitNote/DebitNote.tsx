@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import Table from "../../../Components/Table/Table";
 import Button from "../../../Components/Button";
-import CirclePlus from "../../../assets/icons/CirclePlus";
 import { useState } from "react";
+import CirclePlus from "../../../assets/icons/circleplus";
 
 type Props = {};
 
@@ -53,8 +53,8 @@ const DebitNote = ({}: Props) => {
     <div>
       <div className="flex">
         <div>
-          <p className="text-[#0B1320] font-bold">Debit Note</p>
-          <p className="text-[#818894] text-sm">
+        <h1 className="text-lg font-bold text-[#2C3E50]">Debit Note</h1>
+          <p className="text-[#818894] text-xs">
             Lorem ipsum dolor sit amet consectetur. Commodo enim odio fringilla{" "}
           </p>
         </div>

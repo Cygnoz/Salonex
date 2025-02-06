@@ -1,8 +1,6 @@
-import backHomeIcon from "../../assets/Images/Frame 630214.png";
+import backHomeIcon from "../../assets/Images/Frame 630214.png.png";
 import calenderIcon from "../../assets/Images/Frame 630162 (1).png";
 import timeIcon from "../../assets/Images/Frame 630162.png";
-import Button from "../../Components/Button";
-import PlusCircle from "../../assets/icons/Plus";
 import SelectCustomerModal from "./SelectedCustomerModal";
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateCustomerModal from "./CreateCustomerModal";
@@ -54,11 +52,11 @@ function PosHeader({onSelectCustomer }: Props) {
       <div className="flex justify-center items-center gap-5">
         <div className="bg-white rounded px-4 py-2 flex items-center gap-2.5">
           <img src={timeIcon} className="w-6" alt="Time Icon" />
-          <span className="text-dropdownText text-[10px] font-bold">{formattedDate}</span>
+          <span className="text-[#2C3E50] text-[10px] font-bold">{formattedDate}</span>
         </div>
         <div className="bg-white rounded px-4 py-2 flex items-center gap-2.5">
           <img src={calenderIcon} className="w-6" alt="Calendar Icon" />
-          <span className="text-dropdownText text-[10px] font-bold">{formattedTime}</span>
+          <span className="text-[#2C3E50] text-[10px] font-bold">{formattedTime}</span>
         </div>
         <SelectCustomerModal onButtonClick={handleSelectedCustomer} />
         <CreateCustomerModal/>   

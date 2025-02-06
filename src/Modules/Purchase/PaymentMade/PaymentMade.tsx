@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../Components/Button";
-import CirclePlus from "../../../assets/icons/CirclePlus";
 import Table from "../../../Components/Table/Table";
 import { useState } from "react";
+import CirclePlus from "../../../assets/icons/circleplus";
 
 type Props = {};
 
@@ -56,8 +56,8 @@ function PaymentMade({}: Props) {
     <div>
       <div className="flex">
         <div>
-          <p className="text-[#0B1320] font-bold">Payment Made</p>
-          <p className="text-[#818894] text-sm">
+        <h1 className="text-lg font-bold text-[#2C3E50]">Payment Made</h1>
+          <p className="text-[#818894] text-xs">
             Lorem ipsum dolor sit amet consectetur. Commodo enim odio fringilla{" "}
           </p>
         </div>

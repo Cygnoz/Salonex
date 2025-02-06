@@ -39,9 +39,7 @@ function Customer({}: Props) {
     <div>
     <div className="flex justify-between ">
       <div>
-      <h1 className="text-[#0B1320] text-[16px] font-bold">
-        Customer
-      </h1>
+      <h1 className="text-lg font-bold text-[#2C3E50]">Customer</h1>
       <p className="text-[#818894] text-[12px] font-normal">
         Lorem ipsum dolor sit amet consectetur. Commodo enim odio fringilla
       </p>

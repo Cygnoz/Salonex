@@ -1,8 +1,10 @@
 type Props = {}
 
-function ItemHub({}: Props) {
+function ItemHub({ }: Props) {
   return (
-    <div>ItemHub</div>
+    <div>
+      <h1 className="text-lg font-bold text-[#2C3E50]">ItemHub</h1>
+    </div>
   )
 }
 

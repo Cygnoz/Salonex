@@ -52,7 +52,8 @@ const Table: React.FC<TableProps> = ({
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const totalPages = Math.ceil(data.length / rowsPerPage);
+
+  const totalPages = Math.max(1, Math.ceil(data.length / rowsPerPage));
 
   const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(Number(event.target.value));
@@ -79,7 +80,7 @@ const Table: React.FC<TableProps> = ({
   return (
     <div className="border border-b bg-white rounded-lg">
       <div className="flex items-center gap-4 justify-between px-6 mt-6 mb-4">
-      { searchPlaceholder && <SearchBar
+        {searchPlaceholder && <SearchBar
           placeholder={searchPlaceholder}
           searchValue={searchValue}
           onSearchChange={(value) => {
@@ -88,33 +89,33 @@ const Table: React.FC<TableProps> = ({
         />}
         {
           isPrint && (
-            <Button size="sm" variant="secondary">
-              <PrinterIcon />
+            <Button size="sm">
+              <PrinterIcon color="white" />
               <p className="text-xs font-semibold">Print</p>
             </Button>
           )
         }
       </div>
 
-      <div className="overflow-x-auto mt-3 hide-scrollbar overflow-y-scroll max-h-[25rem]">
+      <div className="overflow-x-auto mt-3 hide-scrollbar overflow-y-scroll max-h-[45vh]">
         <table className="min-w-full bg-white mb-5">
           <thead className="text-[12px] text-center text-dropdownText">
             <tr style={{ backgroundColor: "#F7ECD9" }}>
-              <th className="py-3 px-4 border-b border-tableBorder text-xs font-medium text-[#495160]">
-                No
+              <th className="py-3 px-4 border-b border-tableBorder text-xs font-bold text-[#495160]">
+                SI  No
               </th>
               {columns.map(
                 (col) =>
                   col.visible && (
                     <th
                       key={col.id}
-                      className="py-2 px-4 text-[#495160] border-b text-xs font-medium border-tableBorder"
+                      className="py-2 px-4 text-[#495160] border-b text-xs font-bold border-tableBorder"
                     >
                       {col.label}
                     </th>
                   )
               )}
-              <th className="py-3 px-2 font-medium text-[#495160] border-b text-xs border-tableBorder">
+              <th className="py-3 px-2 font-bold text-[#495160] border-b text-xs border-tableBorder">
                 Action
               </th>
               <th className="py-3 px-2 font-medium border-b border-tableBorder"></th>
@@ -154,7 +155,7 @@ const Table: React.FC<TableProps> = ({
                           {page === "supplier" ? (
                             <AddSupplierModal id={item._id} />
                           ) : page === "Customer" ? (
-                            <NewCustomer id={item._id}/>
+                            <NewCustomer id={item._id} />
                           ) : (
                             <button onClick={() => onEditClick && onEditClick(item._id)}>
                               <Pen color={"#3C7FBC"} size={18} />
@@ -191,6 +192,7 @@ const Table: React.FC<TableProps> = ({
             )}
           </tbody>
         </table>
+      </div>
         <div className="flex justify-between items-center mt-4">
           {/* Rows per page selector on the left */}
           <div className="flex gap-2 items-center text-[#71736B] font-medium text-xs p-5">
@@ -213,12 +215,12 @@ const Table: React.FC<TableProps> = ({
               {/* Left Chevron Button */}
               {currentPage > 1 && (
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                  className="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 transition duration-200 disabled:opacity-50"
-                  disabled={currentPage === 1}
-                >
-                  <ChevronLeft color="" />
-                </button>
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                className="w-8 h-8 flex items-center justify-center rounded bg-gray-50 hover:bg-gray-300 transition duration-200 disabled:opacity-50"
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft />
+              </button>
               )}
 
               {/* Render Page Numbers */}
@@ -232,9 +234,9 @@ const Table: React.FC<TableProps> = ({
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`px-3 py-1 rounded ${currentPage === page
-                        ? "bg-[#97998E] text-white"
-                        : "text-[#71736B] hover:bg-gray-100"
+                      className={`px-3 py-1 rounded text-xs ${currentPage === page
+                        ? "bg-[#B5636A] text-white"
+                        : "text-[#495160] font-medium hover:bg-gray-100 bg-[#F7ECD9]"
                         }`}
                     >
                       {page}
@@ -243,10 +245,14 @@ const Table: React.FC<TableProps> = ({
 
                 {currentPage + 1 < totalPages && (
                   <>
-                    <span className="px-1">...</span>
+                    <span className="px-1 bg-[#F7ECD9]">...</span>
                     <button
                       onClick={() => setCurrentPage(totalPages)}
-                      className="px-3 py-1 rounded text-[#71736B] hover:bg-gray-100"
+                      className={`px-3 py-1 rounded text-xs ${currentPage === Number(page)
+                        ? "bg-[#B5636A] text-white"
+                        : "text-[#495160] font-medium hover:bg-gray-100 bg-[#F7ECD9]"
+                        }`}
+
                     >
                       {totalPages}
                     </button>
@@ -256,13 +262,13 @@ const Table: React.FC<TableProps> = ({
 
               {/* Right Chevron Button */}
               {currentPage < totalPages && (
-                <button
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                  className="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 transition duration-200 disabled:opacity-50"
-                  disabled={currentPage === totalPages || totalPages === 0}
-                >
-                  <ChevronRight />
-                </button>
+               <button
+               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+               className="w-8 h-8 flex items-center justify-center rounded bg-gray-50 hover:bg-gray-300 transition duration-200 disabled:opacity-50"
+               disabled={currentPage === totalPages || totalPages === 0}
+             >
+               <ChevronRight />
+             </button>
               )}
             </div>
 
@@ -273,7 +279,6 @@ const Table: React.FC<TableProps> = ({
           </div>
 
         </div>
-      </div>
 
 
     </div>

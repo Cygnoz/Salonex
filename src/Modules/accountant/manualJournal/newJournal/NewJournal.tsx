@@ -9,6 +9,7 @@ import TrashIcon from "../../../../assets/icons/TrashIcon"
 import Button from "../../../../Components/Button"
 import journalBgImage from "../../../../assets/images/journalBgImage.png"
 import CirclePlus from "../../../../assets/icons/circleplus"
+import DateInput from "../../../../Components/DateInput"
 
 type Props = {}
 
@@ -392,7 +393,7 @@ function NewJournal({ }: Props) {
       transaction: newTransaction,
     });
   };
-
+  const [selectedDate, setSelectedDate] = useState("");
 
   return (
     <div>
@@ -400,7 +401,7 @@ function NewJournal({ }: Props) {
         <Link to={"/accountant/manualJournal"}>
           <BackIcon />
         </Link>
-        <p className="text-base font-bold text-heading">Create Manual Journal</p>
+        <h1 className="text-lg font-bold text-[#2C3E50]">Create Manual Journal</h1>
       </div>
 
       <div className="bg-white p-6 rounded-2xl mt-3">
@@ -408,7 +409,7 @@ function NewJournal({ }: Props) {
           <div className="flex items-center justify-between w-full gap-9">
             <div className="w-[40%]">
               <label className="block text-sm text-text_tertiary mb-2">Date</label>
-              <Input placeholder="Select date" />
+              <DateInput placeholder="Select date" value={selectedDate} onChange={setSelectedDate} />
             </div>
             <div className="w-[26%]">
               <label className="block text-sm text-text_tertiary mb-2">Journal#</label>
@@ -600,14 +601,14 @@ function NewJournal({ }: Props) {
         </div>
       </div>
       <br />
-        <div className="flex items-center justify-end gap-3">
-          <Button className="text-sm" variant="secondary">
-            Cancel
-          </Button>
-          <Button className="text-sm" variant="primary">
-            Save
-          </Button>
-        </div>
+      <div className="flex items-center justify-end gap-3">
+        <Button className="text-sm pl-14 pr-14" variant="secondary">
+          Cancel
+        </Button>
+        <Button className="text-sm pl-14 pr-14" variant="primary">
+          Save
+        </Button>
+      </div>
     </div>
   )
 }

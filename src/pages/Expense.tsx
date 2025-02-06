@@ -4,23 +4,21 @@ import Table from "../Components/Table/Table";
 import AddExpenseCategory from "../Modules/Expense/AddExpenseCategory";
 import { useNavigate } from "react-router-dom";
 import AddExpenseModal from "../Modules/Expense/AddExpenseModal";
-import { TodaysExpense } from "../assets/icons/TodaysExpense";
-import { MonthExpense } from "../assets/icons/MonthExpense";
-import { WeekExpense } from "../assets/icons/WeekExpense";
+import WeekExpense from "../assets/icons/WeekExpense";
+import TodaysExpense from "../assets/icons/TodaysExpense";
+import MonthExpense from "../assets/icons/MonthExpense";
 
 type Props = {};
 
-function Expense({}: Props) {
+function Expense({ }: Props) {
   // const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
   const navigate = useNavigate();
 
   const columns = [
-    { id: "slNo", label: "Sl No", visible: true },
     { id: "name", label: "Name", visible: true },
     { id: "category", label: "Category", visible: true },
     { id: "paymentMethod", label: "Payment Method", visible: true },
     { id: "addedDate", label: "Added Date", visible: true },
-    { id: "actions", label: "Actions", visible: true },
   ];
 
   const data = [
@@ -56,14 +54,14 @@ function Expense({}: Props) {
       paymentMethod: "Credit Card",
       addedDate: "2025-01-15",
     },
- 
+
   ];
-  
+
   // const handlePrintClick = (id: string) => {
   //   console.log(`Printing record with ID: ${id}`);
   //   // Add your print logic here
   // };
-  
+
 
   const handleRowClick = () => {
     navigate("view");
@@ -94,8 +92,8 @@ function Expense({}: Props) {
         <div className="flex justify-between items-start">
           {/* Header Section */}
           <div>
-            <p className="head1">Expense</p>
-            <p className="text-[#818894] text-[16px]">
+            <h1 className="text-lg font-bold text-[#2C3E50]">Expense</h1>
+            <p className="text-[#818894] text-xs">
               Lorem ipsum dolor sit amet consectetur. Commodo enim odio
               fringilla
             </p>
@@ -114,68 +112,65 @@ function Expense({}: Props) {
 
         <div className="flex justify-evenly items-center mt-3">
           <HomeCard
-            icon={<TodaysExpense/>}
-            title="Today's"
+            icon={<TodaysExpense />}
+            title="Today's Expenses"
             description=""
             number={5000}
-            iconFrameColor="linear-gradient(127.73deg, #F7ECD9 10.69%, #B5F0D3 139.31%)"
+            iconFrameColor="linear-gradient(127.73deg, #7E4854 10.69%, #B7656E 139.31%)"
             bgColor="#FFFFFF"
             titleColor="#495160"
             descriptionColor="#555555"
             numberColor="#0B1320"
-            border="#FFFFFF"
           />
           <HomeCard
-            icon={<WeekExpense/>}
+            icon={<WeekExpense />}
             title="This week's expense"
             description=""
             number={5000}
-            iconFrameColor="linear-gradient(127.73deg, #F7ECD9 10.69%, #B5F0D3 139.31%)"
+            iconFrameColor="linear-gradient(127.73deg, #7E4854 10.69%, #B7656E 139.31%)"
             bgColor="#FFFFFF"
             titleColor="#495160"
             descriptionColor="#555555"
             numberColor="#0B1320"
-            border="#FFFFFF"
           />
           <HomeCard
             icon={<MonthExpense />}
             title="This month expense"
             description=""
             number={10000}
-            iconFrameColor="linear-gradient(127.73deg, #F7ECD9 10.69%, #B5F0D3 139.31%)"
+            iconFrameColor="linear-gradient(127.73deg, #7E4854 10.69%, #B7656E 139.31%)"
             bgColor="#FFFFFF"
             titleColor="#495160"
             descriptionColor="#555555"
             numberColor="#0B1320"
-            border="#FFFFFF"
           />
         </div>
 
         <div className="mt-2">
-  <Table
-    columns={columns}
-    data={data}
-    searchPlaceholder="Search by Name or Category"
-    searchableFields={["name", "category"]}
-    loading={false}
-    onRowClick={handleRowClick}
-    onDelete={handleDelete}
-    onEditClick={handleEditClick}
-    isPrint={true} // Enable the print button
-    // onPrintClick={handlePrintClick} // Pass the print click handler
-    renderColumnContent={(colId, item) => {
-      if (colId === "actions") {
-        return (
-          <div className="flex gap-2">
-            <button onClick={() => handleEditClick(item.id)}>Edit</button>
-            <button onClick={() => handleDelete(item.id)}>Delete</button>
-          </div>
-        );
-      }
-      return item[colId];
-    }}
-  />
-</div>
+          <Table
+            columns={columns}
+            data={data}
+            searchPlaceholder="Search by Name or Category"
+            searchableFields={["name", "category"]}
+            loading={false}
+            onRowClick={handleRowClick}
+            onDelete={handleDelete}
+            onEditClick={handleEditClick}
+            isPrint={true} // Enable the print button
+            // onPrintClick={handlePrintClick} // Pass the print click handler
+            renderColumnContent={(colId, item) => {
+              if (colId === "actions") {
+                return (
+                  <div className="flex gap-2">
+                    <button onClick={() => handleEditClick(item.id)}>Edit</button>
+                    <button onClick={() => handleDelete(item.id)}>Delete</button>
+                  </div>
+                );
+              }
+              return item[colId];
+            }}
+          />
+        </div>
 
 
         {/* Modal for Add Category */}

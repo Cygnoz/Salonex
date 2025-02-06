@@ -57,7 +57,7 @@ function PosDiscount({
       <div className="flex">
         <input
           type="text"
-          className="text-xs w-full rounded-l-md text-start text-[#818894] bg-white border border-slate-300 h-9 p-2 outline-none cursor-pointer"
+          className="text-xs w-full rounded-l-2xl text-start text-[#818894] bg-white border border-[#CECECE] h-9 p-2 outline-none cursor-pointer"
           placeholder="Enter Discount Amount"
           value={discountValue}
           onClick={handleInputClick} 
@@ -65,8 +65,8 @@ function PosDiscount({
         />
         <div className="relative w-20">
           <select
-            className="block appearance-none w-full h-9 text-[#818894] bg-white border border-inputBorder 
-                       text-sm pl-2 pr-2 rounded-r-md leading-tight 
+            className="block appearance-none w-full h-9 text-[#818894] bg-white border border-[#CECECE] 
+                       text-sm pl-2 pr-2 rounded-r-2xl leading-tight 
                        focus:outline-none focus:bg-white focus:border-gray-500"
             name="discountType"
             value={localDiscountType}

@@ -30,7 +30,7 @@ function Banner({ seeOrgDetails }: Props) {
   }, []);
 
   return (
-<div className="bg-gradient-to-br from-[#F7ECD9] to-[#B5F0D3] rounded-lg flex h-[148px]">      {seeOrgDetails && oneOrganization && (
+<div className="bg-gradient-to-br from-[#FFFFFF] to-[#E4939AC2] rounded-lg flex h-[148px]">      {seeOrgDetails && oneOrganization && (
         <div className="ms-2 p-2 text-center mt-3 items-center flex">
           <div>
             <p className="bg-gray text-sm w-fit text-yellow-50 bg-[#818894] rounded-md p-2">
@@ -49,8 +49,8 @@ function Banner({ seeOrgDetails }: Props) {
           </div>
         </div>
       )}
-      <div className="flex ml-auto me-28 w-fit">
-        <img src={bgImage} className=" -mb-2 top-8 mt-auto" alt="" />
+      <div className="flex ml-auto me-16 w-fit">
+        <img src={bgImage} className="w-52 mt-auto" alt="" />
       </div>
     </div>
   );

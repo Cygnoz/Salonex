@@ -69,11 +69,7 @@ function Taxes({}: Props) {
         <Banner />
         <div className="mt-5">
           <div
-            className="mt-3 p-6 rounded-lg flex justify-between items-center gap-4"
-            style={{
-              background:
-                "linear-gradient(89.66deg, #E3E6D5 -0.9%, #F7E7CE 132.22%)",
-            }}
+            className="mt-3 p-6 rounded-lg flex justify-between items-center gap-4 bg-[#F3F1EE]"
           >
             <div>
               <p className="text-[#303F58] text-sm">

@@ -322,7 +322,7 @@ const Profile = () => {
                 </div>
               ) : (
                 <>
-                  <div className="justify-center flex items-center bg-[#00534d] text-white  p-1 rounded-full ">
+                  <div className="justify-center flex items-center bg-[#794247] text-white  p-1 rounded-full ">
                     <Plus color="white" classname="h-3 w-3" />
                   </div>
                   <p className="text-sm ms-2">
@@ -351,7 +351,7 @@ const Profile = () => {
             <p className="mt-3 text-text_primary ">
               <b>Organization Logo</b>
             </p>
-            <p className="text-xs mt-1 text-text_secondary">
+            <p className="text-[10px] mt-1 text-text_secondary">
               Preferred Image Dimensions: 240&times;240&times; pixels @ 72 DPI{" "}
               <br />
               Maximum File size 1MB
@@ -537,11 +537,11 @@ const Profile = () => {
         </div>
 
         <div className="flex my-4 gap-4">
-          <Button variant="primary" size="sm" type="submit">
+          <Button variant="primary" className="pl-12 pr-12" size="sm" type="submit">
             Save
           </Button>
 
-          <Button variant="secondary" size="sm">
+          <Button variant="secondary" size="sm" className="pl-12 pr-12">
             Cancel
           </Button>
         </div>

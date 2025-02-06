@@ -1,12 +1,12 @@
-import  { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useApi from "../../../Hooks/useApi";
 import toast from "react-hot-toast";
 import { endpoints } from "../../../Services/apiEdpoints";
 import CheveronDown from "../../../assets/icons/CheveronDown";
 import SearchBar from "../../../Components/SearchBar";
 import { Link } from "react-router-dom";
-import CirclePlus from "../../../assets/icons/CirclePlus";
-import Trash from "../../../assets/icons/Trash";
+import CirclePlus from "../../../assets/icons/circleplus";
+import TrashIcon from "../../../assets/icons/TrashIcon";
 
 type Props = {
   state?: any;
@@ -690,13 +690,13 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
                         value={
                           !isInterState
                             ? (row.itemCgstAmount || 0) +
-                                (row.itemSgstAmount || 0) ===
+                              (row.itemSgstAmount || 0) ===
                               0
                               ? "-"
                               : row.itemCgstAmount + row.itemSgstAmount
                             : (row.itemIgstAmount || 0) === 0
-                            ? "-"
-                            : row.itemIgstAmount
+                              ? "-"
+                              : row.itemIgstAmount
                         }
                       />
                     }
@@ -755,25 +755,25 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
                       className="text-center flex justify-center gap-2"
                       onClick={() => removeRow(index)}
                     >
-                      <Trash color="darkRed" />
+                      <TrashIcon color="#EA1E4F" />
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-         
+
         </div>
         <button
-            type="button"
-            className="text-[#0b9d56]  rounded-lg py-5 flex gap-1 items-center text-sm font-bold"
-            onClick={addRow}
-          >
-            <CirclePlus color={"#0b9d56"} size={18} />
-            Add Item
-          </button>
+          type="button"
+          className="text-[#0b9d56]  rounded-lg py-5 flex gap-1 items-center text-sm font-bold"
+          onClick={addRow}
+        >
+          <CirclePlus color={"#975359"} size={18} />
+          <span className="text-[#975359]"> Add Item</span>
+        </button>
       </div>
-     
+
     </div>
   );
 };

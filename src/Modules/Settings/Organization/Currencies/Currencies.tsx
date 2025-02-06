@@ -26,12 +26,11 @@ const Currencies: React.FC<Props> = () => {
 
   return (
     <>
-      <div className="m-4 overflow-y-scroll hide-scrollbar text-[#303F58]">
+      <div className="overflow-y-scroll hide-scrollbar text-[#303F58]">
         <Banner seeOrgDetails />
-        <div className="p-2 flex items-center">
-          <p className="font-bold text-[15px]">Currencies</p>
-
-          <div className="ml-auto flex gap-4 items-center">
+        <div className="p-2">
+          <div className="  flex justify-between items-center gap-4">
+            <p className="font-bold text-sm text-[#303F58]">Currencies</p>
             {/* <label className="flex items-center cursor-pointer">
               <div onClick={() => openModal(true, false)} className="relative">
                 <input

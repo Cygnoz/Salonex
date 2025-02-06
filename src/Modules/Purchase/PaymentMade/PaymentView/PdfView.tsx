@@ -118,9 +118,9 @@ function PdfView({ data, organization }: Props) {
             </p>
           </div>
           <div className="flex items-center justify-center ">
-            <div className="bg-gradient-to-r from-[#E3E6D5] to-[#F7E7CE] w-full flex justify-center items-center flex-col py-5 rounded-sm">
-              <h3 className="text-[14px] font-bold ">Amount Paid</h3>
-              <p className="text-xs  font-semibold text-text_primary text-end">
+            <div className="bg-gradient-to-r from-[#7E4854] to-[#B7656E] w-full flex justify-center items-center flex-col py-5 rounded-sm">
+              <h3 className="text-[14px] text-white ">Amount Paid</h3>
+              <p className="text-xs  font-semibold text-white text-end">
                 {data?.amountPaid ? data.amountPaid : "-"}
               </p>
             </div>

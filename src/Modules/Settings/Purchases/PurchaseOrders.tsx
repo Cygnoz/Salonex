@@ -23,7 +23,7 @@ const PurchaseOrders = ({}: Props) => {
         <div className="p-2 rounded-lg bg-white   w-[221px]">
           <div className="flex bg-[#f7ecda] gap-2 items-center justify-center  p-2 rounded-lg">
             <SettingsIcon color="#3c424f" strokeWidth="3" />
-            <p className="text-text_tertiary font-semibold"> General</p>
+            <p className="text-text_tertiary text-sm font-bold"> General</p>
           </div>
         </div>
         <div className="bg-white my-4 p-5 rounded-xl text-sm">

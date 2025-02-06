@@ -55,11 +55,11 @@ export const settingsList = [
       icon: WalletIcon,
       subhead: [
         { headName: "Rewards", subRoute: "/settings/rewards-settings/rewards" },
-        { headName: "Refer & Earn", subRoute: "/settings/rewards-settings/refer-earn" },
-        {
-          headName: "Membership Card",
-          subRoute: "/settings/rewards-settings/membership-card",
-        },
+        // { headName: "Refer & Earn", subRoute: "/settings/rewards-settings/refer-earn" },
+        // {
+        //   headName: "Membership Card",
+        //   subRoute: "/settings/rewards-settings/membership-card",
+        // },
       ],
     },
     {

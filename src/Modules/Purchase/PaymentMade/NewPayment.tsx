@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ChevronLeft from "../../../assets/icons/ChevronLeft";
 import { Link } from "react-router-dom";
 import Select from "../../../Components/Form/Select";
 import Input from "../../../Components/Form/Input";
@@ -9,6 +8,7 @@ import PrinterIcon from "../../../assets/icons/PrinterIcon";
 import PaymentTable from "./PaymentTable";
 import ObjectSelect from "../../../Components/Form/ObjectSelect";
 import AddSupplierModal from "../../Supplier/AddSupplierModal";
+import BackIcon from "../../../assets/icons/BackIcon";
 
 type Props = {};
 
@@ -110,11 +110,11 @@ const NewPayment = ({}: Props) => {
       <div className="flex mb-3 gap-5">
         <Link to={"/purchase/payment-made"}>
           <div className="flex justify-center items-center h-11 w-11 bg-[white] rounded-full">
-            <ChevronLeft  />
+            <BackIcon  />
           </div>
         </Link>
         <div className="flex justify-center items-center">
-          <h4 className="font-bold text-xl text-textColor ">Bill Payment</h4>
+        <h4 className="font-bold text-base text-[#0B1320]">Bill Payment</h4>
         </div>
       </div>
 
@@ -162,7 +162,7 @@ const NewPayment = ({}: Props) => {
             size="md"
           />
         </div>
-        <div className="col-span-3 bg-white p-6 rounded-t-2xl space-y-1 text-xs text-text_tertiary">
+        <div className="col-span-3 h-[20vh] bg-white p-6 rounded-t-2xl space-y-1 text-xs text-text_tertiary">
           <div className="flex">
             <div className="w-[75%]">
               <p>Amount Paid</p>
@@ -172,7 +172,7 @@ const NewPayment = ({}: Props) => {
             </div>
           </div>
           <div className="flex">
-            <div className="w-[75%]">
+            <div className="w-[100%]">
               <p>Amount used for payment</p>
             </div>
             <div className="w-full text-end font-bold">
@@ -183,9 +183,6 @@ const NewPayment = ({}: Props) => {
       </div>
       <div
         className=" flex bg-white p-4 rounded-b-2xl  sticky"
-        style={{
-          boxShadow: "0px -1px 4px 0px rgba(0, 0, 0, 0.23)",
-        }}
       >
         <div className="flex gap-2 ml-auto">
           <Button variant="secondary">Cancel</Button>

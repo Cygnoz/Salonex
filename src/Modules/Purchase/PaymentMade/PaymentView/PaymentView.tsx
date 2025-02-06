@@ -2,22 +2,22 @@ import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useApi from '../../../../Hooks/useApi';
 import { endpoints } from '../../../../Services/apiEdpoints';
-import ChevronLeft from '../../../../assets/icons/ChevronLeft';
 import Button from '../../../../Components/Button';
 import Pen from '../../../../assets/icons/Pen';
 import PrinterIcon from '../../../../assets/icons/PrinterIcon';
 import SideBar from './SideBar';
 import PdfView from './PdfView';
+import BackIcon from '../../../../assets/icons/BackIcon';
 
 type Props = {};
 
-function PaymentView({}: Props) {
-  const[paymentData,setPaymentData]=useState<[]|any>([])
-  const [organization]=useState<any>()
-  const {request:getPayment}=useApi("get",5005)
+function PaymentView({ }: Props) {
+  const [paymentData, setPaymentData] = useState<[] | any>([])
+  const [organization] = useState<any>()
+  const { request: getPayment } = useApi("get", 5005)
 
 
-  const {id}=useParams()
+  const { id } = useParams()
 
   const getPayments = async () => {
     try {
@@ -34,9 +34,9 @@ function PaymentView({}: Props) {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getPayments()
-  },[])
+  }, [])
 
   return (
     <div className="p-6 text-pdftext bg-white rounded-lg mx-7">
@@ -46,7 +46,7 @@ function PaymentView({}: Props) {
             style={{ borderRadius: "50%" }}
             className="w-[40px] h-[40px] flex items-center justify-center bg-[#F6F6F6]"
           >
-            <ChevronLeft  />
+            <BackIcon />
           </div>
         </Link>
         <h1 className="text-[20px] font-bold text-[#303F58]">View Payment</h1>
@@ -60,22 +60,22 @@ function PaymentView({}: Props) {
         </div>
         <div className="flex space-x-3 mb-4">
           <Button className="h-[38px] w-[100px] flex justify-center items-center" variant="secondary">
-            <Pen color="#0b9d56" />
+            <Pen color="#B5636A" />
             Edit
           </Button>
 
           <Button className="h-[38px] w-[100px] flex justify-center items-center" variant="secondary" size="sm" >
-                    <PrinterIcon color="#0b9d56"  />
-                    Print
-                  </Button>
-         
+            <PrinterIcon color="#B5636A" />
+            Print
+          </Button>
+
         </div>
       </div>
       <hr className="mb-5 border-loremcolor" />
       <div className="grid grid-cols-12 space-x-4">
-     <div className='col-span-5'>  <SideBar data={paymentData}/></div>
+        <div className='col-span-5'>  <SideBar data={paymentData} /></div>
         <div className='col-span-7'>
-        <PdfView data={paymentData} organization={organization}/>
+          <PdfView data={paymentData} organization={organization} />
         </div>
       </div>
     </div>

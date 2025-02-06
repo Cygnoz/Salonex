@@ -28,15 +28,15 @@ function ManualJournalView({}: Props) {
             </div>
             <div className="flex gap-3 items-center">
               <Button variant="secondary" className="pl-6 pr-6" size="sm">
-                <Pen color="#0B9C56" />{" "}
+                <Pen color="red" />{" "}
                 <p className="text-sm font-medium">Edit</p>
               </Button>
               <Button variant="secondary" className="pl-5 pr-5" size="sm">
-                <PrinterIcon color="#0B9C56"/>{" "}
+                <PrinterIcon color="red"/>{" "}
                 <p className="text-sm font-medium">Print</p>
               </Button>
               <Button variant="secondary" className="pl-5 pr-5" size="sm">
-                <TrashIcon color="#0B9C56" />{" "}
+                <TrashIcon color="red" />{" "}
                 <p className="text-sm font-medium">Delete</p>
               </Button>
             </div>

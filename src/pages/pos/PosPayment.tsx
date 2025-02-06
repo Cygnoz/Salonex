@@ -228,13 +228,13 @@ function PosPayment({ selectedItems, total, selectedCustomer, selectedMethodLabe
       </Button>
 
       <Modal
-        className="w-[40%] overflow-y-auto max-h-[95%] hide-scrollbar px-8 py-4 rounded-2xl"
+        className="w-[40%] overflow-y-auto max-h-[95%] hide-scrollbar px-8 py-4 bg-[#F8F4F4] rounded-2xl"
         open={isModalOpen}
         onClose={closeModal}
       >
         {/* Modal Content */}
         <div className="flex justify-between items-center mb-2">
-          <span className="text-textColor text-base font-bold">Add Sale</span>
+          <span className="text-[#2C3E50] text-base font-bold">Add Sale</span>
           <p className="text-3xl font-light cursor-pointer" onClick={closeModal}>
             &times;
           </p>
@@ -262,11 +262,11 @@ function PosPayment({ selectedItems, total, selectedCustomer, selectedMethodLabe
           </p>
         </div>
 
-        <p className="text-dropdownText font-bold text-sm mt-4">
+        <p className="text-[#2C3E50] font-bold text-sm mt-4">
           {selectedItems?.length} Items
         </p>
-        <p className="text-dropdownText font-bold text-base mt-2">Total </p>
-        <p className="mt-2 font-bold text-2xl text-textColor">
+        <p className="text-[#2C3E50] font-bold text-base mt-2">Total </p>
+        <p className="mt-2 font-bold text-2xl text-[#2C3E50]">
           ₹ {total.toFixed(2)}
         </p>
 
@@ -275,7 +275,7 @@ function PosPayment({ selectedItems, total, selectedCustomer, selectedMethodLabe
           <label className="text-textColor text-sm">Paid</label>
           <input
             type="text"
-            className="text-xs w-full rounded-l-md text-start text-[#818894]
+            className="text-xs w-full rounded-2xl text-start text-[#818894]
              bg-white border border-slate-300 h-9 p-2 mt-1 outline-none cursor-pointer"
             value={paidAmount}
             readOnly
@@ -284,7 +284,7 @@ function PosPayment({ selectedItems, total, selectedCustomer, selectedMethodLabe
 
         {/* Predefined Amount Buttons */}
         <div className="rounded-md mt-4">
-          <div className="flex gap-2 mb-4">
+          <div className="flex gap-1 mb-4">
             {["₹ 100", "₹ 500", "₹ 1000", "₹ 2000", "₹ 5000", "₹ 10000"].map(
               (amount) => (
                 <button
@@ -321,7 +321,7 @@ function PosPayment({ selectedItems, total, selectedCustomer, selectedMethodLabe
 
         <div className="mt-3 flex items-center justify-between">
           <p className="text-[#2A9F6E] text-sm">Change to be given</p>
-          <p className="text-dropdownText text-xl font-bold">
+          <p className="text-[#4B5C79] text-xl font-bold">
             ₹ {(paidAmount ? (paidAmount - total).toFixed(2) : "0.00")}
           </p>
         </div>

@@ -3,7 +3,7 @@ import CirclePlus from "../../../../assets/icons/circleplus";
 import Button from "../../../../Components/Button";
 import Modal from "../../../../Components/modal/Modal";
 import Table from "../../../../Components/Table/Table";
-import accountsBgImage from "../../../../assets/images/bankBgImage.png";
+import taxBgImage from "../../../../assets/images/Frame 629026.png"
 import Input from "../../../../Components/Form/Input";
 import ViewTaxDetailsVat from "./ViewTaxDetailsVat";
 
@@ -67,22 +67,25 @@ function TaxRateVat({}: Props) {
       <Modal
         open={isModalOpen}
         onClose={closeModal}
-        className="w-[50%] px-8 py-6"
+        className="w-[50%] p-8  bg-[#F8F4F4]"
       >
           <div
-          className="mt-4 p-6 rounded-2xl flex justify-between items-center relative bg-cover bg-no-repeat bg-right"
-          style={{
-            backgroundImage: `url(${accountsBgImage})`,
-          }}
+          className="mt-4  rounded-2xl flex justify-between items-center relative bg-cover bg-no-repeat bg-right"
         >
-          <div className="relative flex-1">
-            <p className="text-[#004D4D] font-bold text-base">Create New Tax</p>
-            <p className="text-text_tertiary text-xs mt-2">
-              Lorem ipsum dolor sit amet consectetur.
-            </p>
+            <div className="relative flex items-center justify-between w-full">
+            <div className="flex items-center gap-3">
+              <img src={taxBgImage} className="w-12" alt="" />
+              <div>
+                <p className="text-[#004D4D] font-bold text-base">Create New Tax</p>
+                <p className="text-[#818894] text-[10px]">
+                  Lorem ipsum dolor sit amet cons Lorem ipsum dolor sit amet cons amet cons Lorem ipsu
+                </p>
+              </div>
+            </div>
+            <div className="text-4xl text-[#2C3E50]  cursor-pointer">&times;</div>
           </div>
         </div>
-        <div className="mt-4 bg-[#FAF7F2] p-4 rounded-2xl text-text_tertiary text-sm">
+        <div className="mt-4 rounded-2xl text-text_tertiary text-sm">
           <form>
             <div>
               <p className="mb-2">Tax Name</p>
@@ -96,10 +99,10 @@ function TaxRateVat({}: Props) {
         </div>
 
         <div className="flex justify-end gap-2 mt-4">
-          <Button onClick={closeModal} variant="secondary" className="text-sm">
+          <Button onClick={closeModal} variant="secondary" className="text-sm pl-7 pr-7">
             Cancel
           </Button>
-          <Button>Save</Button>
+          <Button className="pl-7 pr-7">Save</Button>
         </div>
       </Modal>
 

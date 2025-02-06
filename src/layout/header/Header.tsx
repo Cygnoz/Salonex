@@ -3,38 +3,49 @@ import SettingsIcon from "../../assets/icons/SettingsIcon";
 import NotificationIcon from "./headerIcons/NotificationIcon";
 import defaultOrganizationImage from "../../assets/images/personImage.png";
 import SignOut from "./headerIcons/SignOut";
+import QuestionIcon from "../../assets/icons/QuestionIcon";
+import LenseIcon from "../../assets/icons/LenseIcon";
 
 type Props = {};
 
-function Header({}: Props) {
+function Header({ }: Props) {
   const navigate = useNavigate();
 
   const handleSettingsClick = () => {
-    localStorage.setItem("index", "12"); 
+    localStorage.setItem("index", "12");
     navigate("/settings");
   };
 
   return (
-    <div className="w-full p-4 bg-white flex items-start">
-      <div>
+    <div className="w-full p-4 flex items-start">
+      <div className="relative w-[498px]">
+        <LenseIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         <input
           type="text"
-          className="w-[498px] px-3 py-2 rounded-[10px] text-sm bg-[#F9F7F5]"
-          placeholder="search"
+          className="w-full pl-10 pr-3 py-2 rounded-[50px] text-sm bg-white text-[#495160]"
+          placeholder="Search"
         />
       </div>
-      <div className="flex items-center gap-6 ml-auto">
-        <NotificationIcon />
-        <div className="cursor-pointer" onClick={handleSettingsClick}>
-          <SettingsIcon color="#818894" width="22" />
-        </div>
-        <div className="flex items-center justify-center">
-          <img src={defaultOrganizationImage} className="w-9" alt="Organization" />
+
+      <div className="flex items-center gap-5 ml-auto">
+        <div className="flex items-center justify-center bg-white rounded-[48px] px-3 py-2">
+          <img src={defaultOrganizationImage} className="w-7" alt="Organization" />
           <div className="ms-3">
-            <p className="text-sm font-semibold">Admin</p>
-            <p className="text-xs">john@gmail.com</p>
+            <p className="text-xs font-semibold">Admin</p>
+            <p className="text-[8px]">john@gmail.com</p>
           </div>
-          <SignOut />
+          <div className="px-3">
+            <SignOut />
+          </div>
+        </div>
+        <div className="cursor-pointer bg-white  p-2.5 rounded-full" onClick={handleSettingsClick}>
+          <SettingsIcon color="#495160" width="18" height="18" />
+        </div>
+        <div className="cursor-pointer bg-white  p-2.5 rounded-[40px]">
+          <NotificationIcon />
+        </div>
+        <div className="cursor-pointer bg-white  p-2.5 rounded-[40px]">
+          <QuestionIcon />
         </div>
       </div>
     </div>

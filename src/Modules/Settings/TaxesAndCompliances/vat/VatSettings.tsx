@@ -14,9 +14,7 @@ function VatSettings({ }: Props) {
     <div>
       <p className="text-[#303F58] font-bold">VAT Settings</p>
 
-      <div className="p-6 mt-4 rounded-lg" style={{
-        background: 'linear-gradient(89.66deg, #E3E6D5 -0.9%, #F7E7CE 132.22%)',
-      }}>
+      <div className="p-6 mt-4 rounded-lg bg-[#F7ECD9]">
         <div className="flex justify-between items-center">
           <p className=" text-[#303F58] text-sm">Is your business registered for VAT?</p>
           <label className="flex items-center cursor-pointer">

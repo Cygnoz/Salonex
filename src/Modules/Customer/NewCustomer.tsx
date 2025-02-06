@@ -14,9 +14,9 @@ import CirclePlus from "../../assets/icons/circleplus";
 import CheveronDown from "../../assets/icons/CheveronDown";
 import Pen from "../../assets/icons/Pen";
 
-type Props = { page?: string, id?:string }
+type Props = { page?: string, id?: string }
 
-const NewCustomer = ({ page,id }: Props) => {
+const NewCustomer = ({ page, id }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(1);
 
@@ -50,18 +50,18 @@ const NewCustomer = ({ page,id }: Props) => {
         </Button>
       ) : (
         <div onClick={openModal}>
-            <Pen color={"#3C7FBC"} size={18} />
+          <Pen color={"#3C7FBC"} size={18} />
         </div>
-    )}
+      )}
 
-      <Modal  open={isModalOpen} onClose={closeModal} className="p-6 max-w-[1200px] max-h-[500px] w-full h-full pt-[32px] rounded-tl-[16px] rounded-tr-[16px] border border-t-0 border-l-0 border-r-0">
+      <Modal open={isModalOpen} onClose={closeModal} className="p-6 max-w-[1200px] max-h-[500px] w-full h-full pt-[32px] rounded-tl-[16px] rounded-tr-[16px] border border-t-0 border-l-0 border-r-0">
         <div>
           <div className="p-2 m-2 bg-white flex justify-between items-center mb-5">
-                    <h1 className="font-bold text-md text-[#0B1320]">Add New Customer</h1>
-                    <button onClick={closeModal} className="text-gray-500 hover:text-gray-700 transition" aria-label="Close modal">
-                        <CrossIcon />
-                    </button>
-                </div>
+            <h1 className="font-bold text-md text-[#0B1320]">Add New Customer</h1>
+            <button onClick={closeModal} className="text-gray-500 hover:text-gray-700 transition" aria-label="Close modal">
+              <CrossIcon />
+            </button>
+          </div>
           <div className="p-2 w-[1111px] h-[56px] rounded-lg shadow-sm bg-[#FAF7F2] mb-6">
             {/* Stepper Navigation */}
             <div className="flex p-2 items-center justify-between mb-6">
@@ -160,7 +160,7 @@ const NewCustomer = ({ page,id }: Props) => {
                 <div className="grid grid-cols-3 gap-4 mt-4">
                   <Input label="Contact" placeholder="Enter Contact" size="md" />
                   <Input label="Email" placeholder="Enter Email" size="md" />
-                  <Input label="Date of Birth" placeholder="Enter Date of Birth" size="md" type="date"/>
+                  <Input label="Date of Birth" placeholder="Enter Date of Birth" size="md" type="date" />
                 </div>
 
                 {/* Row 3: Membership Card and Opening Balance */}
@@ -262,7 +262,7 @@ const NewCustomer = ({ page,id }: Props) => {
                           <GalleryIcon />
                         </div>
                       </div>
-                             </div>
+                    </div>
                     <div>
                       <p className="text-sm text-textColor mt-1">
                         Upload Image <span className="text-[#B47300]">browse</span>
@@ -304,7 +304,7 @@ const NewCustomer = ({ page,id }: Props) => {
                   </div>
 
                   {/* Row 3: Anniversary and Profession */}
-                  <Input label="Anniversary" placeholder="Enter Date of Birth" size="md" type="date"/>
+                  <Input label="Anniversary" placeholder="Enter Date of Birth" size="md" type="date" />
 
                   <Input
                     label="Profession"

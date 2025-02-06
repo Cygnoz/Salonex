@@ -22,7 +22,7 @@ const Expense = ({}: Props) => {
             <div
               key={item}
               onClick={() => setActiveTab(item)}
-              className={`flex gap-2 items-center justify-center px-2 py-1 rounded-3xl text-xs cursor-pointer ${
+              className={`flex gap-2 items-center justify-center me-5 px-2 py-1 rounded-3xl text-xs cursor-pointer ${
                 activeTab === item ? "bg-[#f7ecda]" : ""
               }`}
             >

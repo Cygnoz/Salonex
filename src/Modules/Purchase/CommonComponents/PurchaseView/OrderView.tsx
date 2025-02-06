@@ -6,6 +6,9 @@ import { endpoints } from "../../../../Services/apiEdpoints";
 import CheveronDown from "../../../../assets/icons/CheveronDown";
 import PaymentMadeHistory from "../../Bill/PaymentMadeHistory";
 import Journal from "../../Bill/Journal";
+import Trash from "../../../../assets/icons/Trash";
+import Pen from "../../../../assets/icons/Pen";
+import EllipsisIcon from "../../../../assets/icons/EllipsisIcon";
 
 type Props = {
   data?: any;
@@ -84,7 +87,7 @@ function OrderView({ data, page, organization }: Props) {
           }) => (
             <div key={item.itemId}>
               {" "}
-              <div className="mt-6 py-2 px-[10px] flex flex-col bg-[#F3F3F5] rounded-lg">
+              <div className="mt-6 py-6  px-4 flex flex-col bg-[#C96E76] rounded-lg">
                 <div className="w-full flex items-center gap-8 cursor-pointer">
                   {/* Item Section */}
                   <div className="flex items-start justify-start gap-4">
@@ -94,8 +97,8 @@ function OrderView({ data, page, organization }: Props) {
                       className="h-9 w-9 rounded-full"
                     />
                     <div className="text-textColor border-[#A3A9B3] border-r-[1px]  pe-16 space-y-1 ">
-                      <p className="text-xs text-text_tertiary">Item</p>
-                      <p className="font-semibold text-xs text-text_tertiary">
+                      <p className="text-xs fot text-white">Product Name</p>
+                      <p className="font-semibold text-xs text-white">
                         {item.itemName}
                       </p>
                     </div>
@@ -103,46 +106,58 @@ function OrderView({ data, page, organization }: Props) {
 
                   {/* Ordered Section */}
                   <div className="text-start  border-[#A3A9B3] border-r-[1px] space-y-1 pe-16">
-                    <p className="text-xs text-text_tertiary">Ordered</p>
-                    <p className="font-semibold text-xs text-text_tertiary">
+                    <p className="text-xs text-white">Ordered</p>
+                    <p className="font-semibold text-xs text-white">
                       {item.itemQuantity || 0} PCS
                     </p>
                   </div>
 
                   {/* Status Section */}
                   <div className="text-start  border-[#A3A9B3] border-r-[1px] space-y-1 pe-16">
-                    <p className="text-xs text-text_tertiary">Status</p>
-                    <p className="font-semibold text-xs text-text_tertiary">
+                    <p className="text-xs text-white">Status</p>
+                    <p className="font-semibold text-xs text-white">
                       0 Invoiced
                     </p>
                   </div>
 
                   {/* Rate Section */}
                   <div className="text-start  border-[#A3A9B3] border-r-[1px] space-y-1 pe-16">
-                    <p className="text-xs text-text_tertiary">Rate</p>
-                    <p className="font-semibold text-xs text-text_tertiary">
+                    <p className="text-xs text-white">Rate</p>
+                    <p className="font-semibold text-xs text-white">
                       {currency} {item.itemCostPrice || 0}
                     </p>
                   </div>
 
                   {/* Discount Section */}
                   <div className="text-start  border-[#A3A9B3] border-r-[1px] space-y-1 pe-16">
-                    <p className="text-xs text-text_tertiary">Discount</p>
-                    <p className="font-semibold text-xs text-text_tertiary">
+                    <p className="text-xs text-white">Discount</p>
+                    <p className="font-semibold text-xs text-white">
                       {item.discountType === "percentage"
                         ? ((item.itemCostPrice || 0) *
-                            (item.itemDiscount || 0)) /
-                          100
+                          (item.itemDiscount || 0)) /
+                        100
                         : item.itemDiscount || 0}
                     </p>
                   </div>
 
                   {/* Amount Section */}
                   <div className="text-start space-y-1 ">
-                    <p className="text-xs text-text_tertiary">Amount</p>
-                    <p className="font-semibold text-sm text-text_tertiary">
+                    <p className="text-xs text-white">Amount</p>
+                    <p className="font-semibold text-sm text-white">
                       {currency} {item.itemAmount || 0}
                     </p>
+                  </div>
+
+                  <div className="ms-auto flex items-center gap-3">
+                    <div className="bg-white p-2 rounded-[10px] cursor-pointer">
+                      <Trash size={13.5} color="#6E7072" />
+                    </div>
+                    <div className="bg-white p-2 rounded-[10px] cursor-pointer">
+                      <Pen size={13.5} color="#6E7072" />
+                    </div>
+                    <div className="bg-white p-2 rounded-[10px] cursor-pointer">
+                      <EllipsisIcon  size="13.5"/>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -156,12 +171,6 @@ function OrderView({ data, page, organization }: Props) {
   return (
     <div className="mt-4">
       <div className="flex items-center justify-start mb-4">
-        <p className="text-text_tertiary border-r-[1px] border-borderRight pr-4 text-sm font-normal">
-          Order Date:{" "}
-          <span className="ms-2 text-dropdownText text-sm font-semibold">
-            {data?.orderDate}
-          </span>
-        </p>
         <p className="text-text_tertiary border-r-[1px] border-borderRight px-4 text-sm font-normal">
           Bill Date:{" "}
           <span className="ms-3 text-dropdownText text-sm font-semibold">
@@ -172,13 +181,6 @@ function OrderView({ data, page, organization }: Props) {
           Due Date:{" "}
           <span className="ms-3 text-dropdownText text-sm font-semibold">
             {data?.dueDate}
-          </span>
-        </p>
-
-        <p className="text-text_tertiary border-r-[1px] border-borderRight px-4 text-sm font-normal">
-          Expected Shipment:{" "}
-          <span className="ms-3 text-dropdownText text-sm font-semibold">
-            {data?.expectedShipmentDate}
           </span>
         </p>
 
@@ -218,12 +220,12 @@ function OrderView({ data, page, organization }: Props) {
                 {supplier?.companyName && <p>{supplier.companyName}</p>}
                 {(supplier?.billingAddressStreet1 ||
                   supplier?.billingAddressStreet2) && (
-                  <p>
-                    {supplier.billingAddressStreet1 || ""}{" "}
-                    {supplier.billingAddressStreet2 && ", "}
-                    {supplier.billingAddressStreet2 || ""}
-                  </p>
-                )}
+                    <p>
+                      {supplier.billingAddressStreet1 || ""}{" "}
+                      {supplier.billingAddressStreet2 && ", "}
+                      {supplier.billingAddressStreet2 || ""}
+                    </p>
+                  )}
                 {supplier?.billingCity && <p>{supplier.billingCity}</p>}
                 {(supplier?.billingCountry || supplier?.billingPinCode) && (
                   <p>
@@ -286,14 +288,14 @@ function OrderView({ data, page, organization }: Props) {
                 </div>
                 <hr className="mt-4 border-t border-[#CCCCCC]" />
                 <div className="flex justify-end gap-2 mt-6">
-                  <Button variant="secondary" size="sm" className="px-4">
+                  <Button variant="secondary" size="sm" className="pr-10 pl-10">
                     Cancel
                   </Button>
-                  <Button variant="secondary" size="sm" >
-                    <PrinterIcon color="#0b9d56"   />
+                  <Button variant="secondary" size="sm" className="pl-10 pr-10" >
+                    <PrinterIcon color="#B5636A" />
                     Print
                   </Button>
-                  <Button variant="primary" size="sm" >
+                  <Button variant="primary" size="sm" className="pl-6 pr-6">
                     Save & Send
                   </Button>
                 </div>
