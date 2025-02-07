@@ -29,7 +29,7 @@ export default function DateInput({ placeholder = "Select date", value = "", onC
 
   return (
     <div
-      className="relative border flex rounded-[36px] px-2 py-1 text-sm items-center cursor-pointer"
+      className="relative border flex rounded-[36px] h-9 px-2 py-1 text-sm items-center cursor-pointer"
       onClick={handleDateClick}
     >
       <div className="pointer-events-none flex items-center px-2 text-gray-700">

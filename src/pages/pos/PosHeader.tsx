@@ -3,7 +3,7 @@ import calenderIcon from "../../assets/Images/Frame 630162 (1).png";
 import timeIcon from "../../assets/Images/Frame 630162.png";
 import SelectCustomerModal from "./SelectedCustomerModal";
 import { useLocation, useNavigate } from "react-router-dom";
-import CreateCustomerModal from "./CreateCustomerModal";
+import CreateCustomerModal from "./addCustomerPos/CreateCustomerModal";
 // import { Toaster } from "react-hot-toast";
 
 type Props = {
