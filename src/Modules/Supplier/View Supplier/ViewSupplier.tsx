@@ -1,72 +1,120 @@
-import { Link } from "react-router-dom"
-import ChevronLeft from "../../../assets/icons/ChevronLeft"
-import Info from "../../../assets/icons/Info"
+import { Link } from "react-router-dom";
+import ChevronLeft from "../../../assets/icons/ChevronLeft";
 import { useState } from "react";
-import LineChart from "../../../assets/icons/LineChart";
 import History from "../../../assets/icons/History";
-import Overview from "./Overview/Overview";
 import PaymentHistory from "./Payment History/PaymentHistory";
 import PurchaseHistory from "./Purchase History/PurchaseHistory";
+import supplierImg from "../../../assets/images/Rectangle 5454.png";
+import User from "../../../assets/icons/User";
+import Phone from "../../../assets/icons/Phone";
+import Mail from "../../../assets/icons/Mail";
+import Home from "../../../assets/icons/Home";
+import Gst from "../../../assets/icons/Gst";
+import HandIcon from "../../../assets/icons/HnadIcon";
+import BoxIcon from "../../../assets/icons/BoxIcon";
 
-type Props = {}
+type Props = {};
 
-function ViewSupplier({ }: Props) {
-    const [activeTab, setActiveTab] = useState<string>("overview");
+function ViewSupplier({}: Props) {
+  const [activeTab, setActiveTab] = useState<string>("paymentHistory");
 
-    const handleTabSwitch = (tabName: string) => {
-        setActiveTab(tabName);
-    };
-    return (
-        <div>
-            <div className="flex gap-5 items-center">
-                <Link to="/supplier">
-                    <div
-                        style={{ borderRadius: "50%" }}
-                        className="w-[40px] h-[40px] flex items-center justify-center bg-[#FFFFFF]"
-                    >
-                        <ChevronLeft color="#0F172A" />
-                    </div>
-                </Link>
-                <p className="text-textColor text-xl font-bold">Supplier Details</p>
+  const handleTabSwitch = (tabName: string) => {
+    setActiveTab(tabName);
+  };
+  return (
+    <div>
+      <div className="flex gap-5 items-center">
+        <Link to="/supplier">
+          <div
+            style={{ borderRadius: "50%" }}
+            className="w-[40px] h-[40px] flex items-center justify-center bg-[#FFFFFF]"
+          >
+            <ChevronLeft color="#0F172A" />
+          </div>
+        </Link>
+        <p className="text-[#2C3E50] text-xl font-bold">Supplier Dashboard</p>
+      </div>
+      <div className="  h-auto rounded-md text-textColor  px-2 mt-3 p-2">
+        <div className="h-[135px] rounded-[16px] bg-[#C96E76] p-6 w-full text-sm text-start flex items- justify-center gap-20 text-[#FFFFFF]">
+          <img src={supplierImg} alt="" className="w-[120px] h-[90px]" />
+          <div className="space-y-2">
+            <div className="flex items-center  justify-start gap-1 font-semibold">
+              {" "}
+              <User size="14" color="#FFFFFF" />
+              <p> Dani Olmo</p>
             </div>
-            <div className=" bg-white h-auto rounded-md text-textColor  px-2 mt-3 p-2">
-                <div className="grid grid-cols-3 px-5 pt-3 items-center w-full gap-2">
-                    <div
-                        onClick={() => handleTabSwitch("overview")}
-                        className={`text-[14px] font-semibold ${activeTab === "overview" ? "bg-[#F7E7CE]" : ""} py-2 justify-center flex gap-2 items-center rounded-[8px] cursor-pointer`}
-                    >
-                        <Info color="#303F58" /> Overview
-                    </div>
-
-                    <div
-                        onClick={() => handleTabSwitch("purchaseHistory")}
-                        className={`text-[14px] font-semibold ${activeTab === "purchaseHistory" ? "bg-[#F7E7CE]" : ""}  py-2 justify-center flex gap-2 items-center rounded-[8px] cursor-pointer`}
-                    >
-                        <LineChart /> Purchase History
-                    </div>
-                    <div
-                        onClick={() => handleTabSwitch("paymentHistory")}
-                        className={`text-[14px] font-semibold ${activeTab === "paymentHistory" ? "bg-[#F7E7CE]" : ""}  py-2 justify-center flex gap-2 items-center rounded-[8px] cursor-pointer`}
-                    >
-                        <History /> Payment History
-                    </div>
-                </div>
-                <div className="px-5 py-3">
-                    {activeTab === "overview" && (
-                        <Overview />
-                    )}
-                    {activeTab === "purchaseHistory" && (
-                         <PurchaseHistory /> 
-                        
-                    )}
-                    {activeTab === "paymentHistory" && (
-                        <PaymentHistory />
-                    )}
-                </div>
+            <div className="flex justify-start items-center gap-1 ">
+              {" "}
+              <Phone size={14} color="#FFFFFF" />
+              <span>
+                <p>+91 98954 25487</p>
+              </span>
             </div>
-
+            <div className="flex justify-start items-center gap-1">
+              {" "}
+              <Mail size={14} color="#FFFFFF" />
+              <span>
+                <p>Dani@gmail.com</p>
+              </span>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-start gap-1 font-semibold">
+              {" "}
+              <Home /> Address
+            </div>
+            <div className=" ">
+              {" "}
+              <p>54B Thornridge , Shiloh </p>
+            </div>
+            <div className="">
+              {" "}
+              <p>Hawaii 81254</p>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="flex  items-center justify-start gap-1 font-semibold">
+              {" "}
+              <Gst /> GST
+            </div>
+            <div className="flex items-center justify-center gap-1">
+              {" "}
+              <p>2548BG454</p>
+            </div>
+          </div>
+          <div className="flex items-center justify-center gap-1">
+            <div className="bg-[#A1585E] w-[256px] h-[71px] rounded-xl flex items-center justify-center gap-2 "><HandIcon/><div className="space-y-1"><p className="font-bold">Credit Balance</p><p className="text-xs">₹ 2548</p></div></div>
+          </div>{" "}
         </div>
-    )
+
+        <div className="flex gap-2 px-5 mt-3 items-center bg-white p-2 w-full rounded-xl">
+         
+  <div
+            onClick={() => handleTabSwitch("paymentHistory")}
+            className={`text-[14px] font-semibold px-8 ${
+              activeTab === "paymentHistory" ? "bg-[#cc6c74] text-white"  : "text-[#495160]"
+            }  py-2 justify-center flex gap-2 items-center rounded-[8px] cursor-pointer`}
+          >
+            <History color={`${activeTab==="paymentHistory"?"white":"#495160" }`} /> Payment History
+          </div>
+          <div
+            onClick={() => handleTabSwitch("purchaseHistory")}
+            className={`text-[14px] font-semibold px-8 ${
+              activeTab === "purchaseHistory" ? "bg-[#cc6c74] text-white" : "text-[#495160]"
+            }  py-2 justify-center flex gap-2 items-center rounded-[8px] cursor-pointer`}
+          >
+            <BoxIcon color={`${activeTab==="purchaseHistory"?"white":"#495160" }`}/> Purchase History
+          </div>
+        
+        </div>
+        <div className=" py-3">
+            {activeTab === "paymentHistory" && <PaymentHistory />}
+          {activeTab === "purchaseHistory" && <PurchaseHistory />}
+        
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default ViewSupplier
+export default ViewSupplier;
