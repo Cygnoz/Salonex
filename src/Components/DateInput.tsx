@@ -37,7 +37,7 @@ export default function DateInput({
   return (
     <div
       className={clsx(
-        "relative border flex rounded-[36px] h-9 px-2 py-1 text-sm items-center cursor-pointer",
+        "relative border flex rounded-[36px] h-9 px-2 py-1 text-xs items-center cursor-pointer",
         className // ✅ Allow custom styles via props
       )}
       onClick={handleDateClick}
