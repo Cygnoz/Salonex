@@ -13,7 +13,7 @@ function CheveronDown({color}: Props) {
         <path
           d="M6 9L12 15L18 9"
           stroke={color?color:"#818894"}
-          stroke-width="2"
+          stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
         />

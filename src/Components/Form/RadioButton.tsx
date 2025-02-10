@@ -5,7 +5,7 @@ interface RadioButtonProps {
   name: string;
   label: string;
   selected: string;
-  className?:string
+  className?: string;
   onChange: (value: string, name: string) => void;
 }
 
@@ -18,13 +18,16 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   onChange,
 }) => {
   return (
-    <div className="flex gap-2 justify-center items-center cursor-pointer">
+    <label
+      htmlFor={id}
+      className="flex gap-2 justify-center items-center cursor-pointer"
+    >
       <div className="grid place-items-center">
         <input
           id={id}
           type="radio"
           name={name}
-          className={`col-start-1 row-start-1 appearance-none shrink-0 w-5 h-5  rounded-full border ${
+          className={`col-start-1 row-start-1 appearance-none shrink-0 w-5 h-5 rounded-full border ${
             selected === id
               ? "border-[5px] border-[#C96E76]"
               : "border-1 border-neutral-400"
@@ -38,10 +41,10 @@ const RadioButton: React.FC<RadioButtonProps> = ({
           }`}
         />
       </div>
-      <label htmlFor={id} className={className || "text-start text-xs font-medium text-[#495160]"}>
+      <span className={className || "text-start text-xs font-medium text-[#495160]"}>
         {label}
-      </label>
-    </div>
+      </span>
+    </label>
   );
 };
 

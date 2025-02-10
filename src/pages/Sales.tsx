@@ -1,8 +1,12 @@
+import Inovice from "../Modules/Sales/Invoice/Inovice"
+
 type Props = {}
 
 function Sales({}: Props) {
   return (
-    <div>Sales</div>
+    <div>
+      <Inovice/>
+    </div>
   )
 }
 
