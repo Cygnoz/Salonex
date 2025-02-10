@@ -13,6 +13,7 @@ import CrossIcon from "../../assets/icons/CrossIcon";
 import CirclePlus from "../../assets/icons/circleplus";
 import CheveronDown from "../../assets/icons/CheveronDown";
 import Pen from "../../assets/icons/Pen";
+import ConsultationModal from "../../pages/pos/addCustomerPos/ConsultationModal";
 
 type Props = { page?: string; id?: string };
 
@@ -289,17 +290,13 @@ const NewCustomer = ({ page, id }: Props) => {
             )}
             {/* Tab 4: Client Consultation Section */}
             {activeTab === 4 && (
-              <div className=" gap-6 w-full pt-5 px-10">
-              <p className="font-bold text-[#2C3E50]">Client Consultation</p>
-              <p className="text-[#495160] text-xs mt-3">
-                This section captures important details about the client’s
-                preferences, concerns, and needs. It includes areas like skin
-                type, hair type, health conditions, and other relevant factors
-                to ensure personalized services. The consultation helps tailor
-                treatments, products, and recommendations for an optimal
-                experience.
-              </p>
+              <div className="bg-[#EAECF05E] p-8 rounded-lg">
+              <p className="text-[#2C3E50] font-bold text-base">Client Consultation</p>
+              <p className="text-[#495160] text-xs mt-3">This section captures important details about the client’s preferences, concerns, and needs. It includes areas like skin type, hair type, health conditions, and other relevant factors to ensure personalized services. The consultation helps tailor treatments, products, and recommendations for an optimal experience.</p>
+              <div className="mt-3">
+                <ConsultationModal/>
               </div>
+            </div>
             )}
             {/* Tab 5: Social Media Section */}
             {activeTab === 5 && (

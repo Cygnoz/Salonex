@@ -3,6 +3,9 @@ import CustomerProfile from "../../assets/images/CustomerProfile.png"
 import Pipette from '../../assets/icons/Pipette';
 import Calender from '../../assets/icons/Calender';
 import CalendarDays from '../../assets/icons/CalendarDays';
+import Trash from '../../assets/icons/Trash';
+import PencilLine from '../../assets/icons/PencilLine';
+import Eye from '../../assets/icons/Eye';
 
 
 
@@ -18,7 +21,7 @@ const Booking = () => {
       <div className=" grid grid-cols-12 gap-5 my-5  min-h-screen">
         <div className=" col-span-3 ">
           {/* Upcoming Booking Section */}
-          <div className="bg-white  rounded-lg shadow-md p-6">
+          <div className="bg-white w-[283px] h-[350px]  rounded-lg shadow-md p-6">
             {/* Header Section */}
             <h2 className="text-[16px] font-semibold mb-4 text-[#495160]">Upcoming Booking</h2>
 
@@ -62,15 +65,15 @@ const Booking = () => {
             </div>
           </div>
 
-          <div className='flex items-center justify-center my-5 rounded-lg text-[#495160] px-12 font-bold   h-[70px] bg-[#EED2D5]'>
+          <div className='flex items-center justify-center w-[283px]   my-5 rounded-lg text-[#495160] px-12 font-bold   h-[70px] bg-[#EED2D5]'>
             Total Bookings  <span className='ms-10'>07</span>
           </div>
           </div>
 
 
           {/* Booking List Section */}
-          <div className="col-span-9">
-            <div className="flex items-center justify-between mb-4">
+          <div className="col-span-9 ">
+            <div className="flex items-center  justify-between mb-4">
               <input
                 type="text"
                 placeholder="Search phone or customers"
@@ -143,13 +146,13 @@ const Booking = () => {
                   {/* Actions Section */}
                   <div className="flex items-center space-x-2">
                     <button className="p-2 bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200">
-                      {/* <FaTrashAlt /> */}
+                     <Trash/>
                     </button>
                     <button className="p-2 bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200">
-                      {/* <FaUserEdit /> */}
+                    <PencilLine color='#6E7072'/>
                     </button>
                     <button className="p-2 bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200">
-                      {/* <FaEye /> */}
+                      <Eye color='#6E7072'/>
                     </button>
                   </div>
                 </div>
