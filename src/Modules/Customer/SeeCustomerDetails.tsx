@@ -1,10 +1,4 @@
-import CardSkeleton from "../../Components/CardsSKeleton"
-import orderDoneImage from "../../assets/images/OrderDoneImage.png"
-import TotalSalesImage from "../../assets/images/TotalSalesImage.png"
-import TotalRevenueOrderImage from "../../assets/images/TotalRevenueOrderImage.png"
-import TotalRevenueSalesImage from "../../assets/images/TotalRevenueSalesImage.png"
-import BgCard from "../../assets/images/BgCard.jpg"
-import CustomerProfile from "../../assets/images/CustomerProfile.png"
+
 import Info from "../../assets/icons/Info"
 import SquereScissorIcon from "../../assets/icons/SquereScissorIcon"
 import History from "../../assets/icons/History"
@@ -13,16 +7,12 @@ import NewsPaperIcon from "../../assets/icons/NewsPaperIcon"
 import { useState } from "react"
 import Overview from "./Overview"
 import ItemMeasurement from "./Booking"
-import OrderHistory from "./OrderHistory"
-import ViewPayment from "./ViewPayment"
 import { Link } from "react-router-dom"
 import ChevronLeft from "../../assets/icons/ChevronLeft"
-import SalesHistory from "./SalesHistory"
-interface CardData {
-  icon: string;
-  title: string;
-  count: string;
-}
+import PaymentHistory from "./PaymentHistory"
+import WalletTransaction from "./WalletTransaction"
+import ReferalBonus from "./ReferalBonus"
+
 
 const SeeCustomerDetails = () => {
 
@@ -100,14 +90,14 @@ const SeeCustomerDetails = () => {
           {selectedTab === "Booking" && (
             <ItemMeasurement />
           )}
-          {selectedTab === "Order History" && (
-            <OrderHistory />
+          {selectedTab === "Wallet Transaction" && (
+            <WalletTransaction/>
           )}
-          {selectedTab === "View Payment" && (
-            <ViewPayment />
+          {selectedTab === "Payment History" && (
+            <PaymentHistory/>
           )}
-           {selectedTab === "Sales History" && (
-            <SalesHistory/>
+           {selectedTab === "Referal Bonus History" && (
+            <ReferalBonus/>
           )}
         </div>
 

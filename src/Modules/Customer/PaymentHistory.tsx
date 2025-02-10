@@ -1,11 +1,11 @@
 import React from "react";
 import Table from "../../Components/Table/Table";
 
-const ViewPayment: React.FC = () => {
+const PaymentHistory: React.FC = () => {
   // Column definitions
   const columns = [
     { id: "slNo", label: "Sl No", visible: true },
-    { id: "invoiceNumber", label: "Invoice Number", visible: true },
+    { id: "invoice", label: "Invoice", visible: true },
     { id: "date", label: "Date", visible: true },
     { id: "amount", label: "Amount", visible: true },
     { id: "remark", label: "Remark", visible: true },
@@ -16,7 +16,7 @@ const ViewPayment: React.FC = () => {
     {
       id: "1",
       slNo: "1",
-      invoiceNumber: "INV00234",
+      invoice: "INV00234",
       date: "28 May 2024",
       amount: "₹2000.00",
       remark: "Balance",
@@ -24,7 +24,7 @@ const ViewPayment: React.FC = () => {
     {
       id: "2",
       slNo: "2",
-      invoiceNumber: "INV00134",
+      invoice: "INV00134",
       date: "28 May 2024",
       amount: "₹500.00",
       remark: "Balance",
@@ -32,7 +32,7 @@ const ViewPayment: React.FC = () => {
     {
       id: "3",
       slNo: "3",
-      invoiceNumber: "INV00124",
+      invoice: "INV00124",
       date: "28 May 2024",
       amount: "₹500.00",
       remark: "Balance",
@@ -40,7 +40,7 @@ const ViewPayment: React.FC = () => {
     {
       id: "4",
       slNo: "4",
-      invoiceNumber: "INV00114",
+      invoice: "INV00114",
       date: "28 May 2024",
       amount: "₹500.00",
       remark: "Balance",
@@ -48,7 +48,7 @@ const ViewPayment: React.FC = () => {
     {
       id: "5",
       slNo: "5",
-      invoiceNumber: "INV00034",
+      invoice: "INV00034",
       date: "28 May 2024",
       amount: "₹500.00",
       remark: "Balance",
@@ -102,4 +102,4 @@ const ViewPayment: React.FC = () => {
   );
 };
 
-export default ViewPayment;
+export default PaymentHistory;
