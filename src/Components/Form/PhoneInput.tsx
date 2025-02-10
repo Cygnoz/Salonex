@@ -2,6 +2,7 @@ import { useState } from "react";
 import Input from "./Input";
 
 interface PhoneNumberInputProps {
+  required?: boolean;
   countryData: any;
   onChange: (value: string) => void;
   initialValue?: string;
@@ -14,6 +15,7 @@ interface PhoneNumberInputProps {
 }
 
 const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
+  required = false,
   countryData,
   onChange,
   initialValue = "",
@@ -63,8 +65,8 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
 
   return (
     <div className="w-full relative">
-      <label className="block text-sm mb-1 font-normal text-deepStateBlue">
-        {label} <span className="text-red-500">*</span>
+      <label className="block text-xs mb-1 font-normal text-deepStateBlue">
+        {label}{ required && <span className="text-red-500">*</span>}
       </label>
       <div className="flex items-center relative">
         {/* Flag and Dial Code Dropdown */}
@@ -96,7 +98,7 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
               <div
                 key={index}
                 onClick={() => handleCountrySelect(country)}
-                className="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                className="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer text-xs"
               >
                 <img
                   src={country.flag}
@@ -118,7 +120,7 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
             placeholder={placeholder}
             size={size}
             onChange={handlePhoneNumberChange}
-            className={`w-full max-w-md ${
+            className={`w-full text-xs max-w-md ${
               sizeClasses[size]
             } rounded-r-[40px] text-textPrimary border px-2 ${
               error

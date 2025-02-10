@@ -3,6 +3,8 @@ import CheveronDown from "../../assets/icons/CheveronDown";
 // import SearchBar from "../ui/SearchBar";
 
 interface SelectProps {
+  isDisabled?: boolean;
+  
   required?: boolean;
   label?: string;
   options: { value: any; label: string }[];
@@ -24,6 +26,7 @@ const Select: React.FC<SelectProps> = ({
   value,
   onChange,
   size = "md",
+  isDisabled
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue] = useState("");
@@ -61,19 +64,6 @@ const Select: React.FC<SelectProps> = ({
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (isOpen && dropdownRef.current) {
-  //     const dropdownRect = dropdownRef.current.getBoundingClientRect();
-  //     const viewportHeight = window.innerHeight;
-
-  //     if (dropdownRect.bottom + 150 > viewportHeight) {
-  //       setDropdownPosition("top");
-  //     } else {
-  //       setDropdownPosition("bottom");
-  //     }
-  //   }
-  // }, [isOpen]);
-
   const handleOptionSelect = (selectedValue: string) => {
     if (onChange) onChange(selectedValue);
     setIsOpen(false);
@@ -97,8 +87,8 @@ const Select: React.FC<SelectProps> = ({
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       <div
-        className={`relative ${readOnly ? "pointer-events-none opacity-50" : "cursor-pointer"}`}
-        onClick={() => !readOnly && setIsOpen(!isOpen)}
+        className={`relative ${readOnly || isDisabled ? "pointer-events-none opacity-50" : "cursor-pointer"}`}
+        onClick={() => !readOnly && !isDisabled && setIsOpen(!isOpen)}
       >
         <div
           className={`block ${getSizeClasses(size)} text-[#818894] bg-white border w-full flex items-center 
@@ -147,4 +137,3 @@ const Select: React.FC<SelectProps> = ({
 
 export default Select;
 
-//        ${dropdownPosition === "top" ? "bottom-full mb-1" : "top-full mt-1"}
