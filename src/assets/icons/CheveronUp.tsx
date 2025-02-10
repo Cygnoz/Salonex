@@ -1,11 +1,11 @@
-type Props = { color: string };
+type Props = { color: string, size?: string };
 
-function CheveronUp({color}: Props) {
+function CheveronUp({ color, size }: Props) {
   return (
     <div>
       <svg
-        width="16"
-        height="16"
+        width={size ? size : "16"}
+        height={size ? size : "16"}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@ function CheveronUp({color}: Props) {
         <path
           d="M18 15L12 9L6 15"
           stroke={color}
-          strokeWidth="4"
+          strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />

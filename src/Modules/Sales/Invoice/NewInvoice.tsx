@@ -8,6 +8,8 @@ import RadioButton from "../../../Components/Form/RadioButton";
 import DateInput from "../../../Components/DateInput";
 import TextArea from "../../../Components/Form/TextArea";
 import Upload from "../../../assets/icons/Upload";
+import Button from "../../../Components/Button";
+import PrinterIcon from "../../../assets/icons/PrinterIcon";
 
 type Props = {}
 
@@ -414,6 +416,17 @@ function NewInvoice({}: Props) {
               </div>
             </>
           )}
+        </div>
+      </div>
+      <div
+        className=" flex bg-white p-4 rounded-b-2xl  sticky"
+      >
+        <div className="flex gap-2 ml-auto">
+          <Button variant="secondary">Cancel</Button>
+          <Button variant="secondary">
+            <PrinterIcon color={"#B5636A"}  /> Print
+          </Button>
+          <Button variant="primary">Save & Send</Button>
         </div>
       </div>
     </div>
