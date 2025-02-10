@@ -1,6 +1,6 @@
 type Props = { color?: string; size?: number };
 
-function Phone({ color, size = 16 }: Props) {
+function PartyProper({ color, size = 16 }: Props) {
   return (
     <div>
       <svg
@@ -21,4 +21,4 @@ function Phone({ color, size = 16 }: Props) {
   );
 }
 
-export default Phone;
+export default PartyProper;

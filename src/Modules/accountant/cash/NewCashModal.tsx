@@ -2,9 +2,9 @@ import { useState } from "react"
 import Button from "../../../Components/Button"
 import Input from "../../../Components/Form/Input"
 import Modal from "../../../Components/modal/Modal"
-import accountsBgImage from "../../../assets/images/cashBgimage.png"
 import CirclePlus from "../../../assets/icons/circleplus"
-
+import bgImg1 from  "../../../assets/images/Credit card-bro 2.png"
+import bgImg2 from  "../../../assets/images/Ribbon-3.png"
 type Props = {}
 
 function NewCashModal({ }: Props) {
@@ -24,18 +24,21 @@ function NewCashModal({ }: Props) {
                 <p> Create Account</p>
             </Button>
 
-            <Modal open={isModalOpen} onClose={closeModal} className="w-[649px] text-start p-8 bg-[#F8F4F4]">
+            <Modal open={isModalOpen} onClose={closeModal} className="w-[719px] text-start p-8  bg-[#F8F4F4]">
                 <div
-                    className="p-6 rounded-2xl flex justify-between items-center relative bg-cover bg-no-repeat bg-right"
-                    style={{
-                        backgroundImage: `url(${accountsBgImage})`,
-                    }}
+                    className=" rounded-2xl bg-[#ffd6da] flex ps-5 justify-between items-center relative h-[143.51px]"
+                   
                 >
                     <div className="relative flex-1">
-                        <p className="text-[#004D4D] font-bold text-base">Account Details</p>
+                        <p className="text-[#383c42] font-bold text-base">Create Cash Account</p>
                         <p className="text-text_tertiary text-xs mt-2">
-                            Lorem ipsum dolor sit amet consectetur.
+                        Set up your cash account effortlessly!
                         </p>
+                    </div>
+                    <div className="flex ml-auto">
+                    <img src={bgImg2} alt="" className="h-[140px] mt-2" />
+
+                    <img src={bgImg1} alt="" className="-[138px] -my-8 " />
                     </div>
                 </div>
 

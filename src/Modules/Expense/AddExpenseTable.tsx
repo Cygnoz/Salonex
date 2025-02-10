@@ -181,7 +181,7 @@ const AddExpenseTable: React.FC<Props> = ({
               <th className="p-2"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-[white]">
             {rows.map((row: any, index: number) => (
               <tr key={index} className="border-b border-inputBorder">
                 <td className="p-2">
