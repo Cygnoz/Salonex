@@ -94,8 +94,7 @@ function Expense({ }: Props) {
           <div>
             <h1 className="text-lg font-bold text-[#2C3E50]">Expense</h1>
             <p className="text-[#818894] text-xs">
-              Lorem ipsum dolor sit amet consectetur. Commodo enim odio
-              fringilla
+            Gain a clear understanding of your financial outflows with the Expense Overview section
             </p>
           </div>
 

@@ -12,6 +12,9 @@ import Home from "../../../assets/icons/Home";
 import Gst from "../../../assets/icons/Gst";
 import HandIcon from "../../../assets/icons/HnadIcon";
 import BoxIcon from "../../../assets/icons/BoxIcon";
+import Button from "../../../Components/Button";
+import Pen from "../../../assets/icons/Pen";
+import AddPaymentModal from "./AddPaymentModal";
 
 type Props = {};
 
@@ -33,6 +36,13 @@ function ViewSupplier({}: Props) {
           </div>
         </Link>
         <p className="text-[#2C3E50] text-xl font-bold">Supplier Dashboard</p>
+        <div className="flex ml-auto gap-4">
+          <Button variant="secondary">
+            <Pen color={"#C96E76"} />
+            Edit
+          </Button>{" "}
+          <AddPaymentModal />{" "}
+        </div>
       </div>
       <div className="  h-auto rounded-md text-textColor  px-2 mt-3 p-2">
         <div className="h-[135px] rounded-[16px] bg-[#C96E76] p-6 w-full text-sm text-start flex items- justify-center gap-20 text-[#FFFFFF]">
@@ -83,34 +93,47 @@ function ViewSupplier({}: Props) {
             </div>
           </div>
           <div className="flex items-center justify-center gap-1">
-            <div className="bg-[#A1585E] w-[256px] h-[71px] rounded-xl flex items-center justify-center gap-2 "><HandIcon/><div className="space-y-1"><p className="font-bold">Credit Balance</p><p className="text-xs">₹ 2548</p></div></div>
+            <div className="bg-[#A1585E] w-[256px] h-[71px] rounded-xl flex items-center justify-center gap-2 ">
+              <HandIcon />
+              <div className="space-y-1">
+                <p className="font-bold">Credit Balance</p>
+                <p className="text-xs">₹ 2548</p>
+              </div>
+            </div>
           </div>{" "}
         </div>
 
         <div className="flex gap-2 px-5 mt-3 items-center bg-white p-2 w-full rounded-xl">
-         
-  <div
+          <div
             onClick={() => handleTabSwitch("paymentHistory")}
             className={`text-[14px] font-semibold px-8 ${
-              activeTab === "paymentHistory" ? "bg-[#cc6c74] text-white"  : "text-[#495160]"
+              activeTab === "paymentHistory"
+                ? "bg-[#cc6c74] text-white"
+                : "text-[#495160]"
             }  py-2 justify-center flex gap-2 items-center rounded-[8px] cursor-pointer`}
           >
-            <History color={`${activeTab==="paymentHistory"?"white":"#495160" }`} /> Payment History
+            <History
+              color={`${activeTab === "paymentHistory" ? "white" : "#495160"}`}
+            />{" "}
+            Payment History
           </div>
           <div
             onClick={() => handleTabSwitch("purchaseHistory")}
             className={`text-[14px] font-semibold px-8 ${
-              activeTab === "purchaseHistory" ? "bg-[#cc6c74] text-white" : "text-[#495160]"
+              activeTab === "purchaseHistory"
+                ? "bg-[#cc6c74] text-white"
+                : "text-[#495160]"
             }  py-2 justify-center flex gap-2 items-center rounded-[8px] cursor-pointer`}
           >
-            <BoxIcon color={`${activeTab==="purchaseHistory"?"white":"#495160" }`}/> Purchase History
+            <BoxIcon
+              color={`${activeTab === "purchaseHistory" ? "white" : "#495160"}`}
+            />{" "}
+            Purchase History
           </div>
-        
         </div>
         <div className=" py-3">
-            {activeTab === "paymentHistory" && <PaymentHistory />}
+          {activeTab === "paymentHistory" && <PaymentHistory />}
           {activeTab === "purchaseHistory" && <PurchaseHistory />}
-        
         </div>
       </div>
     </div>

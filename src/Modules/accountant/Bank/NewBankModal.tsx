@@ -2,10 +2,11 @@ import { useState } from "react";
 import Button from "../../../Components/Button"
 import Modal from "../../../Components/modal/Modal";
 import Input from "../../../Components/Form/Input";
-import accountsBgImage from "../../../assets/images/bankBgImage.png"
 import Select from "../../../Components/Form/Select";
 import CirclePlus from "../../../assets/icons/circleplus";
 import CheveronDown from "../../../assets/icons/CheveronDown";
+import bgImg1 from  "../../../assets/images/Savings-bro 1 (1).png"
+import bgImg2 from  "../../../assets/images/Ribbon-3.png"
 
 type Props = {}
 
@@ -27,19 +28,23 @@ function NewBankModal({}: Props) {
       </Button>
 
       <Modal open={isModalOpen} onClose={closeModal} className="w-[649px] text-start p-8 bg-[#F8F4F4]">
-        <div
-          className="p-6 rounded-2xl flex justify-between items-center relative bg-cover bg-no-repeat bg-right"
-          style={{
-            backgroundImage: `url(${accountsBgImage})`,
-          }}
-        >
-          <div className="relative flex-1">
-            <p className="text-[#2C3E50] font-bold text-base">Create Bank Account</p>
-            <p className="text-[#4B5C79] text-xs mt-2">
-            Open a new bank account swiftly and securely.
-            </p>
-          </div>
-        </div>
+      <div
+                    className=" rounded-2xl bg-[#ffd6da] flex ps-5 justify-between items-center relative h-[143.51px]"
+                   
+                >
+                    <div className="relative flex-1">
+                        <p className="text-[#383c42] font-bold text-base">Create Bank Account</p>
+                        <p className="text-text_tertiary text-xs mt-2">
+                        Set up your cash account effortlessly!
+                        </p>
+                    </div>
+                    <div className="flex ml-auto">
+                    <img src={bgImg2} alt="" className="h-[140px] mt-2" />
+
+                    <img src={bgImg1} alt="" className="-[138px]  " />
+                    </div>
+                </div>
+
 
 
         <div className="mt-6 rounded-2xl text-text_tertiary text-sm">
