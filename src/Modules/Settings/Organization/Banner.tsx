@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import bgImage from "../../../assets/Images/image 41.png";
 import useApi from "../../../Hooks/useApi";
-import { endpoints } from "../../../Services/apiEdpoints";
+import { endpoints } from "../../../Services/apiEndpoints";
 
 type Props = {
   seeOrgDetails?: boolean;

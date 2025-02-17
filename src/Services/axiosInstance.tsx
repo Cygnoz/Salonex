@@ -23,8 +23,6 @@ const createInstance = (
     Accept: "application/json",
   };
 
-  console.log(contentType,"api");
-
 
   if (useAuth) {
     const authToken: string | null = localStorage.getItem("authToken");

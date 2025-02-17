@@ -5,7 +5,7 @@ import ProductsIcon from "../../assets/icons/ProductsIcon";
 import AddItemsPos from "./AddItemsPos";
 import useApi from "../../Hooks/useApi";
 // import { endponits } from "../../Services/apiEndpoints";
-import { endpoints } from "../../Services/apiEdpoints";
+import { endpoints } from "../../Services/apiEndpoints";
 import serviceImage from "../../assets/Images/serv.png";
 import SearchBar from "../../Components/SearchBar";
 import bgImage from "../../assets/Images/posservices.png";

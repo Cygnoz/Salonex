@@ -3,7 +3,7 @@ import CheveronDown from "../../../assets/icons/CheveronDown";
 import SearchBar from "../../../Components/SearchBar";
 import toast from "react-hot-toast";
 import useApi from "../../../Hooks/useApi";
-import { endpoints } from "../../../Services/apiEdpoints";
+import { endpoints } from "../../../Services/apiEndpoints";
 import CirclePlus from "../../../assets/icons/circleplus";
 import TrashIcon from "../../../assets/icons/TrashIcon";
 

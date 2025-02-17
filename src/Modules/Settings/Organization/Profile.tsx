@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import Button from "../../../Components/Button";
 import useApi from "../../../Hooks/useApi";
 // import toast from "react-hot-toast";
-import { endpoints } from "../../../Services/apiEdpoints";
+import { endpoints } from "../../../Services/apiEndpoints";
 import Plus from "../../../assets/icons/Plus";
 import Banner from "./Banner";
 import Trash from "../../../assets/icons/Trash";
@@ -12,41 +12,25 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Select from "../../../Components/Form/Select";
 import PhoneNumberInput from "../../../Components/Form/PhoneInput";
+import { ProfileData } from "../../../Interface/Profile";
+import { useRegularApi } from "../../../context/ApiContext";
 
-interface InputData {
-  organizationLogo?: string;
-  organizationName: string;
-  organizationCountry: string;
-  organizationIndustry?: string;
-  addline1?: string;
-  addline2?: string;
-  city?: string;
-  pincode?: string;
-  state: string;
-  organizationPhNum: string;
-  website?: string;
-  baseCurrency: string;
-  fiscalYear?: string;
-  timeZone: string;
-  timeZoneExp?: string;
-  dateFormat: string;
-  dateFormatExp?: string;
-  dateSplit: string;
-  phoneNumberCode?: string;
-}
+
 
 const Profile = () => {
+  const {refreshContext,settingsAdditionalDatas,currencyData,countryData}=useRegularApi()
+
+  console.log("currency",currencyData);
+  console.log("cuntry",countryData);
+  console.log("addiotional",settingsAdditionalDatas);
+  
   const [additionalData, setAdditionalData] = useState<any | null>([]);
   const [selectedCountry, setSelectedCountry] = useState<any>(null);
-  const [countryData, setcountryData] = useState<any | []>([]);
-  const [currencyData, setcurrencyData] = useState<any | []>([]);
   const [stateList, setStateList] = useState<any | []>([]);
   const { request: getAdditionalData } = useApi("get", 5004);
   const { request: createOrganization } = useApi("post", 5004);
-  const { request: getCurrencyData } = useApi("get", 5004);
-  const { request: getCountryData } = useApi("get", 5004);
 
-  const [inputData, setInputData] = useState<InputData>({
+  const [inputData, setInputData] = useState<ProfileData>({
     organizationLogo: "",
     organizationName: "",
     organizationCountry: "",
@@ -97,7 +81,7 @@ const Profile = () => {
     setValue,
     clearErrors,
     formState: { errors },
-  } = useForm<InputData>({
+  } = useForm<ProfileData>({
     resolver: yupResolver(validationSchema),
   });
 
@@ -134,13 +118,6 @@ const Profile = () => {
     }
   };
 
-  const fetchAllData = async () => {
-    await fetchData(endpoints.GET_ADDITIONAL_DATA, setAdditionalData);
-    await fetchData(endpoints.GET_COUNTRY_DATA, (data: any) =>
-      setcountryData(data.countries)
-    );
-    await fetchData(endpoints.GET_CURRENCY_LIST, setcurrencyData);
-  };
 
   const handleInputPhoneChange = (e: any) => {
     const rawInput = e.target.value.trim();
@@ -186,45 +163,8 @@ const Profile = () => {
     }
   };
 
-  // const selectTimeZone = (e: any) => {
-  //   const selectedZone = e.target.value;
 
-  //   const selectedTimeZone = additionalData.timezones.find(
-  //     (timezone: any) => timezone.zone === selectedZone
-  //   );
-
-  //   console.log(selectedTimeZone);
-
-  //   if (selectedTimeZone) {
-  //     setInputData((prevDetails) => ({
-  //       ...prevDetails,
-  //       timeZone: selectedZone,
-  //       timeZoneExp: selectedTimeZone.timeZone,
-  //     }));
-  //   }
-  // };
-
-  // const selectDateFormat = (e: any) => {
-  //   const selectedFormat = e.target.value;
-
-  //   const selectedDateFormat = [
-  //     ...additionalData.dateFormats.short,
-  //     ...additionalData.dateFormats.medium,
-  //     ...additionalData.dateFormats.long,
-  //   ].find((dateFormat) => dateFormat.format === selectedFormat);
-
-  //   console.log(selectedDateFormat);
-
-  //   if (selectedDateFormat) {
-  //     setInputData((prevDetails: any) => ({
-  //       ...prevDetails,
-  //       dateFormat: selectedFormat,
-  //       dateFormatExp: selectedDateFormat.dateFormat,
-  //     }));
-  //   }
-  // };
-
-  const onSubmit: SubmitHandler<InputData> = async (data, event) => {
+  const onSubmit: SubmitHandler<ProfileData> = async (data, event) => {
     event?.preventDefault();
     console.log("Form Data:", data);
 
@@ -250,9 +190,7 @@ const Profile = () => {
       organizationLogo: "",
     }));
   };
-  useEffect(() => {
-    fetchAllData();
-  }, []);
+
 
   useEffect(() => {}, [countryData]);
 
@@ -284,15 +222,10 @@ const Profile = () => {
     }
   }, [inputData.organizationCountry, countryData, inputData.organizationLogo]);
 
-  const handleInputChange = (field: keyof InputData) => {
+  const handleInputChange = (field: keyof ProfileData) => {
     clearErrors(field);
   };
 
-  // const setFormValues = (data: InputData) => {
-  //   Object.keys(data).forEach((key) => {
-  //     setValue(key as keyof InputData, data[key as keyof InputData]);
-  //   });
-  // };
 
 
   return (
@@ -370,9 +303,7 @@ const Profile = () => {
               label="Organization Name"
               placeholder="Enter organization Name"
               error={errors.organizationName?.message}
-              {...register("organizationName", {
-                onChange: () => handleInputChange("organizationName"),
-              })}
+              {...register("organizationName")}
             />
 
             <Select

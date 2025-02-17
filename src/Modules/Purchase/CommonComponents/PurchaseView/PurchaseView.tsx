@@ -7,7 +7,7 @@ import useApi from "../../../../Hooks/useApi";
 import PrinterIcon from "../../../../assets/icons/PrinterIcon";
 import ChevronLeft from "../../../../assets/icons/ChevronLeft";
 import OrderView from "./OrderView";
-import { endpoints } from "../../../../Services/apiEdpoints";
+import { endpoints } from "../../../../Services/apiEndpoints";
 import PDFView from "./PDFView";
 import DotIcon from "../../../../assets/icons/DotIcon";
 import BackIcon from "../../../../assets/icons/BackIcon";
