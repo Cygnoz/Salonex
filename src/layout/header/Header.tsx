@@ -5,7 +5,7 @@ import defaultOrganizationImage from "../../assets/images/personImage.png";
 import SignOut from "./headerIcons/SignOut";
 import QuestionIcon from "../../assets/icons/QuestionIcon";
 import LenseIcon from "../../assets/icons/LenseIcon";
-
+import { Toaster } from "react-hot-toast";
 type Props = {};
 
 function Header({ }: Props) {
@@ -48,6 +48,7 @@ function Header({ }: Props) {
           <QuestionIcon />
         </div>
       </div>
+        <Toaster reverseOrder={false} />
     </div>
   );
 }

@@ -1,27 +1,19 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import useApi from "../Hooks/useApi";
 import { endpoints} from "../Services/apiEndpoints";
+import { ProfileData } from '../Interface/Profile';
 
-// Define Organization type
-interface Organization {
-  id: string;
-  name: string;
-  address?: string;
-  email?: string;
-  phone?: string;
-  [key: string]: any;
-}
+
 
 interface OrganizationContextType {
-  organizationData: Organization | null;
-  fetchOrganization: () => Promise<void>;
-  refreshContext: () => void;
+  organizationData:ProfileData |null;
+  refreshOrg: () => void;
 }
 
 const OrganizationContext = createContext<OrganizationContextType | undefined>(undefined);
 
 export const OrganizationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [organizationData, setOrganizationData] = useState<Organization | null>(null);
+  const [organizationData, setOrganizationData] = useState<ProfileData | null>(null);
   const { request: getOneOrganization } = useApi('get', 5004);
 
   // Fetch organization data and store it in sessionStorage
@@ -51,13 +43,13 @@ export const OrganizationProvider: React.FC<{ children: ReactNode }> = ({ childr
   }, []);
 
   // Refresh context function
-  const refreshContext = () => {
+  const  refreshOrg = () => {
     sessionStorage.removeItem('organization');
     fetchOrganization();
   };
 
   return (
-    <OrganizationContext.Provider value={{ organizationData, fetchOrganization, refreshContext }}>
+    <OrganizationContext.Provider value={{ organizationData,  refreshOrg }}>
       {children}
     </OrganizationContext.Provider>
   );
