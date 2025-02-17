@@ -42,8 +42,8 @@ const Select: React.FC<SelectProps> = ({
       : options;
 
     setFilteredOptions(
-      allOptions.filter((option) =>
-        option.label.toLowerCase().includes(searchValue.toLowerCase())
+      allOptions?.filter((option) =>
+        option?.label.toLowerCase().includes(searchValue.toLowerCase())
       )
     );
   }, [searchValue, options, placeholder]);

@@ -1,69 +1,35 @@
 import {  useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useApi from "../../../../Hooks/useApi";
-import { endpoints } from "../../../../Services/apiEndpoints";
 import Trash from "../../../../assets/icons/Trash";
-import AddCurrency from "./AddCurrency";
+import CurrencyModal from "./CurrencyModal";
 import { Link } from "react-router-dom";
+import { useRegularApi } from "../../../../context/ApiContext";
+import { endpoints } from "../../../../Services/apiEndpoints";
+import ConfirmModal from "../../../../Components/modal/ConfirmModal";
+import Modal from "../../../../Components/modal/Modal";
 
 const CurrencyTable = () => {
-  const { request: get_currencies } = useApi("get", 5004);
+  const {refreshContext,currencyData}=useRegularApi()
   const { request: deleteCurrencyRequest } = useApi("delete", 5004);
-
-  const [currenciesData, setCurrenciesData] = useState<any[]>([
-    {
-      _id: "1",
-      currencyCode: "USD",
-      currencyName: "United States Dollar",
-      currencySymbol: "$",
-      baseCurrency: true,
-    },
-    {
-      _id: "2",
-      currencyCode: "EUR",
-      currencyName: "Euro",
-      currencySymbol: "€",
-      baseCurrency: false,
-    },
-    {
-      _id: "3",
-      currencyCode: "INR",
-      currencyName: "Indian Rupee",
-      currencySymbol: "₹",
-      baseCurrency: false,
-    },
-    {
-      _id: "4",
-      currencyCode: "GBP",
-      currencyName: "British Pound",
-      currencySymbol: "£",
-      baseCurrency: false,
-    },
-  ]);
-  const [ setSelectedCurrency] = useState<any | null>(null);
+  const [isModal,setIsModal]=useState(false)
+  const [id,setId]=useState('')
+  const handleModalToggle=(id?:any)=>{
+    setIsModal((prev)=>!prev)
+    setId(id)
+  }
 
   const tableHeaders = ["Name", "Symbol", "Actions"];
 
-  const getHandleCurrencies = async () => {
-    try {
-      const url = `${endpoints.GET_CURRENCIES}`;
-      const { response, error } = await get_currencies(url);
-      if (!error && response) {
-        setCurrenciesData(response.data);
-        console.log(response, "currencyData");
-      }
-    } catch (error) {
-      console.error("Error in fetching currency data", error);
-    }
-  };
+  
 
-  const handleDelete = async (currencyId: string) => {
+  const handleDelete = async () => {
     try {
-      const url = `/${currencyId}`;
+      const url = `${endpoints.DELETE_CURRENCIES}/${id}`;
       const { response, error } = await deleteCurrencyRequest(url);
       if (!error && response) {
         toast.success(response.data.message);
-        getHandleCurrencies();
+        refreshContext({currencyData:true})
       } else {
         console.error(`Error deleting currency: ${error.message}`);
       }
@@ -73,9 +39,9 @@ const CurrencyTable = () => {
   };
 
   useEffect(() => {
-    getHandleCurrencies();
+    refreshContext({currencyData:true})
   }, []);
-  console.log(currenciesData);
+  console.log(currencyData);
   return (
     <div className="space-y-4 pt-2">
       <table className="min-w-full bg-white mb-5">
@@ -92,7 +58,7 @@ const CurrencyTable = () => {
           </tr>
         </thead>
         <tbody className="text-dropdownText text-center text-xs">
-          {currenciesData.map((item: any, index: number) => (
+          {currencyData.map((item: any, index: number) => (
             <tr className="relative" key={index}>
               {/* Currency Name & Code */}
               <td className="py-4 px-4  border-y border-tableBorder">
@@ -120,12 +86,12 @@ const CurrencyTable = () => {
                   </Link>
                   </div>
 
-                  <div onClick={() => setSelectedCurrency(item)}>
-                    <AddCurrency page="edit" />
+                  <div >
+                    <CurrencyModal editItem={item} />
                   </div>
 
                   {item.baseCurrency === false ? (
-                    <div onClick={() => handleDelete(item._id)}>
+                    <div className="cursor-pointer" onClick={()=>handleModalToggle(item?._id)}>
                       <Trash color={"#EA1E4F"} size={18} />
                     </div>
                   ) : (
@@ -140,6 +106,9 @@ const CurrencyTable = () => {
           ))}
         </tbody>
       </table>
+      <Modal open={isModal} onClose={handleModalToggle}className="w-[30%]" >
+        <ConfirmModal prompt="Are you sure want to delete this currency"  action={handleDelete} onClose={handleModalToggle}/>
+      </Modal>
     </div>
   );
 };

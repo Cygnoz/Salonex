@@ -3,7 +3,7 @@ import Banner from "../Banner";
 import Modal from "../../../../Components/modal/Modal";
 import CurrencyTable from "./CurrencyTable";
 import { useState } from "react";
-import AddCurrency from "./AddCurrency";
+import CurrencyModal from "./CurrencyModal";
 
 type Props = {};
 
@@ -86,7 +86,7 @@ const Currencies: React.FC<Props> = () => {
               </div>
             </Modal>
 
-        <AddCurrency page="add" />
+        <CurrencyModal  />
           </div>
         </div>
         <div className="bg-white rounded-lg p-3"><CurrencyTable /></div>

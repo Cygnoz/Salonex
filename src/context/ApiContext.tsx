@@ -19,7 +19,7 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
   const { request: getCurrencyData } = useApi("get", 5004);
 
   // State variables
-  const [settingsAdditionalData, setSettingsAdditionalData] = useState<any>(null);
+  const [settingsAdditionalDatas, setSettingsAdditionalDatas] = useState<any>(null);
   const [countryData, setCountryData] = useState<any>(null);
   const [currencyData, setCurrencyData] = useState<any>(null);
 
@@ -32,11 +32,11 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
       const fetchPromises = [];
 
       if (!options || options.settingsAdditionalDatas) {
-        fetchPromises.push(getAdditionalData(endpoints.GET_ADDITIONAL_DATA).then(response => ({ settingsAdditionalDatas: response?.response?.data || null })));
+        fetchPromises.push(getAdditionalData(endpoints.GET_ADDITIONAL_DATA).then(response => ({ settingsAdditionalDatas: response?.response?.data[0] || null })));
       }
 
       if (!options || options.countryData) {
-        fetchPromises.push(getCountryData(endpoints.GET_COUNTRY_DATA).then(response => ({ countryData: response?.response?.data || null })));
+        fetchPromises.push(getCountryData(endpoints.GET_COUNTRY_DATA).then(response => ({ countryData: response?.response?.data[0]?.countries || null })));
       }
 
       if (!options || options.currencyData) {
@@ -49,7 +49,7 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
 
       // Compare new data with previous data to avoid unnecessary state updates
       if (JSON.stringify(prevDataRef.current) !== JSON.stringify(newData)) {
-        if (newData.settingsAdditionalDatas) setSettingsAdditionalData(newData.settingsAdditionalDatas);
+        if (newData.settingsAdditionalDatas) setSettingsAdditionalDatas(newData.settingsAdditionalDatas);
         if (newData.countryData) setCountryData(newData.countryData);
         if (newData.currencyData) setCurrencyData(newData.currencyData);
 
@@ -71,15 +71,15 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     fetchData(); // Initial data fetch
-  }, [fetchData]);
+  }, []);
 
   // Memoize context value to prevent unnecessary re-renders
   const contextValue = useMemo(() => ({
-    settingsAdditionalData,
+    settingsAdditionalDatas,
     countryData,
     currencyData,
     refreshContext
-  }), [settingsAdditionalData, countryData, currencyData, refreshContext]);
+  }), [settingsAdditionalDatas, countryData, currencyData, refreshContext]);
 
   return <ApiContext.Provider value={contextValue}>{children}</ApiContext.Provider>;
 };

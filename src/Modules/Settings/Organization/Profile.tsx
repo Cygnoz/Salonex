@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import Button from "../../../Components/Button";
 import useApi from "../../../Hooks/useApi";
-// import toast from "react-hot-toast";
 import { endpoints } from "../../../Services/apiEndpoints";
 import Plus from "../../../assets/icons/Plus";
 import Banner from "./Banner";
@@ -14,43 +13,27 @@ import Select from "../../../Components/Form/Select";
 import PhoneNumberInput from "../../../Components/Form/PhoneInput";
 import { ProfileData } from "../../../Interface/Profile";
 import { useRegularApi } from "../../../context/ApiContext";
+import toast from "react-hot-toast";
+import { useOrganization } from "../../../context/OrgContext";
 
 
 
 const Profile = () => {
   const {refreshContext,settingsAdditionalDatas,currencyData,countryData}=useRegularApi()
-
-  console.log("currency",currencyData);
-  console.log("cuntry",countryData);
-  console.log("addiotional",settingsAdditionalDatas);
-  
-  const [additionalData, setAdditionalData] = useState<any | null>([]);
-  const [selectedCountry, setSelectedCountry] = useState<any>(null);
-  const [stateList, setStateList] = useState<any | []>([]);
-  const { request: getAdditionalData } = useApi("get", 5004);
+ const {organizationData,refreshOrg}=useOrganization()
   const { request: createOrganization } = useApi("post", 5004);
+  const [data, setData] = useState<{
+    country: any[];
+    state: { label: string; value: string }[];
+    dateFormate: { label: string; value: string }[];
+    industry: { label: string; value: string }[];
+    dateSplit: { label: string; value: string }[];
+    financialYear: { label: string; value: string }[];
+     timezones: { label: string; value: string }[];
+     currency:{ label: string; value: string }[];
+  }>({ country: [], state: [],dateFormate:[],industry:[],dateSplit:[],financialYear:[],timezones:[],currency:[] });
 
-  const [inputData, setInputData] = useState<ProfileData>({
-    organizationLogo: "",
-    organizationName: "",
-    organizationCountry: "",
-    organizationIndustry: "",
-    addline1: "",
-    addline2: "",
-    city: "",
-    pincode: "",
-    state: "",
-    organizationPhNum: "",
-    website: "",
-    baseCurrency: "",
-    fiscalYear: "",
-    timeZone: "",
-    timeZoneExp: "",
-    dateFormat: "",
-    dateFormatExp: "",
-    dateSplit: "",
-    phoneNumberCode: "",
-  });
+  
 
   const validationSchema = yup.object({
     organizationName: yup.string().required("Organization Name is a required field"),
@@ -85,67 +68,12 @@ const Profile = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const countrydata = [
-    {
-      name: "India",
-      flag: "/flags/india.png",
-      phoneNumberCode: "+91",
-      phoneNumberLimit: 10,
-    },
-    {
-      name: "USA",
-      flag: "/flags/usa.png",
-      phoneNumberCode: "+1",
-      phoneNumberLimit: 10,
-    },
-    // Add more countries here
-  ];
-  const countryOptions = countrydata.map((country) => ({
-    value: country.name,
-    label: country.name,
-  }));
-
-  const fetchData = async (endpoint: any, setDataCallback: any) => {
-    try {
-      const { response, error } = await getAdditionalData(endpoint);
-      if (!error && response) {
-        setDataCallback(
-          response.data[0]?.countries || response.data[0] || response.data
-        );
-      }
-    } catch (error) {
-      console.log(`Error in fetching data from ${endpoint}`, error);
-    }
-  };
 
 
-  const handleInputPhoneChange = (e: any) => {
-    const rawInput = e.target.value.trim();
-    const phoneNumberLimit = selectedCountry?.phoneNumberLimit || 0;
-
-    let phoneNumber = rawInput
-      .replace(selectedCountry?.phoneNumberCode, "")
-      .trim();
-
-    if (phoneNumber.length > phoneNumberLimit) {
-      phoneNumber = phoneNumber.slice(0, phoneNumberLimit);
-    }
-
-    const enteredPhone = `${
-      selectedCountry?.phoneNumberCode || ""
-    } ${phoneNumber}`;
-
-    // console.log(enteredPhone, "entered");
-
-    setInputData((prevData) => ({
-      ...prevData,
-      organizationPhNum: enteredPhone,
-    }));
-  };
 
   const handleFileChange = (
     e: ChangeEvent<HTMLInputElement>,
-    key: string // Specify the key to update, e.g., "organizationLogo"
+    key:any
   ) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -153,10 +81,7 @@ const Profile = () => {
 
       reader.onloadend = () => {
         const base64String = reader.result as string;
-        setInputData((prevData) => ({
-          ...prevData,
-          [key]: base64String,
-        }));
+        setValue(key,base64String)
       };
 
       reader.readAsDataURL(file);
@@ -174,9 +99,10 @@ const Profile = () => {
         data
       );
       if (response && !error) {
-        // toast.success(response.data.message); // Show success toast
+        toast.success(response.data.message); // Show success toast
+        refreshOrg()
       } else if (error) {
-        // toast.error(error.response?.data?.message || "An error occurred.");
+        toast.error(error.response?.data?.message || "An error occurred.");
       }
     } catch (err) {
       console.error("Unexpected error submitting data:", err);
@@ -184,48 +110,103 @@ const Profile = () => {
     }
   };
 
-  const handleDeleteImage = () => {
-    setInputData((prevDetails: any) => ({
-      ...prevDetails,
-      organizationLogo: "",
+
+
+
+
+  
+  useEffect(() => {
+    const filteredCountries = countryData?.map((items: any) => ({
+      ...items,
+      label: items.name,
+      value: String(items.name), // Ensure `value` is a string
     }));
-  };
+    setData((prevData: any) => ({ ...prevData, country: filteredCountries }));
+  }, [countryData]);
 
-
-  useEffect(() => {}, [countryData]);
-
+  // // Effect to fetch and populate states based on selected country
   useEffect(() => {
-    if (selectedCountry === null && inputData.organizationCountry) {
-      const matchingCountry = countryData.find(
-        (country: any) => country.name === inputData.organizationCountry
+    const selectedCountry = watch("organizationCountry");
+    if (selectedCountry) {
+      const filteredStates = countryData?.filter(
+        (country: any) => country.name === selectedCountry
       );
 
-      if (matchingCountry) {
-        setSelectedCountry(matchingCountry);
-      } else {
-        const matchingCountry = countryData.find(
-          (country: any) => country.name === "India"
-        );
-        setSelectedCountry(matchingCountry);
-      }
+      const transformedStates = filteredStates.flatMap((country: any) =>
+        country.states.map((state: any) => ({
+          label: state,
+          value: state,
+        }))
+      );
+      setData((prevData: any) => ({ ...prevData, state: transformedStates }));
     }
-  }, [selectedCountry, inputData.organizationCountry, countryData]);
+  }, [watch("organizationCountry"), countryData]);
 
   useEffect(() => {
-    if (inputData.organizationCountry) {
-      const country = countryData.find(
-        (c: any) => c.name === inputData.organizationCountry
-      );
-      if (country) {
-        setStateList(country.states || []);
-      }
-    }
-  }, [inputData.organizationCountry, countryData, inputData.organizationLogo]);
+    
+    setData((prev) => ({
+      ...prev, // Spread the previous state values
+      dateFormate: [
+        ...(settingsAdditionalDatas?.dateFormats?.short || []),
+        ...(settingsAdditionalDatas?.dateFormats?.medium || []),
+        ...(settingsAdditionalDatas?.dateFormats?.long || []),
+      ].map((dateFormat: any) => ({
+        value: dateFormat.format,
+        label: dateFormat.format,
+      })) || [],
+      industry: (settingsAdditionalDatas?.industry || []).map((industry: any) => ({
+        value: industry,
+        label: industry,
+      })) || [],
+      dateSplit: (settingsAdditionalDatas?.dateSplit || []).map((dateSplit: any) => ({
+        value: dateSplit,
+        label: dateSplit,
+      })) || [],
+      financialYear: (settingsAdditionalDatas?.financialYear || []).map((financialYear: any) => ({
+        value: financialYear,
+        label: financialYear,
+      })) || [],
+      timezones: (settingsAdditionalDatas?.timezones || []).map((timezone: any) => ({
+        value: timezone.zone,
+        label: timezone.zone + " - " + timezone.description,
+      })) || [],
+    }));
+  }, [settingsAdditionalDatas]);
+  
+
+  useEffect(() => {
+    setData((prev) => ({
+      ...prev, // Spread the previous state to keep other properties intact
+      currency: (currencyData || []).map((currency: any) => ({
+        value: currency.currencyCode,
+        label: `${currency.currencyName} (${currency.currencyCode})`,
+      })),
+    }));
+  }, [currencyData]); // Triggered when currencyData changes
+  
+  
+
 
   const handleInputChange = (field: keyof ProfileData) => {
     clearErrors(field);
   };
+ 
+  const setFormValues = (data: ProfileData) => {
+    Object.keys(data).forEach((key) => {
+      setValue(key as keyof ProfileData, data[key as keyof ProfileData]);
+    });
+  };
+  
+  useEffect(()=>{
+    refreshContext({currencyData:true})
+    if(organizationData){
+      setFormValues(organizationData)
+    }
+  },[organizationData])
 
+  console.log("phone",watch("organizationPhNum"));
+  
+  
 
 
   return (
@@ -242,13 +223,13 @@ const Profile = () => {
           <label>
             <div
               className={`bg-[#f8f7f5] mt-2 flex h-28 justify-center items-center rounded-lg ${
-                inputData.organizationLogo ? "h-[90px] rounded-b-none" : ""
+                watch("organizationLogo") ? "h-[90px] rounded-b-none" : ""
               }`}
             >
-              {inputData.organizationLogo ? (
+              {watch("organizationLogo") ? (
                 <div className="">
                   <img
-                    src={inputData.organizationLogo}
+                    src={watch("organizationLogo")}
                     alt=""
                     className="py-0 h-[51px]"
                   />
@@ -272,9 +253,9 @@ const Profile = () => {
               />
             </div>
           </label>
-          {inputData.organizationLogo && (
+          {watch("organizationLogo")  && (
             <div className="bg-neutral-200 rounded-b-lg h-7 flex items-center justify-end px-4">
-              <button onClick={handleDeleteImage}>
+              <button onClick={()=>setValue("organizationLogo","")}>
                 {" "}
                 <Trash color={"darkRed"} />
               </button>
@@ -311,7 +292,7 @@ const Profile = () => {
               placeholder="Select Country"
               error={errors.organizationCountry?.message}
               label="Organization Location"
-              options={countryOptions}
+              options={data.country}
               onChange={(value: string) => {
                 setValue("organizationCountry", value);
                 handleInputChange("organizationCountry");
@@ -329,7 +310,7 @@ const Profile = () => {
               }}
               value={watch("organizationIndustry")}
               label="Organization Indusrty"
-              options={[]}
+              options={data.industry}
             />
           </div>
 
@@ -367,11 +348,15 @@ const Profile = () => {
             />
             <Select
               required
-              placeholder="Select State / Region / County"
+              placeholder={watch("organizationCountry")?"Select State / Region / County":"Select a Country"}
               error={errors.state?.message}
-              onChange={() => handleInputChange("state")}
+              onChange={(value: string) => {
+                setValue("state", value);
+                handleInputChange("state");
+              }}
+              value={watch("state")}
               label="State / Region / County"
-              options={[]}
+              options={data?.state||[]}
             />
             <PhoneNumberInput
               label="Phone"
@@ -379,11 +364,11 @@ const Profile = () => {
               error={errors.organizationPhNum?.message}
               placeholder="Enter phone number"
               value={watch("organizationPhNum")}
-              onChange={(value) => {
+              onChange={(value:any) => {
                 handleInputChange("organizationPhNum");
                 setValue("organizationPhNum", value);
               }}
-              countryData={countrydata}
+              countryData={data?.country}
             />
           </div>
         </div>
@@ -411,17 +396,26 @@ const Profile = () => {
             required
             placeholder=" Select Currency"
             error={errors.baseCurrency?.message}
-            onChange={() => handleInputChange("baseCurrency")}
             label="Base Currency"
-            options={[]}
+            onChange={(value: string) => {
+                setValue("baseCurrency", value);
+                handleInputChange("baseCurrency");
+              }}
+              value={watch("baseCurrency")}
+            options={data?.currency}
           />
           <Select
             required
             placeholder="Select Financial Year"
             error={errors.fiscalYear?.message}
-            onChange={() => handleInputChange("fiscalYear")}
+        
             label="Financial Year"
-            options={[]}
+            onChange={(value: string) => {
+              setValue("fiscalYear", value);
+              handleInputChange("fiscalYear");
+            }}
+            value={watch("fiscalYear")}
+            options={data?.financialYear}
           />
         </div>
 
@@ -438,9 +432,13 @@ const Profile = () => {
               required
               placeholder="Select Time zone"
               error={errors.timeZone?.message}
-              onChange={() => handleInputChange("timeZone")}
+              onChange={(value: string) => {
+                setValue("timeZone", value);
+                handleInputChange("timeZone");
+              }}
+              value={watch("timeZone")}
               label="Time Zone"
-              options={[]}
+              options={data?.timezones}
             />
           </div>
           <div
@@ -451,18 +449,26 @@ const Profile = () => {
               required
               placeholder="Select Date Fromat"
               error={errors.dateFormat?.message}
-              onChange={() => handleInputChange("dateFormat")}
+              onChange={(value: string) => {
+                setValue("dateFormat", value);
+                handleInputChange("dateFormat");
+              }}
+              value={watch("dateFormat")}
               label="Date Format"
-              options={[]}
+              options={data?.dateFormate}
             />
           </div>
           <div className="col-span-4 pt-6">
             <Select
               placeholder="Select Date Split"
               error={errors.dateSplit?.message}
-              onChange={() => handleInputChange("dateSplit")}
+              onChange={(value: string) => {
+                setValue("dateSplit", value);
+                handleInputChange("dateSplit");
+              }}
+              value={watch("dateSplit")}
               label=""
-              options={[]}
+              options={data?.dateSplit}
             />
           </div>
         </div>
