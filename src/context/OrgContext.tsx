@@ -1,19 +1,18 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import useApi from "../Hooks/useApi";
 import { endpoints} from "../Services/apiEndpoints";
-import { ProfileData } from '../Interface/Profile';
 
 
 
 interface OrganizationContextType {
-  organizationData:ProfileData |null;
+  organizationData:any |null;
   refreshOrg: () => void;
 }
 
 const OrganizationContext = createContext<OrganizationContextType | undefined>(undefined);
 
 export const OrganizationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [organizationData, setOrganizationData] = useState<ProfileData | null>(null);
+  const [organizationData, setOrganizationData] = useState<any | null>(null);
   const { request: getOneOrganization } = useApi('get', 5004);
 
   // Fetch organization data and store it in sessionStorage

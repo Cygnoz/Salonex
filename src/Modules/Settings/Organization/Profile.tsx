@@ -21,9 +21,6 @@ import { useOrganization } from "../../../context/OrgContext";
 const Profile = () => {
   const {refreshContext,settingsAdditionalDatas,currencyData,countryData}=useRegularApi()
  const {organizationData,refreshOrg}=useOrganization()
-  console.log("org",organizationData);
-  
-  
   const { request: createOrganization } = useApi("post", 5004);
   const [data, setData] = useState<{
     country: any[];

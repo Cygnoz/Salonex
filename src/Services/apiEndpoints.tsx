@@ -4,7 +4,6 @@ export const endpoints = {
     CREATE_ORGANIZATION: `setup-organization`,
     GET_ONE_ORGANIZATION: `get-one-organization`,
     GET_COUNTRY_DATA: `get-countries-data`,
-    GET_CURRENCY_LIST: `get-currency`,
   
     //Sales
     ADD_SALES_SETTINGS: `add-sales-settings`,
@@ -115,7 +114,7 @@ export const endpoints = {
     GET_ONE_SUPPLIER_HISTORY: `get-one-supplier-history`,
   
     //Currency
-    GET_CURRENCIES: "get-currency",
+    GET_CURRENCY_LIST: "get-currency",
     ADD_CURRENCIES: "add-currency",
     DELETE_CURRENCIES: `delete-currency`,
     EDIT_CURRENCIES: `edit-currency`,
