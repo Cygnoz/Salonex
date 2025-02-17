@@ -1,24 +1,11 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import Input from "./Input";
 
-interface PhoneNumberInputProps {
-  required?: boolean;
-  countryData: any;
-  onChange: (value: string) => void;
-  initialValue?: string;
-  size?: "sm" | "md" | "lg";
-  error?: string;
-  name?: string;
-  label?: string;
-  placeholder?: string;
-  value?: any;
-}
-
-const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
+const PhoneNumberInput: React.FC<any> = ({
   required = false,
   countryData,
   onChange,
-  initialValue = "",
   size = "md",
   error = "",
   name = "phoneNumber",
@@ -28,13 +15,23 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
 }) => {
   const [selectedCountry, setSelectedCountry] = useState<any | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState(initialValue);
 
   const sizeClasses: Record<string, string> = {
     sm: "h-7 py-1 text-[10px] px-2",
     md: "h-9 py-2 px-3 text-sm",
     lg: "h-11 py-3 px-4 text-base",
   };
+
+  // 🌟 Automatically detect country from existing value
+  useEffect(() => {
+    if (value && countryData?.length) {
+      const country = countryData.find((c: any) => value.startsWith(c.phoneNumberCode));
+      if (country) {
+        setSelectedCountry(country);
+      }
+    }
+  }, [value, countryData]);
+
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawInput = e.target.value.trim();
     const phoneNumberLimit = selectedCountry?.phoneNumberLimit || 0;
@@ -51,7 +48,6 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
       selectedCountry?.phoneNumberCode || ""
     } ${sanitizedNumber}`;
 
-    setPhoneNumber(updatedPhoneNumber);
     onChange(updatedPhoneNumber);
   };
 
@@ -59,23 +55,20 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
     setSelectedCountry(country);
     setDropdownOpen(false);
     const updatedPhoneNumber = `${country.phoneNumberCode} `;
-    setPhoneNumber(updatedPhoneNumber);
     onChange(updatedPhoneNumber);
   };
 
   return (
     <div className="w-full relative">
       <label className="block text-xs mb-1 font-normal text-deepStateBlue">
-        {label}{ required && <span className="text-red-500">*</span>}
+        {label} {required && <span className="text-red-500">*</span>}
       </label>
       <div className="flex items-center relative">
         {/* Flag and Dial Code Dropdown */}
         <div
-          className={`flex items-center cursor-pointer border rounded-l-full px-3  ${
+          className={`flex items-center cursor-pointer border rounded-l-full px-3 bg-white ${
             sizeClasses[size]
-          }  bg-white ${
-            dropdownOpen ? "border-primary-default" : "border-borderColor"
-          }`}
+          } ${dropdownOpen ? "border-primary-default" : "border-borderColor"}`}
           onClick={() => setDropdownOpen(!dropdownOpen)}
         >
           {selectedCountry?.flag ? (
@@ -85,7 +78,6 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
                 alt={`${selectedCountry.name} flag`}
                 className="h-4 w-4 mr-2"
               />
-              {/* <span className="text-sm">{selectedCountry.phoneNumberCode}</span> */}
             </>
           ) : (
             <span className="text-sm text-gray-500">Select</span>
@@ -113,24 +105,23 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
             ))}
           </div>
         )}
-      <div className="max-w-full w-full">
+
+        <div className="max-w-full w-full">
           <Input
             name={name}
             value={value}
             placeholder={placeholder}
             size={size}
             onChange={handlePhoneNumberChange}
-            className={`w-full text-xs max-w-md ${
-              sizeClasses[size]
-            } rounded-r-[40px] text-textPrimary border px-2 ${
+            className={`w-full text-xs max-w-md ${sizeClasses[size]} rounded-r-[40px] text-textPrimary border px-2 ${
               error
                 ? "border-[#BC0000]"
                 : "border-borderColor focus:border-primary-default focus:outline-none focus:ring-primary-default"
-            }`}        />
+            }`}
+          />
+        </div>
       </div>
-      </div>
-      {error && <p className="text-[#BC0000] text-sm mt-1">{error}</p>}{" "}
-      {/* Error message */}
+      {error && <p className="text-[#BC0000] text-sm mt-1">{error}</p>}
     </div>
   );
 };

@@ -87,5 +87,4 @@ const App: React.FC = () => {
     </Suspense>
   );
 };
-
 export default App;
