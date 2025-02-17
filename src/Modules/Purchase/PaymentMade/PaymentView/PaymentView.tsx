@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useApi from '../../../../Hooks/useApi';
-import { endpoints } from '../../../../Services/apiEdpoints';
+import { endpoints } from '../../../../Services/apiEndpoints';
 import Button from '../../../../Components/Button';
 import Pen from '../../../../assets/icons/Pen';
 import PrinterIcon from '../../../../assets/icons/PrinterIcon';

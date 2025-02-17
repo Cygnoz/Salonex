@@ -5,7 +5,7 @@ import Pen from "../../assets/icons/Pen";
 
 import { useEffect, useState } from "react";
 import useApi from "../../Hooks/useApi";
-import { endpoints } from "../../Services/apiEdpoints";
+import { endpoints } from "../../Services/apiEndpoints";
 import CheveronLeftIcon from "../../assets/icons/ChevronLeft";
 import DollarSign from "../../assets/icons/Dollarsign";
 import { ExpenseDollar } from "../../assets/icons/ExpenseDollar";

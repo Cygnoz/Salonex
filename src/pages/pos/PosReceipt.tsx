@@ -3,7 +3,7 @@ import leftImage from "../../assets/Images/7182239_3582344 1.png";
 import Button from "../../Components/Button";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { endpoints } from "../../Services/apiEdpoints";
+import { endpoints } from "../../Services/apiEndpoints";
 import useApi from "../../Hooks/useApi";
 
 type Props = {};

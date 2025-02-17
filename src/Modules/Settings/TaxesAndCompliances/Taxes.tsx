@@ -4,7 +4,7 @@ import Button from "../../../Components/Button";
 import GSTComponent from "./gst/GSTComponent";
 import VATComponent from "./vat/VATComponent";
 import useApi from "../../../Hooks/useApi";
-import { endpoints } from "../../../Services/apiEdpoints";
+import { endpoints } from "../../../Services/apiEndpoints";
 import Banner from "../Organization/Banner";
 import RadioButton from "../../../Components/Form/RadioButton";
 

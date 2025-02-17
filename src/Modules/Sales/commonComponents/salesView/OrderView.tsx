@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PrinterIcon from "../../../../assets/icons/PrinterIcon";
 import Button from "../../../../Components/Button";
 import useApi from "../../../../Hooks/useApi";
-import { endpoints } from "../../../../Services/apiEdpoints";
+import { endpoints } from "../../../../Services/apiEndpoints";
 import CheveronDown from "../../../../assets/icons/CheveronDown";
 import PaymentMadeHistory from "./PaymentMadeHistory";
 import Journal from "./Journal";

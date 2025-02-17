@@ -1,4 +1,5 @@
 export const endpoints ={
+    // Organization
     CREATE_ORGANIZATION: `setup-organization`,
     GET_ONE_ORGANIZATION:``,
     GET_ADDITIONAL_DATA:``,
@@ -15,5 +16,8 @@ export const endpoints ={
     ADD_CURRENCIES:``,
     DELETE_CURRENCIES:``,
 
-    GET_ALL_TAX:""
+    GET_ALL_TAX:"",
+     // Login
+     LOGIN: "/login",
+     GET_OTP: "/verify-otp",
 }

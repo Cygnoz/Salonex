@@ -13,7 +13,7 @@ import ExpenseFilterCards from "./ExpenseFilterCards";
 import BrowseUploads from "../../assets/icons/BrowseUploads";
 
 import { List } from "../../assets/icons/List";
-import { endpoints } from "../../Services/apiEdpoints";
+import { endpoints } from "../../Services/apiEndpoints";
 import BackIcon from "../../assets/icons/BackIcon";
 import { toast } from "react-hot-toast";
 import useApi from "../../Hooks/useApi";

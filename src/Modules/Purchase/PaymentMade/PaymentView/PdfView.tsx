@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useApi from "../../../../Hooks/useApi";
 import { ToWords } from "to-words";
-import { endpoints } from "../../../../Services/apiEdpoints";
+import { endpoints } from "../../../../Services/apiEndpoints";
 
 type Props = { data: any; organization?: any };
 

@@ -4,7 +4,7 @@ import Button from "../../../../Components/Button";
 import Pen from "../../../../assets/icons/Pen";
 import useApi from "../../../../Hooks/useApi";
 import OrderView from "./OrderView";
-import { endpoints } from "../../../../Services/apiEdpoints";
+import { endpoints } from "../../../../Services/apiEndpoints";
 import PDFView from "./PDFView";
 import BackIcon from "../../../../assets/icons/BackIcon";
 

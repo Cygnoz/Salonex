@@ -32,7 +32,7 @@ function BankHome({}: Props) {
     <p className="text-subHeading mt-2 text-xs">Lorem ipsum dolor sit amet consectetua egestas consectetur amet.</p>
         </div>
         <div>
-        <NewBankModal/>
+        <NewBankModal />
         </div>
     </div>
     <div className="mt-6">

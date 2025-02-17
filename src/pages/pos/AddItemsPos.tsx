@@ -6,7 +6,7 @@ import Button from "../../Components/Button";
 import PosDiscount from "./PosDiscount";
 import OutlineTrashIcon from "../../assets/icons/OutlineTrashIcon";
 import PosPayment from "./PosPayment";
-import { endpoints } from "../../Services/apiEdpoints";
+import { endpoints } from "../../Services/apiEndpoints";
 import useApi from "../../Hooks/useApi";
 // import noItemFoundIMage from "../../assets/Images/no item added.png"
 

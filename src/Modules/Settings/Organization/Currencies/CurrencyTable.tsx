@@ -1,7 +1,7 @@
 import {  useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useApi from "../../../../Hooks/useApi";
-import { endpoints } from "../../../../Services/apiEdpoints";
+import { endpoints } from "../../../../Services/apiEndpoints";
 import Trash from "../../../../assets/icons/Trash";
 import AddCurrency from "./AddCurrency";
 import { Link } from "react-router-dom";
