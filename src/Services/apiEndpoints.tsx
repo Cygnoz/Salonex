@@ -20,4 +20,19 @@ export const endpoints ={
      // Login
      LOGIN: "/login",
      GET_OTP: "/verify-otp",
+
+     // Supplier
+    ADD_SUPPLIER: "add-suppliers",
+    GET_ALL_SUPPLIER: "get-all-supplier",
+  
+    EDIT_SUPPLIER: "update-supplier",
+    DELETE_SUPPLIER:"delete-supplier",
+    GET_TAX_SUPPLIER: `supplier-additional-data`,
+    UPDATE_SUPPLIER_STATUS: `update-supplier-status`,
+    GET_ONE_SUPPLIER_HISTORY: `get-one-supplier-history`,
+
+    GET_PAYMENT_TERMS: `get-all-payment-terms`,
+
+     // get settingsData
+     GET_SETTINGS_DATA: `get-settings`,
 }
