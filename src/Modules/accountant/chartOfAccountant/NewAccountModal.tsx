@@ -350,11 +350,8 @@ function NewAccountModal({ page, accountData, fetchAllAccounts }: Props) {
                 <>
                   <div className="mb-2 mt-4 flex items-center gap-1 text-textColor">
                     <Checkbox
-                      id="checkbox3"
-                      name="returnableItem"
                       checked={isSubAccount}
                       onChange={handleCheckboxChange}
-                      className="w-5 h-5 mx-1 my-1 mt-1.5"
                     />
                     <label
                       htmlFor="checkbox3"
