@@ -204,7 +204,6 @@ const Profile = () => {
     }
   },[organizationData])
 
-  console.log("phone",watch("organizationPhNum"));
   
   
 

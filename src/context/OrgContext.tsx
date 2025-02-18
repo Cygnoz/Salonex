@@ -1,11 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import useApi from "../Hooks/useApi";
-import { endpoints} from "../Services/apiEndpoints";
-
-
+import { endpoints } from "../Services/apiEndpoints";
 
 interface OrganizationContextType {
-  organizationData:any |null;
+  organizationData: any | null;
   refreshOrg: () => void;
 }
 
@@ -13,8 +11,10 @@ const OrganizationContext = createContext<OrganizationContextType | undefined>(u
 
 export const OrganizationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [organizationData, setOrganizationData] = useState<any | null>(null);
-  const { request: getOneOrganization } = useApi('get', 5004);
 
+
+  const { request: getOneOrganization } = useApi('get', 5004);
+  
   // Fetch organization data and store it in sessionStorage
   const fetchOrganization = async () => {
     try {
@@ -30,24 +30,25 @@ export const OrganizationProvider: React.FC<{ children: ReactNode }> = ({ childr
     }
   };
 
-  // Load organization data from sessionStorage on mount
+  // Load organization data from sessionStorage on mount or when authToken changes
   useEffect(() => {
-    const savedOrganization = sessionStorage.getItem('organization');
-    if (savedOrganization) {
-      setOrganizationData(JSON.parse(savedOrganization));
-    } else {
-      fetchOrganization();
-    }
-  }, []);
+
+      const savedOrganization = sessionStorage.getItem('organization');
+      if (savedOrganization) {
+        setOrganizationData(JSON.parse(savedOrganization));
+      } else {
+        fetchOrganization();
+      }
+    
+  }, []); // Dependency on authToken state
 
   // Refresh context function
-  const  refreshOrg = () => {
-    sessionStorage.removeItem('organization');
+  const refreshOrg = () => {
     fetchOrganization();
   };
 
   return (
-    <OrganizationContext.Provider value={{ organizationData,  refreshOrg }}>
+    <OrganizationContext.Provider value={{ organizationData, refreshOrg }}>
       {children}
     </OrganizationContext.Provider>
   );

@@ -80,6 +80,8 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
     fetchData(); // Initial data fetch
   }, []);
 
+  
+
   // Memoize context value to prevent unnecessary re-renders
   const contextValue = useMemo(() => ({
     settingsAdditionalDatas,

@@ -1,29 +1,40 @@
 import React, { lazy, Suspense } from "react";
 import { useRoutes } from "react-router-dom";
-import PurchaseRoutes from "./Routes/PurchaseRoutes";
+import AccountsRoutes from "./Routes/AccountsRoutes";
+import BookingRoutes from "./Routes/BookingRoutes";
 import CustomerRoutes from "./Routes/CustomerRoutes";
-import SettingsRoutes from "./Routes/SettingsRoutes";
+import ExpenseRoutes from "./Routes/ExpenseRoutes";
+import InternalOrderRoutes from "./Routes/InternalOrderRoutes";
 import ItemMasterRoutes from "./Routes/ItemMasterRoutes";
 import OrderRoutes from "./Routes/OrderRoutes";
-import InternalOrderRoutes from "./Routes/InternalOrderRoutes";
+import PurchaseRoutes from "./Routes/PurchaseRoutes";
+import ReportRoutes from "./Routes/ReportRoutes";
 import SaleRoutes from "./Routes/SaleRoutes";
-import AccountsRoutes from "./Routes/AccountsRoutes";
-import ExpenseRoutes from "./Routes/ExpenseRoutes";
+import SettingsRoutes from "./Routes/SettingsRoutes";
 import SupplierRoutes from "./Routes/SpplierRoutes";
 import StaffRoutes from "./Routes/StaffRoutes";
-import ReportRoutes from "./Routes/ReportRoutes";
+import NoAccess from "./context/NoAccess";
 import Login from "./pages/Login/Login";
 import Otp from "./pages/Login/Otp";
 import PosReceipt from "./pages/pos/PosReceipt";
-import BookingRoutes from "./Routes/BookingRoutes";
-
 const Layout = lazy(() => import("./layout/Layout"));
 const Dashboard = lazy(() => import("./pages/DashBoard"));
 const Pos = lazy(() => import("./pages/pos/Pos"));
 const SettingsLayout = lazy(() => import("./layout/Settings/SettingsLayout"));
 
+// Wrapper component to handle authentication
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+  const isAuthenticated = sessionStorage.getItem("authToken");
+
+  if (!isAuthenticated) {
+    return <NoAccess />;
+  }
+
+  return children;
+};
+
 const App: React.FC = () => {
-  const routes = [
+  const routes = useRoutes([
     {
       path: "/",
       element: <Login />,
@@ -33,8 +44,15 @@ const App: React.FC = () => {
       element: <Otp />,
     },
     {
-      // path: "/",
-      element: <Layout />,
+      path: "/pos",
+      element: <Pos />,
+    },
+    {
+      path: "/posreceipt",
+      element: <PosReceipt />,
+    },
+    {
+      element: <ProtectedRoute><Layout /></ProtectedRoute>,
       children: [
         { path: "/dashboard", element: <Dashboard /> },
         { path: "/purchase/*", element: <PurchaseRoutes /> },
@@ -52,38 +70,20 @@ const App: React.FC = () => {
       ],
     },
     {
-      // path: "/",
-      element: <SettingsLayout />,
+      element: <ProtectedRoute><SettingsLayout /></ProtectedRoute>,
       children: [
-        { path: "", element: <div></div> },
         { path: "/settings/*", element: <SettingsRoutes /> },
       ],
     },
     {
-      path: "/pos",
-      element: <Pos />,
-    },
-    {
-      path: "/posreciept",
-      element: <PosReceipt />,
-    },
-    {
       path: "*",
-      element: <div>Error</div>,
+      element: <NoAccess />,
     },
-  ];
-
-  const element = useRoutes(routes);
+  ]);
 
   return (
-    <Suspense
-      fallback={
-        <div>
-          <p>Loading...</p>
-        </div>
-      }
-    >
-      {element}
+    <Suspense fallback={<div>Loading...</div>}>
+      {routes}
     </Suspense>
   );
 };
