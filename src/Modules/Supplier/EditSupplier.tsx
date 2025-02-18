@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Button from "../../Components/Button";
 import Modal from "../../Components/modal/Modal";
 import Plus from "../../assets/icons/Plus";
@@ -7,159 +7,61 @@ import CheveronDown from "../../assets/icons/CheveronDown";
 // import PhoneInput from "react-phone-input-2";
 import Trash from "../../assets/icons/Trash";
 import Upload from "../../assets/icons/Upload";
+// import CirclePlus from "../../assets/icons/circleplus";
 import Select from "../../Components/Form/Select";
 import Input from "../../Components/Form/Input";
 import PhoneNumberInput from "../../Components/Form/PhoneInput";
 // import Checkbox from "../../Components/Form/Checkbox";
 import TextArea from "../../Components/Form/TextArea";
-import { endpoints } from "../../Services/apiEndpoints";
+
 import useApi from "../../Hooks/useApi";
+//import { SupplierResponseContext } from "../../Context/ContextShare";
 import toast from "react-hot-toast";
 import Eye from "../../assets/icons/Eye";
 import EyeOffIcon from "../../assets/icons/EyeOffIcon";
-import EditIcon from "../../assets/icons/Pen"
+// import EditIcon from "../../assets/icons/EditIcon";
 import CirclePlus from "../../assets/icons/circleplus";
-import { SupplierData } from "../../Interface/Supplier";
-//import { SupplierResponseContext } from "../../context/ContextShare";
-//import { SupplierResponseContext } from "../../context/ContextShare";
+// import { SupplierData } from "../../Interface/Supplier";
+import { endpoints } from "../../Services/apiEndpoints";
 
 // import PhoneInput from "../../Components/Form/PhoneInput";
-
-type Props = {
-  supplierData: any;
-  page?: string;
-  id?: string;
-  fetchAllSuppliers: () => void;
-}
-
-
-
-
-function AddSupplierModal({ page, }: Props) {
-  const initializeSupplierData = (): SupplierData => ({
-    supplierProfile: "",
-    salutation: "",
-    firstName: "",
-    lastName: "",
-    companyName: "",
-    supplierDisplayName: "",
-    supplierEmail: "",
-    workPhone: "",
-    mobile: "",
-    creditDays: "",
-    creditLimit: "",
-    interestPercentage: "",
-    pan: "",
-    currency: "",
-    debitOpeningBalance: "",
-    creditOpeningBalance: "",
-    paymentTerms: "",
-    tds: "",
-    taxType: "",
-    documents: "",
-    websiteURL: "",
-    department: "",
-    designation: "",
-    gstTreatment: "",
-    gstinUin: "",
-    sourceOfSupply: "",
-    vatNumber: "",
-    msmeType: "",
-    msmeNumber: "",
-    msmeRegistered: false,
-    billingAttention: "",
-    billingCountry: "",
-    billingAddressStreet1: "",
-    billingAddressStreet2: "",
-    billingCity: "",
-    billingState: "",
-    billingPinCode: "",
-    billingPhone: "",
-    billingFaxNum: "",
-    shippingAttention: "",
-    shippingCountry: "",
-    shippingAddressStreet1: "",
-    shippingAddressStreet2: "",
-    shippingCity: "",
-    shippingState: "",
-    shippingPinCode: "",
-    shippingPhone: "",
-    shippingFaxNum: "",
-    contactPerson: [
-      {
-        salutation: "",
-        firstName: "",
-        lastName: "",
-        emailAddress: "",
-        workPhone: "",
-        mobile: "",
-      },
-    ],
-    bankDetails: [
-      {
-        accountHolderName: "",
-        bankName: "",
-        accountNum: "",
-        ifscCode: "",
-      },
-    ],
-    remarks: "",
-  });
-
-  // ...existing code...
-
-  const salutationOptions = [
-    { value: "Mr.", label: "Mr." },
-    { value: "Mrs.", label: "Mrs." },
-    { value: "Ms.", label: "Ms." },
-    { value: "Dr.", label: "Dr." },
-  ];
-
-  // ...existing code...
-
-  // ...existing code...
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
-  const [countryData, setcountryData] = useState<any | []>([]);
-  const [stateList, setStateList] = useState<any | []>([]);
-  const [currencyData, setcurrencyData] = useState<any | []>([]);
-  const [gstOrVat, setgstOrVat] = useState<any | []>([]);
-  const [oneOrganization, setOneOrganization] = useState<any | []>([]);
-  const [shippingstateList, setshippingStateList] = useState<any | []>([]);
-  const [paymentTerms, setPaymentTerms] = useState<any | []>([]);
-  const [activeTab, setActiveTab] = useState<string>("otherDetails");
-  const [placeOfSupplyList, setPlaceOfSupplyList] = useState<any | []>([]);
-  const [supplierdata, setSupplierData] = useState<SupplierData>(
-    initializeSupplierData()
-  );
-  const [errors, setErrors] = useState({
-    supplierDisplayName: false,
-    gstinUin: false,
-    sourceOfSupply: false,
-  });
-  const [openingType, setOpeningType] = useState<string>("credit");
-  const { request: getCountryData } = useApi("get", 5004);
-  const { request: getCurrencyData } = useApi("get", 5004);
-  const { request: CreateSupplier } = useApi("post", 5009);
-  // const { request: EditSupplier } = useApi("put", 5001);
-
-  const { request: getPaymentTerms } = useApi("get", 5004);
-  const { request: getOrganization } = useApi("get", 5004);
-  const { request: getTax } = useApi("get", 5009);
- //const { setsupplierResponse } = useContext(SupplierResponseContext)!;
-  const [rows, setRows] = useState([
-    {
-      salutation: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      workPhone: "",
-      mobile: "",
-    },
-  ]);
-  const addRow = () => {
-    setRows([
-      ...rows,
+  
+  type Props = {
+    supplier?: any | null;
+    isModalOpen: boolean;
+    openModal?: () => void;
+    closeModal: () => void;
+    addressEdit?: string;
+  };
+  
+  const EditSupplier: React.FC<Props> = ({
+    supplier,
+    isModalOpen,
+    closeModal,
+    addressEdit,
+  }) => {
+    const [activeTab, setActiveTab] = useState<string>(
+      addressEdit ? "address" : "otherDetails"
+    );
+    const { request: editSupplier } = useApi("put", 5009);
+    const [countryData, setcountryData] = useState<any | []>([]);
+    const [stateList, setStateList] = useState<any | []>([]);
+    const [currencyData, setcurrencyData] = useState<any | []>([]);
+    const [gstOrVat, setgstOrVat] = useState<any | []>([]);
+    const [oneOrganization, setOneOrganization] = useState<any | []>([]);
+    const [shippingstateList, setshippingStateList] = useState<any | []>([]);
+    const [paymentTerms, setPaymentTerms] = useState<any | []>([]);
+    const [placeOfSupplyList, setPlaceOfSupplyList] = useState<any | []>([]);
+    const [errors, setErrors] = useState({
+      supplierDisplayName: false,
+    });
+    const { request: getCountryData } = useApi("get", 5004);
+    const { request: getCurrencyData } = useApi("get", 5004);
+    const { request: getPaymentTerms } = useApi("get", 5004);
+    const { request: getOrganization } = useApi("get", 5004);
+    const { request: getTax } = useApi("get", 5009);
+   // const { setsupplierResponse } = useContext(SupplierResponseContext)!;
+    const [rows, setRows] = useState([
       {
         salutation: "",
         firstName: "",
@@ -169,546 +71,604 @@ function AddSupplierModal({ page, }: Props) {
         mobile: "",
       },
     ]);
-  };
-  const [showAccountNumbers, setShowAccountNumbers] = useState(
-    supplierdata.bankDetails.map(() => false)
-  );
-  const [showReEnterAccountNumbers, setShowReEnterAccountNumbers] = useState(
-    supplierdata.bankDetails.map(() => false)
-  );
+  
+    const addRow = () => {
+      setRows([
+        ...rows,
+        {
+          salutation: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          workPhone: "",
+          mobile: "",
+        },
+      ]);
+    };
+    const [openingType, setOpeningType] = useState<string>("credit");
+    const [supplierdata, setSupplierData] = useState<any>({
+      _id: "",
+      supplierProfile: "",
+      salutation: "",
+      firstName: "",
+      lastName: "",
+      companyName: "",
+      supplierDisplayName: "",
+      supplierEmail: "",
+      workPhone: "",
+      mobile: "",
+      creditDays: "",
+      creditLimit: "",
+      interestPercentage: "",
+      pan: "",
+      currency: "",
+      // debitOpeningBalance:"",
+      // creditOpeningBalance:"",
+      paymentTerms: "",
+      tds: "",
+      documents: "",
+      websiteURL: "",
+      department: "",
+      designation: "",
+      gstTreatment: "",
+      gstinUin: "",
+      sourceOfSupply: "",
+      vatNumber: "",
+      msmeType: "",
+      msmeNumber: "",
+      msmeRegistered: false,
+      billingAttention: "",
+      billingCountry: "",
+      billingAddressStreet1: "",
+      billingAddressStreet2: "",
+      billingCity: "",
+      billingState: "",
+      billingPinCode: "",
+      billingPhone: "",
+      billingFaxNum: "",
+      shippingAttention: "",
+      shippingCountry: "",
+      shippingAddressStreet1: "",
+      shippingAddressStreet2: "",
+      shippingCity: "",
+      shippingState: "",
+      shippingPinCode: "",
+      shippingPhone: "",
+      shippingFaxNum: "",
+      contactPerson: [
+        {
+          salutation: "",
+          firstName: "",
+          lastName: "",
+          emailAddress: "",
+          workPhone: "",
+          mobile: "",
+        },
+      ],
+      bankDetails: [
+        {
+          accountHolderName: "",
+          bankName: "",
+          accountNum: "",
+          ifscCode: "",
+        },
+      ],
+      remarks: "",
+      status: "",
+  });
 
-  // check account number
-  const [reEnterAccountNumbers, setReEnterAccountNumbers] = useState(
-    supplierdata.bankDetails.map(() => "")
-  );
-  const [isAccountNumberSame, setIsaccountNumbersame] = useState(
-    supplierdata.bankDetails.map(() => true)
-  );
-  const handleReEnterAccountNumberChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const newReEnterAccountNumbers = [...reEnterAccountNumbers];
-    newReEnterAccountNumbers[index] = e.target.value;
-    setReEnterAccountNumbers(newReEnterAccountNumbers);
-
-    const isMatch =
-      supplierdata.bankDetails[index].accountNum === e.target.value;
-    const newIsAccountNumberSame = [...isAccountNumberSame];
-    newIsAccountNumberSame[index] = isMatch;
-    setIsaccountNumbersame(newIsAccountNumberSame);
-  };
-
- // console.log(supplierdata, "supplierData");
-
-  // add bank account
-  const handleBankDetailsChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = e.target;
-
-    type BankDetailKeys =
-      | "accountHolderName"
-      | "bankName"
-      | "accountNum"
-      | "ifscCode";
-
-    const updatedBankDetails = [...supplierdata.bankDetails];
-    updatedBankDetails[index][name as BankDetailKeys] = value;
-
-    setSupplierData((prevState) => ({
-      ...prevState,
-      bankDetails: updatedBankDetails,
-    }));
-  };
-
-  useEffect(() => {
-    setShowAccountNumbers(supplierdata.bankDetails.map(() => false));
-    setShowReEnterAccountNumbers(supplierdata.bankDetails.map(() => false));
-  }, [supplierdata.bankDetails]);
-
-  const toggleShowAccountNumber = (index: number) => {
-    setShowAccountNumbers((prev) =>
-      prev.map((item, i) => (i === index ? !item : item))
-    );
-  };
-
-  const toggleShowReEnterAccountNumber = (index: number) => {
-    setShowReEnterAccountNumbers((prev) =>
-      prev.map((item, i) => (i === index ? !item : item))
-    );
-  };
-  const addNewBankAccount = () => {
-    if (supplierdata.bankDetails.length < 6) {
-      setSupplierData((prevState) => ({
-        ...prevState,
-        bankDetails: [
-          ...prevState.bankDetails,
-          {
-            accountHolderName: "",
-            bankName: "",
-            accountNum: "",
-            ifscCode: "",
-          },
-        ],
-      }));
-    } else {
-      //   toast.error("You can only add up to 6 bank accounts.");
-      alert("You can only add up to 6 bank accounts.");
-    }
-  };
-  // delete bank account
-  const deleteBankAccount = (index: number) => {
-    const updatedBankDetails = supplierdata.bankDetails.filter(
-      (_, i) => i !== index
-    );
-    setSupplierData((prevState) => ({
-      ...prevState,
-      bankDetails: updatedBankDetails,
-    }));
-  };
-
-  // handle modal
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-    setSupplierData(initializeSupplierData);
-    setErrors({
-      supplierDisplayName: false,
-      gstinUin: false,
-      sourceOfSupply: false,
-    });
-  };
-
-  // add contact person
-  const handleRowChange = (
-    index: number,
-    field: keyof (typeof rows)[number],
-    value: string
-  ) => {
-    const updatedRows = [...rows];
-    updatedRows[index][field] = value;
-    setRows(updatedRows);
-
-    const updatedContactPerson = updatedRows.map((row) => ({
-      salutation: row.salutation,
-      firstName: row.firstName,
-      lastName: row.lastName,
-      emailAddress: row.email,
-      workPhone: row.workPhone,
-      mobile: row.mobile,
-    }));
-
-    setSupplierData((prevFormData) => ({
-      ...prevFormData,
-      contactPerson: updatedContactPerson,
-    }));
-  };
-  // handle sidebar
-  const getTabClassName = (tabName: string) => {
-    return activeTab === tabName
-      ? " cursor-pointer font-bold text-darkRed"
-      : " cursor-pointer font-bold";
-  };
-  const getBorderClassName = (tabName: string) => {
-    return activeTab === tabName ? "border-[#7a4146]" : "border-neutral-300";
-  };
-
-  // handle phonenumber change
-  const handleBillingPhoneChange = (value: string) => {
-    setSupplierData((prevData) => ({
-      ...prevData,
-      billingPhone: value,
-    }));
-  };
-
-  const handleShippingPhoneChange = (value: string) => {
-    setSupplierData((prevData) => ({
-      ...prevData,
-      shippingPhone: value,
-    }));
-  };
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, type, value } = e.target;
-
-    if (name === "openingType") {
-      // Update openingType state first
-      setOpeningType(value);
-
-      // Update supplierData state based on the new openingType value
-      if (value === "debit") {
-        setSupplierData((prevData) => ({
-          ...prevData,
-          debitOpeningBalance: prevData.creditOpeningBalance,
-          creditOpeningBalance: "", // Clear creditOpeningBalance
-        }));
-      } else if (value === "credit") {
-        setSupplierData((prevData) => ({
-          ...prevData,
-          creditOpeningBalance: prevData.debitOpeningBalance,
-          debitOpeningBalance: "", // Clear debitOpeningBalance
-        }));
-      }
-    }
-
-    // Update openingBalance field
-    if (name === "openingBalance") {
-      if (openingType === "credit") {
-        setSupplierData((prevData) => ({
-          ...prevData,
-          creditOpeningBalance: value,
-        }));
-      } else if (openingType === "debit") {
-        setSupplierData((prevData) => ({
-          ...prevData,
-          debitOpeningBalance: value,
-        }));
-      }
-    }
-
-    // if (name === "companyName") {
-    //   setSupplierData((prevData) => ({
-    //     ...prevData,
-    //     supplierDisplayName: value, // Always update with companyName
-    //   }));
-    //   if (supplierdata.supplierDisplayName) {
-    //     setErrors({ ...errors, supplierDisplayName: false });
-    //   }
-    // } else if (name === "firstName") {
-    //   setSupplierData((prevData) => ({
-    //     ...prevData,
-    //     supplierDisplayName: prevData.companyName ? prevData.supplierDisplayName : value, // Update only if companyName is absent
-    //   }));
-    //   if (supplierdata.supplierDisplayName || !supplierdata.companyName) {
-    //     setErrors({ ...errors, supplierDisplayName: false });
-    //   }
-    // }
-
-    // Update supplierDisplayName based on companyName
-    if (name === "companyName") {
-      setSupplierData((prevData) => ({
-        ...prevData,
-        supplierDisplayName: value, // Always update with companyName
-      }));
-      if (supplierdata.supplierDisplayName) {
-        setErrors({ ...errors, supplierDisplayName: false });
-      }
-    } else if (name === "firstName" || name === "lastName") {
-      setSupplierData((prevData) => {
-        const firstName = name === "firstName" ? value : prevData.firstName;
-        const lastName = name === "lastName" ? value : prevData.lastName;
-        const fullName = `${firstName || ""} ${lastName || ""}`.trim();
-        return {
-          ...prevData,
-          [name]: value, // Update the specific field (firstName or lastName)
-          supplierDisplayName: prevData.companyName
-            ? prevData.supplierDisplayName
-            : fullName, // Update only if companyName is absent
-        };
-      });
-      if (supplierdata.supplierDisplayName || !supplierdata.companyName) {
-        setErrors({ ...errors, supplierDisplayName: false });
-      }
-    }
-
-    // Handle checkbox updates
-    if (type === "checkbox") {
-      const checked = (e.target as HTMLInputElement).checked;
-      setSupplierData((prevData) => ({
-        ...prevData,
-        [name]: checked,
-      }));
-    } else {
-      // Default case for other inputs
-      if (name !== "openingBalance") {
-        setSupplierData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-      }
-    }
-  };
-
-
-  // get additional data
-  const getAdditionalData = async () => {
-    try {
-      // Fetching currency data
-      const Currencyurl = `${endpoints.GET_CURRENCY_LIST}`;
-      const { response, error } = await getCurrencyData(Currencyurl);
-
-      if (!error && response) {
-        setcurrencyData(response?.data);
-      }
-
-      const paymentTermsUrl = `${endpoints.GET_PAYMENT_TERMS}`;
-      const { response: paymentTermResponse, error: paymentTermError } =
-        await getPaymentTerms(paymentTermsUrl);
-
-      if (!paymentTermError && paymentTermResponse) {
-        setPaymentTerms(paymentTermResponse.data);
-      }
-
-      const CountryUrl = `${endpoints.GET_COUNTRY_DATA}`;
-      const { response: countryResponse, error: countryError } =
-        await getCountryData(CountryUrl);
-
-      if (!countryError && countryResponse) {
-        setcountryData(countryResponse?.data[0].countries);
-      } else {
-        console.log(countryError, "country");
-      }
-    } catch (error) {
-      console.log("Error in fetching currency data or payment terms", error);
-    }
-  };
-
-  const getAdditionalInfo = async () => {
-    try {
-      const taxUrl = `${endpoints.GET_TAX_SUPPLIER}`;
-      const { response: taxResponse, error: taxError } = await getTax(taxUrl);
-
-      if (!taxError && taxResponse) {
-        if (taxResponse) {
-          setgstOrVat(taxResponse.data);
-
-          setSupplierData((prevSupplierData) => ({
-            ...prevSupplierData,
-            taxType: taxResponse.data.taxType,
-          }));
+    const salutationOptions = [
+        { value: "Mr.", label: "Mr." },
+        { value: "Mrs.", label: "Mrs." },
+        { value: "Ms.", label: "Ms." },
+        { value: "Dr.", label: "Dr." },
+      ];
+  
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        const validTypes = ["image/jpeg", "image/png"];
+        if (!validTypes.includes(file.type)) {
+          toast.error("Only JPG and PNG images are supported.");
+          return;
         }
-      } else {
-        console.log(taxError, "tax");
-      }
-    } catch (error) {
-      console.error("Error fetching tax data", error);
-    }
-  };
-
-  const getOneOrganization = async () => {
-    try {
-      const url = `${endpoints.GET_ONE_ORGANIZATION}`;
-      const { response, error } = await getOrganization(url);
-
-      if (!error && response?.data) {
-        const result = response.data;
-        setOneOrganization(result);
-
-        setSupplierData((prevSupplierData) => ({
-          ...prevSupplierData,
-          currency: result.baseCurrency,
-          billingCountry: result.organizationCountry,
-          shippingCountry: result.organizationCountry,
-          billingState: result.state,
-          shippingState: result.state,
-          sourceOfSupply: result.state,
-        }));
-      }
-    } catch (error) {
-      console.error("Error fetching organization:", error);
-    }
-  };
-
-  const handleSubmit = async () => {
-    if (loading) return;
-    setLoading(true);
-
-    const newErrors = { ...errors };
-
-    if (supplierdata.supplierDisplayName === "")
-      newErrors.supplierDisplayName = true;
-    if (
-      supplierdata.gstTreatment !== "" &&
-      supplierdata.gstTreatment !== "Overseas" &&
-      supplierdata.sourceOfSupply === ""
-    )
-      newErrors.sourceOfSupply = true;
-    if (
-      supplierdata.gstTreatment !== "Overseas" &&
-      supplierdata.gstTreatment !== "Unregistered Business" &&
-      supplierdata.gstTreatment !== "" &&
-      supplierdata.gstinUin === ""
-    )
-      newErrors.gstinUin = true;
-    const isAccountNumberValid = isAccountNumberSame.every(
-      (isValid) => isValid
-    );
-
-    if (!isAccountNumberValid) {
-      toast.error("Please ensure account numbers match before saving.");
-      setLoading(false); // Reset loading state
-      return;
-    }
-
-    if (Object.values(newErrors).some((error) => error)) {
-      setErrors(newErrors);
-      console.log(newErrors);
-      setLoading(false); // Reset loading state
-      return;
-    }
-
-    try {
-      const url = `${endpoints.ADD_SUPPLIER}`;
-      const { response, error } = await CreateSupplier(url, supplierdata);
-      console.log("err", error);
-      if (response && !error) {
-        console.log("sss", response.data);
-
-        toast.success(response.data.message);
-        setModalOpen(false);
-       //setsupplierResponse(response.data);
-        getAdditionalData();
-        getAdditionalInfo();
-        getOneOrganization();
-
-        setSupplierData(initializeSupplierData);
-      } else {
-        toast.error(error.response?.data?.message || error.message);
-        console.error("Error creating supplier:", error);
-      }
-    } catch (error) {
-      console.error("Unexpected error:", error);
-      toast.error("An unexpected error occurred. Please try again.");
-    } finally {
-      setLoading(false)
-    }
-  };
-
-
-  // compy billing address
-  const handleCopyAddress = (e: any) => {
-    e.preventDefault();
-    setSupplierData((prevData) => ({
-      ...prevData,
-      shippingAttention: supplierdata.billingAttention,
-      shippingCountry: supplierdata.billingCountry,
-      shippingAddressStreet1: supplierdata.billingAddressStreet1,
-      shippingAddressStreet2: supplierdata.billingAddressStreet2,
-      shippingCity: supplierdata.billingCity,
-      shippingState: supplierdata.billingState,
-      shippingPinCode: supplierdata.billingPinCode,
-      shippingPhone: supplierdata.billingPhone,
-      shippingFaxNum: supplierdata.billingFaxNum,
-    }));
-  };
-
-
-  // handle place od supply
-  const handleplaceofSupply = () => {
-    if (oneOrganization.organizationCountry) {
-      const country = countryData.find(
-        (c: any) =>
-          c.name.toLowerCase() ===
-          oneOrganization.organizationCountry.toLowerCase()
-      );
-
-      if (country) {
-        const states = country.states;
-        // console.log("States:", states);
-        setPlaceOfSupplyList(states);
-      } else {
-        console.log("Country not found");
-      }
-    } else {
-      console.log("No country selected");
-    }
-  };
-
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const validTypes = ["image/jpeg", "image/png"];
-      if (!validTypes.includes(file.type)) {
-        // toast.error("Only JPG and PNG images are supported.");
-        return;
-      }
-
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        if (reader.result) {
+  
+        const reader = new FileReader();
+  
+        reader.onloadend = () => {
           const base64String = reader.result as string;
           setSupplierData((prevDetails: any) => ({
             ...prevDetails,
-            supplierProfile: base64String, // Ensure you're updating the correct key
+            supplierProfile: base64String,
+          }));
+        };
+  
+        reader.readAsDataURL(file);
+      }
+    };
+  
+    useEffect(() => {
+      if (supplier) {
+        // Update supplier data
+        setSupplierData((prev: any) => ({ ...prev, ...supplier }));
+  
+        // Populate "Re-enter Account Numbers" with account numbers from bankDetails
+        setReEnterAccountNumbers(
+          supplier.bankDetails.map((detail:any) => detail.accountNum || "")
+        );
+  
+        // Set initial state for account number visibility
+        setShowAccountNumbers(supplier.bankDetails.map(() => false));
+        setShowReEnterAccountNumbers(supplier.bankDetails.map(() => false));
+  
+        // Set initial state for account number match
+        setIsaccountNumbersame(supplier.bankDetails.map(() => true));
+      }
+    }, [supplier]);
+  
+    // States
+    const [showAccountNumbers, setShowAccountNumbers] = useState(
+      supplierdata.bankDetails.map(() => false)
+    );
+    const [showReEnterAccountNumbers, setShowReEnterAccountNumbers] = useState(
+      supplierdata.bankDetails.map(() => false)
+    );
+    // check account number
+    const [reEnterAccountNumbers, setReEnterAccountNumbers] = useState(
+      supplierdata.bankDetails.map(() => "")
+    );
+  
+    const [isAccountNumberSame, setIsaccountNumbersame] = useState(
+      supplierdata.bankDetails.map(() => true)
+    );
+  
+    const handleReEnterAccountNumberChange = (
+      index: number,
+      e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      const newReEnterAccountNumbers = [...reEnterAccountNumbers];
+      newReEnterAccountNumbers[index] = e.target.value;
+      setReEnterAccountNumbers(newReEnterAccountNumbers);
+  
+      const isMatch =
+        supplierdata.bankDetails[index].accountNum === e.target.value;
+      const newIsAccountNumberSame = [...isAccountNumberSame];
+      newIsAccountNumberSame[index] = isMatch;
+      setIsaccountNumbersame(newIsAccountNumberSame);
+    };
+  
+    // add bank account
+    const handleBankDetailsChange = (
+      index: number,
+      e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      const { name, value } = e.target;
+  
+      type BankDetailKeys =
+        | "accountHolderName"
+        | "bankName"
+        | "accountNum"
+        | "ifscCode";
+  
+      const updatedBankDetails = [...supplierdata.bankDetails];
+      updatedBankDetails[index][name as BankDetailKeys] = value;
+  
+      // If account number is changed, reset re-entered value
+      if (name === "accountNum") {
+        const newReEnterAccountNumbers = [...reEnterAccountNumbers];
+        newReEnterAccountNumbers[index] = ""; // Clear the re-entered account number
+        setReEnterAccountNumbers(newReEnterAccountNumbers);
+  
+        const newIsAccountNumberSame = [...isAccountNumberSame];
+        newIsAccountNumberSame[index] = false; // Mark as not matching
+        setIsaccountNumbersame(newIsAccountNumberSame);
+      }
+  
+      setSupplierData((prevState: any) => ({
+        ...prevState,
+        bankDetails: updatedBankDetails,
+      }));
+    };
+  
+    console.log(supplierdata, "supplierData");
+  
+    const handleEditSupplier = async () => {
+      const newErrors = { ...errors };
+  
+      // Validate basic supplier fields
+      if (supplierdata.supplierDisplayName === "")
+        newErrors.supplierDisplayName = true;
+  
+      const unmatchedAccounts = supplierdata.bankDetails.some(
+        (bankDetail: { accountNum: string; }, index:any) => {
+          const accountNum = bankDetail.accountNum?.trim();
+          const reEnteredAccount = reEnterAccountNumbers[index]?.trim();
+  
+          if (!accountNum && !reEnteredAccount) {
+            return false;
+          }
+  
+          return accountNum !== reEnteredAccount;
+        }
+      );
+  
+      if (unmatchedAccounts) {
+        toast.error(
+          "Account numbers do not match their re-entered values. Please correct them."
+        );
+        return;
+      }
+  
+      if (Object.values(newErrors).some((error) => error)) {
+        setErrors(newErrors);
+        return;
+      }
+  
+      try {
+        const url = `${endpoints.EDIT_SUPPLIER}/${supplier?._id}`;
+        const { response, error } = await editSupplier(url, supplierdata);
+  
+        if (!error && response) {
+         // setsupplierResponse(response.data);
+          toast.success(response.data.message);
+          closeModal();
+        } else {
+          console.error("Error saving supplier:", error);
+        }
+      } catch (error) {
+        console.error("Error fetching suppliers:", error);
+      }
+    };
+  
+    //  bank details change
+    useEffect(() => {
+      setShowAccountNumbers(supplierdata.bankDetails.map(() => false));
+      setShowReEnterAccountNumbers(supplierdata.bankDetails.map(() => false));
+    }, [supplierdata.bankDetails]);
+  
+    const toggleShowAccountNumber = (index: number) => {
+      setShowAccountNumbers((prev: any[]) =>
+        prev.map((item: any, i: number) => (i === index ? !item : item))
+      );
+    };
+  
+    const toggleShowReEnterAccountNumber = (index: number) => {
+      setShowReEnterAccountNumbers((prev: any[]) =>
+        prev.map((item, i) => (i === index ? !item : item))
+      );
+    };
+  
+    // add new bank account
+    const addNewBankAccount = () => {
+      if (supplierdata.bankDetails.length < 6) {
+        setSupplierData((prevState:any) => ({
+          ...prevState,
+          bankDetails: [
+            ...prevState.bankDetails,
+            {
+              accountHolderName: "",
+              bankName: "",
+              accountNum: "",
+              ifscCode: "",
+            },
+          ],
+        }));
+      } else {
+        toast.error("You can only add up to 6 bank accounts.");
+      }
+    };
+  
+    // delete bank account
+    const deleteBankAccount = (index: number) => {
+      const updatedBankDetails = supplierdata.bankDetails.filter(
+        (_: any, i: number) => i !== index
+      );
+      setSupplierData((prevState: any) => ({
+        ...prevState,
+        bankDetails: updatedBankDetails,
+      }));
+    };
+  
+    // // // handle modal
+    // const openModal = () => {
+    //   setModalOpen(true);
+    // };
+  
+    // const closeModal = () => {
+    //   setModalOpen(false);
+    // };
+  
+    // add contact person
+    const handleRowChange = (
+      index: number,
+      field: keyof (typeof rows)[number],
+      value: string
+    ) => {
+      const updatedRows = [...rows];
+      updatedRows[index][field] = value;
+      setRows(updatedRows);
+  
+      const updatedContactPerson = updatedRows.map((row) => ({
+        salutation: row.salutation,
+        firstName: row.firstName,
+        lastName: row.lastName,
+        emailAddress: row.email,
+        workPhone: row.workPhone,
+        mobile: row.mobile,
+      }));
+  
+      setSupplierData((prevFormData: any) => ({
+        ...prevFormData,
+        contactPerson: updatedContactPerson,
+      }));
+    };
+  
+    // handle sidebar
+    const getTabClassName = (tabName: string) => {
+      return activeTab === tabName
+        ? " cursor-pointer font-bold text-darkRed"
+        : " cursor-pointer font-bold";
+    };
+  
+    const getBorderClassName = (tabName: string) => {
+      return activeTab === tabName ? "border-darkRed" : "border-neutral-300";
+    };
+    // console.log(supplierdata);
+  
+    // handle phonenumber change
+    const handleBillingPhoneChange = (value: string) => {
+      setSupplierData((prevData: any) => ({
+        ...prevData,
+        billingPhone: value,
+      }));
+    };
+  
+    const handleShippingPhoneChange = (value: string) => {
+      setSupplierData((prevData: any) => ({
+        ...prevData,
+        shippingPhone: value,
+      }));
+    };
+  
+    // handle input chnage
+    const handleChange = (
+      e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
+      const { name, type, value } = e.target;
+  
+      if (name === "openingType") {
+        setOpeningType(value);
+  
+        if (value === "Debit") {
+          setSupplierData((prevData:any) => ({
+            ...prevData,
+            debitOpeningBalance: prevData.creditOpeningBalance,
+            creditOpeningBalance: "",
+          }));
+        } else if (value === "Credit") {
+          setSupplierData((prevData:any) => ({
+            ...prevData,
+            creditOpeningBalance: prevData.debitOpeningBalance,
+            debitOpeningBalance: "",
           }));
         }
-      };
-
-      reader.readAsDataURL(file); // Convert the file to a Base64 string
-    }
-  };
-
-  useEffect(() => {
-    handleplaceofSupply();
-    if (supplierdata.billingCountry) {
-      const country = countryData.find(
-        (c: any) => c.name === supplierdata.billingCountry
-      );
-      if (country) {
-        setStateList(country.states || []);
       }
-    }
-
-    if (supplierdata.shippingCountry) {
-      const country = countryData.find(
-        (c: any) => c.name === supplierdata.shippingCountry
-      );
-      if (country) {
-        setshippingStateList(country.states || []);
+  
+      if (name === "openingBalance") {
+        if (openingType === "Credit") {
+          setSupplierData((prevData: any) => ({
+            ...prevData,
+            creditOpeningBalance: value,
+          }));
+        } else if (openingType === "Debit") {
+          setSupplierData((prevData: any) => ({
+            ...prevData,
+            debitOpeningBalance: value,
+          }));
+        }
       }
-    }
-  }, [supplierdata.shippingCountry, supplierdata.billingCountry, countryData]);
-
-  useEffect(() => {
-    getOneOrganization();
-    getAdditionalData();
-    getAdditionalInfo();
-  }, []);
-
-
-  return (
-    <div>
-      {/* <div>
-        <div className="flex justify-between">
-          <div>
-            <h1 className="text-[#0B1320] text-[16px] font-bold">Supplier</h1>
-            <p className="text-[#818894] text-[12px] font-normal">
-              Lorem ipsum dolor sit amet consectetur. Commodo enim odio fringilla
-            </p>
-          </div>
-        </div>
-
-        <Button onClick={openModal}>
-          <CirclePlus />
-          <p>Add Supplier</p>
-        </Button>
-      </div> */}
-      {page === "Edit" ? (
-        <div onClick={openModal} className="  cursor-pointer">
-          <EditIcon color={"#C88000"} />
-        </div>
-      ) : (
-        <Button onClick={openModal}>
-          <CirclePlus />
-          <p> Add Suppier</p>
-        </Button>
-      )}
-
-
-
+  
+      // Update supplierDisplayName based on companyName
+      if (name === "companyName") {
+        setSupplierData((prevData: any) => ({
+          ...prevData,
+          supplierDisplayName: value,
+        }));
+      }
+  
+      // Handle checkbox updates
+      if (type === "checkbox") {
+        const checked = (e.target as HTMLInputElement).checked;
+        setSupplierData((prevData: any) => ({
+          ...prevData,
+          [name]: checked,
+        }));
+      } else {
+        // Default case for other inputs
+        if (name !== "openingBalance") {
+          setSupplierData((prevData: any) => ({
+            ...prevData,
+            [name]: value,
+          }));
+        }
+      }
+    };
+  
+    // get additional data
+    const getAdditionalData = async () => {
+      try {
+        // Fetching currency data
+        const Currencyurl = `${endpoints.GET_CURRENCY_LIST}`;
+        const { response, error } = await getCurrencyData(Currencyurl);
+  
+        if (!error && response) {
+          setcurrencyData(response?.data);
+          // console.log(response.data, "currencyData");
+        }
+  
+        const paymentTermsUrl = `${endpoints.GET_PAYMENT_TERMS}`;
+        const { response: paymentTermResponse, error: paymentTermError } =
+          await getPaymentTerms(paymentTermsUrl);
+  
+        if (!paymentTermError && paymentTermResponse) {
+          setPaymentTerms(paymentTermResponse.data);
+          // console.log(paymentTermResponse.data, "paymet terms");
+        }
+  
+        const CountryUrl = `${endpoints.GET_COUNTRY_DATA}`;
+        const { response: countryResponse, error: countryError } =
+          await getCountryData(CountryUrl);
+        if (!countryError && countryResponse) {
+          // console.log(countryResponse.data[0].countries, "country");
+  
+          setcountryData(countryResponse?.data[0].countries);
+        } else {
+          console.log(countryError, "country");
+        }
+      } catch (error) {
+        console.log("Error in fetching currency data or payment terms", error);
+      }
+    };
+  
+    const getAdditionalInfo = async () => {
+      try {
+        const taxUrl = `${endpoints.GET_TAX_SUPPLIER}`;
+        const { response: taxResponse, error: taxError } = await getTax(taxUrl);
+  
+        if (!taxError && taxResponse) {
+          if (taxResponse) {
+            // console.log(taxResponse.data.taxType,"tax");
+  
+            setgstOrVat(taxResponse.data);
+          }
+        } else {
+          console.log(taxError, "tax");
+        }
+      } catch (error) {}
+    };
+    const getOneOrganization = async () => {
+      try {
+        const url = `${endpoints.GET_ONE_ORGANIZATION}`;
+        const { response, error } = await getOrganization(url);
+  
+        if (!error && response?.data) {
+          setOneOrganization(response.data);
+          // console.log(response.data,"org");
+        }
+      } catch (error) {
+        console.error("Error fetching organization:", error);
+      }
+    };
+  
+    // compy billing address
+    const handleCopyAddress = (e: any) => {
+      e.preventDefault();
+      setSupplierData((prevData:any) => ({
+        ...prevData,
+        shippingAttention: supplierdata.billingAttention,
+        shippingCountry: supplierdata.billingCountry,
+        shippingAddressStreet1: supplierdata.billingAddressStreet1,
+        shippingAddressStreet2: supplierdata.billingAddressStreet2,
+        shippingCity: supplierdata.billingCity,
+        shippingState: supplierdata.billingState,
+        shippingPinCode: supplierdata.billingPinCode,
+        shippingPhone: supplierdata.billingPhone,
+        shippingFaxNum: supplierdata.billingFaxNum,
+      }));
+    };
+  
+    // handle place od supply
+    const handleplaceofSupply = () => {
+      if (oneOrganization.organizationCountry) {
+        const country = countryData.find(
+          (c: any) =>
+            c.name.toLowerCase() ===
+            oneOrganization.organizationCountry.toLowerCase()
+        );
+  
+        if (country) {
+          const states = country.states;
+          // console.log("States:", states);
+  
+          setPlaceOfSupplyList(states);
+        } else {
+          console.log("Country not found");
+        }
+      } else {
+        console.log("No country selected");
+      }
+    };
+  
+    // console.log(placeOfSupplyList,"place");
+  
+    // handle country and state
+    useEffect(() => {
+      handleplaceofSupply();
+      if (supplierdata.billingCountry) {
+        const country = countryData.find(
+          (c: any) => c.name === supplierdata.billingCountry
+        );
+        if (country) {
+          setStateList(country.states || []);
+        }
+      }
+  
+      if (supplierdata.shippingCountry) {
+        const country = countryData.find(
+          (c: any) => c.name === supplierdata.shippingCountry
+        );
+        if (country) {
+          setshippingStateList(country.states || []);
+        }
+      }
+    }, [supplierdata.shippingCountry, supplierdata.billingCountry, countryData]);
+  
+    useEffect(() => {
+      getAdditionalData();
+      getAdditionalInfo();
+      getOneOrganization();
+    }, []);
+  
+    const ShippingAddressRef = useRef<HTMLDivElement | null>(null);
+    const BillingAddressRef = useRef<HTMLDivElement | null>(null);
+  
+    const addressscroll = () => {
+      if (addressEdit) {
+        if (addressEdit === "billingAddressEdit" && BillingAddressRef.current) {
+          BillingAddressRef.current.scrollIntoView({ behavior: "smooth" });
+          console.log(addressEdit, "add");
+        }
+        if (addressEdit === "shippingAddressEdit" && ShippingAddressRef.current) {
+          ShippingAddressRef.current.scrollIntoView({ behavior: "smooth" });
+          console.log(addressEdit, "add");
+        }
+      }
+    };
+  
+    console.log(addressEdit, "addressEdit");
+  
+    useEffect(() => {
+      setActiveTab(addressEdit ? "address" : "otherDetails");
+    }, [addressEdit]);
+  
+    useEffect(() => {
+      if (addressEdit) {
+        addressscroll();
+      }
+    }, [addressEdit]);
+  
+    return (
       <div>
+
+
+        
+        {/* <Button onClick={openModal} variant="secondary" className="pl-6 pr-6"  size="sm"><Pen size={18} color="#565148" /> <p className="text-sm font-medium">Edit</p></Button> */}
         <Modal className="w-[1200px] text-start" open={isModalOpen} onClose={closeModal}>
           <div className="p-5 mt-3">
             <div className="mb-5 flex p-2 rounded-xl bg-[#FAF7F2] relative overflow-hidden px-3 items-center">
               <div className="relative ">
                 <h3 className="text-lg font-bold text-textColor">
-                  Add New Supplier
+                  Edit Supplier 
                 </h3>
               </div>
               <div
@@ -816,8 +776,8 @@ function AddSupplierModal({ page, }: Props) {
                           name="workPhone"
                           placeholder="Enter Work Phone"
                           value={supplierdata.workPhone}
-                          country={"india"}
-                          onChange={(value: any) =>
+                          country={"in"}
+                          onChange={(value:any) =>
                             setSupplierData({ ...supplierdata, workPhone: value })
                           }
                         />
@@ -946,19 +906,19 @@ function AddSupplierModal({ page, }: Props) {
                         <div className="grid grid-cols-2 gap-4">
                           <Input placeholder="Enetr Pan Number" label="PAN" />
 
-                          {/* <Select
+                          <Select
                             label="Currency"
-                            options={currencyData?.map((item: any) => ({
+                            options={currencyData.map((item: any) => ({
                               value: item.currencyCode,
                               label: `${item.currencyName} (${item.currencySymbol})`,
-                            })) || []}
+                            }))}
                             placeholder="Select Currency"
+                            // name="currency"
                             value={supplierdata.currency}
                             onChange={(value: string) =>
-                              handleChange({ target: { name: 'currency', value } } as ChangeEvent<HTMLInputElement>)
+                              handleChange({ target: { name: "currency", value } } as ChangeEvent<HTMLInputElement>)
                             }
-                          /> */}
-
+                          />
 
                           <Select
                             label="Payment Terms"
@@ -1164,11 +1124,11 @@ function AddSupplierModal({ page, }: Props) {
                                         }}
                                       />
                                     </div>
-                                    {errors.gstinUin && (
+                                    {/* {errors.gstinUin && (
                                       <p className="text-red-800 text-xs ms-2 mt-1">
                                         Please enter a valid GSTIN/UIN.
                                       </p>
-                                    )}
+                                    )} */}
                                   </div>
                                 )}
                             </div>
@@ -1662,7 +1622,7 @@ function AddSupplierModal({ page, }: Props) {
                     {activeTab === "bankDetails" && (
                       <div className="">
                         <div>
-                          {supplierdata.bankDetails.map((bankDetail, index) => (
+                          {supplierdata.bankDetails.map((bankDetail: { accountHolderName: string | number | readonly string[] | undefined; bankName: string | number | readonly string[] | undefined; accountNum: string | number | readonly string[] | undefined; ifscCode: string | number | readonly string[] | undefined; }, index: any) => (
                             <>
                               {supplierdata.bankDetails.length > 1 && (
                                 <div className="pt-10 pb-6 flex">
@@ -1836,12 +1796,12 @@ function AddSupplierModal({ page, }: Props) {
             <Button onClick={closeModal} variant="secondary">
               Cancel
             </Button>
-            <Button onClick={handleSubmit} variant="primary">Save</Button>
+            <Button onClick={handleEditSupplier} variant="primary">Save</Button>
           </div>
         </Modal>
       </div>
-    </div>
-  );
-}
-
-export default AddSupplierModal;
+    );
+  };
+  
+  export default EditSupplier;
+  
