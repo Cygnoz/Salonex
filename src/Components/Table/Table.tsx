@@ -1,15 +1,15 @@
 import { useState } from "react";
 import TableSkelton from "./TableSkelton";
 import Eye from "../../assets/icons/Eye";
-import Trash2 from "../../assets/icons/Trash";
-import Pen from "../../assets/icons/Pen";
 import SearchBar from "../SearchBar";
 import ChevronRight from "../../assets/icons/ChevronRight";
 import ChevronLeft from "../../assets/icons/ChevronLeft";
 import Button from "../Button";
 import PrinterIcon from "../../assets/icons/PrinterIcon";
-import AddSupplierModal from "../../Modules/Supplier/AddSupplierModal";
-import NewCustomer from "../../Modules/Customer/NewCustomer";
+import TrashIcon from "../../assets/icons/Trash";
+import Pen from "../../assets/icons/Pen";
+import NoDataFoundTable from "./NoDataFoundTable";
+import ConfirmModal from "./ConfirmModal";
 
 interface Column {
   id: string;
@@ -31,7 +31,7 @@ interface TableProps {
   isPrint?: boolean
   onEditClick?: (id: string) => void;
   onPrintClick?: (id: string) => void;
-  page?: string
+  renderActions?: (item: any) => JSX.Element;
 }
 
 const Table: React.FC<TableProps> = ({
@@ -46,20 +46,24 @@ const Table: React.FC<TableProps> = ({
   searchableFields,
   onEditClick,
   onPrintClick,
-  page
+  renderActions
 }) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const totalPages = Math.ceil(data.length / rowsPerPage);
 
+  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  const totalPages = Math.max(1, Math.ceil(data.length / rowsPerPage));
-
+  const confirmDelete = (id: string) => {
+    setDeleteId(id);
+    setConfirmModalOpen(true);
+  };
   const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(Number(event.target.value));
     setCurrentPage(1); // Reset to first page when rows per page changes
   };
-
   const filteredData = Array.isArray(data)
     ? data
       .slice()
@@ -89,33 +93,33 @@ const Table: React.FC<TableProps> = ({
         />}
         {
           isPrint && (
-            <Button size="sm">
-              <PrinterIcon color="white" />
+            <Button size="sm" variant="secondary">
+              <PrinterIcon />
               <p className="text-xs font-semibold">Print</p>
             </Button>
           )
         }
       </div>
 
-      <div className="overflow-x-auto mt-3 hide-scrollbar overflow-y-scroll max-h-[45vh]">
+      <div className="overflow-x-auto mt-3 hide-scrollbar overflow-y-scroll max-h-[25rem]">
         <table className="min-w-full bg-white mb-5">
           <thead className="text-[12px] text-center text-dropdownText">
             <tr style={{ backgroundColor: "#F7ECD9" }}>
-              <th className="py-3 px-4 border-b border-tableBorder text-xs font-bold text-[#495160]">
-                SI  No
+              <th className="py-3 px-4 border-b border-tableBorder text-xs font-medium text-[#495160]">
+                No
               </th>
               {columns.map(
                 (col) =>
                   col.visible && (
                     <th
                       key={col.id}
-                      className="py-2 px-4 text-[#495160] border-b text-xs font-bold border-tableBorder"
+                      className="py-2 px-4 text-[#495160] border-b text-xs font-medium border-tableBorder"
                     >
                       {col.label}
                     </th>
                   )
               )}
-              <th className="py-3 px-2 font-bold text-[#495160] border-b text-xs border-tableBorder">
+              <th className="py-3 px-2 font-medium text-[#495160] border-b text-xs border-tableBorder">
                 Action
               </th>
               <th className="py-3 px-2 font-medium border-b border-tableBorder"></th>
@@ -128,7 +132,7 @@ const Table: React.FC<TableProps> = ({
               ))
             ) : filteredData && filteredData.length > 0 ? (
               filteredData.map((item, rowIndex) => (
-                <tr key={item.id} className="relative cursor-pointer">
+                <tr key={item.id} className="relative">
                   <td className="py-2.5 px-4 border-y border-tableBorder text-[#818894]">
                     {(currentPage - 1) * rowsPerPage + rowIndex + 1}
                   </td>
@@ -148,51 +152,54 @@ const Table: React.FC<TableProps> = ({
                         </td>
                       )
                   )}
-                  <td className="py-3 px-4 border-b border-tableBorder text-[#495160] flex items-center justify-center gap-2">
-                    {
+                  <td className="py-3 px-4 border-b border-tableBorder text-[#495160] flex items-center justify-center gap-3">
+                    {renderActions ? (
+                      renderActions(item)
+                    ) : (
                       onEditClick && (
-                        <>
-                          {page === "supplier" ? (
-                            <AddSupplierModal id={item._id} />
-                          ) : page === "Customer" ? (
-                            <NewCustomer id={item._id} />
-                          ) : (
-                            <button onClick={() => onEditClick && onEditClick(item._id)}>
-                              <Pen color={"#3C7FBC"} size={18} />
-                            </button>
-                          )}
-                        </>
-                      )
-                    }
-
-                    {
-                      onRowClick && (
-                        <button onClick={() => onRowClick && onRowClick(item._id)}>
-                          <Eye color={"#9A9436"} />
+                        <button onClick={() => onEditClick(item._id)}>
+                          <Pen color={"#C88000"} />
                         </button>
                       )
-                    }
+                    )}
+
+                    {onRowClick && (
+                      <button onClick={() => onRowClick(item._id)}>
+                        <Eye size={22} color={"#3C7FBC"} />
+                      </button>
+                    )}
+
                     {onPrintClick && (
-                      <button onClick={() => onDelete && onDelete(item._id)}>
+                      <button onClick={() => onPrintClick(item._id)}>
                         <PrinterIcon color="#EA1E4F" />
                       </button>
                     )}
+
                     {onDelete && (
-                      <button onClick={() => onDelete && onDelete(item._id)}>
-                        <Trash2 color="#EA1E4F" size={18} />
+                      <button onClick={() => confirmDelete(item._id)} aria-label="Delete">
+                        <TrashIcon color="#EA1E4F" />
                       </button>
                     )}
-
                   </td>
                   <td className="py-3 px-4 border-b border-tableBorder"></td>
                 </tr>
               ))
             ) : (
-              <p>No Data found</p>
+              <NoDataFoundTable columns={columns} />
             )}
           </tbody>
         </table>
-      </div>
+        <ConfirmModal
+          open={isConfirmModalOpen}
+          onClose={() => setConfirmModalOpen(false)}
+          onConfirm={() => {
+            if (deleteId) {
+              onDelete?.(deleteId); // Call the delete function
+              setConfirmModalOpen(false); // Close the modal after deletion
+            }
+          }}
+          message="Are you sure you want to delete?"
+        />
         <div className="flex justify-between items-center mt-4">
           {/* Rows per page selector on the left */}
           <div className="flex gap-2 items-center text-[#71736B] font-medium text-xs p-5">
@@ -215,12 +222,12 @@ const Table: React.FC<TableProps> = ({
               {/* Left Chevron Button */}
               {currentPage > 1 && (
                 <button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                className="w-8 h-8 flex items-center justify-center rounded bg-gray-50 hover:bg-gray-300 transition duration-200 disabled:opacity-50"
-                disabled={currentPage === 1}
-              >
-                <ChevronLeft />
-              </button>
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  className="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 transition duration-200 disabled:opacity-50"
+                  disabled={currentPage === 1}
+                >
+                  <ChevronLeft color="" />
+                </button>
               )}
 
               {/* Render Page Numbers */}
@@ -234,9 +241,9 @@ const Table: React.FC<TableProps> = ({
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`px-3 py-1 rounded text-xs ${currentPage === page
-                        ? "bg-[#B5636A] text-white"
-                        : "text-[#495160] font-medium hover:bg-gray-100 bg-[#F7ECD9]"
+                      className={`px-3 py-1 rounded ${currentPage === page
+                        ? "bg-[#97998E] text-white"
+                        : "text-[#71736B] hover:bg-gray-100"
                         }`}
                     >
                       {page}
@@ -245,14 +252,10 @@ const Table: React.FC<TableProps> = ({
 
                 {currentPage + 1 < totalPages && (
                   <>
-                    <span className="px-1 bg-[#F7ECD9]">...</span>
+                    <span className="px-1">...</span>
                     <button
                       onClick={() => setCurrentPage(totalPages)}
-                      className={`px-3 py-1 rounded text-xs ${currentPage === Number(page)
-                        ? "bg-[#B5636A] text-white"
-                        : "text-[#495160] font-medium hover:bg-gray-100 bg-[#F7ECD9]"
-                        }`}
-
+                      className="px-3 py-1 rounded text-[#71736B] hover:bg-gray-100"
                     >
                       {totalPages}
                     </button>
@@ -262,13 +265,13 @@ const Table: React.FC<TableProps> = ({
 
               {/* Right Chevron Button */}
               {currentPage < totalPages && (
-               <button
-               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-               className="w-8 h-8 flex items-center justify-center rounded bg-gray-50 hover:bg-gray-300 transition duration-200 disabled:opacity-50"
-               disabled={currentPage === totalPages || totalPages === 0}
-             >
-               <ChevronRight />
-             </button>
+                <button
+                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  className="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 transition duration-200 disabled:opacity-50"
+                  disabled={currentPage === totalPages || totalPages === 0}
+                >
+                  <ChevronRight />
+                </button>
               )}
             </div>
 
@@ -279,6 +282,7 @@ const Table: React.FC<TableProps> = ({
           </div>
 
         </div>
+      </div>
 
 
     </div>
