@@ -12,7 +12,14 @@ const useApi = (type: string, port: number) => {
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const authToken = localStorage.getItem("authToken");
+
+  // Updated: Get token inside request function
+  const getApiInstance = () => {
+    const authToken = sessionStorage.getItem("authToken"); // Always get fresh token
+    return authToken
+      ? axiosInstance.authInstance(port)
+      : axiosInstance.baseInstance(port);
+  };
 
   const request = async (
     url: string,
@@ -21,10 +28,9 @@ const useApi = (type: string, port: number) => {
   ): Promise<ApiResponse> => {
     setLoading(true);
     let response: AxiosResponse | undefined;
-    const api = authToken
-      ? axiosInstance.authInstance(port)
-      : axiosInstance.baseInstance(port);
-    const mApi = axiosInstance.MauthInstance(port);
+
+    // Always use the latest API instance
+    const api = getApiInstance();
 
     try {
       switch (type) {
@@ -35,10 +41,10 @@ const useApi = (type: string, port: number) => {
           response = await api.patch(url, payload, header);
           break;
         case "mPost":
-          response = await mApi.post(url, payload, header);
+          response = await api.post(url, payload, header);
           break;
         case "mPut":
-          response = await mApi.put(url, payload, header);
+          response = await api.put(url, payload, header);
           break;
         case "put":
           response = await api.put(url, payload, header);

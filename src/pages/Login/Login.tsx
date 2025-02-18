@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../Components/Button";
 import Eye from "../../assets/icons/Eye";
 import bgImage from "../../assets/images/Login-image.png"
@@ -50,6 +50,10 @@ function Login({}: Props) {
       setIsLoading(false);
     }
   };
+
+  useEffect(()=>{
+    sessionStorage.clear()
+  },[])
 
   return (
     <div className="h-[100vh] flex">

@@ -11,16 +11,10 @@ const Currencies: React.FC<Props> = () => {
   const [isExchangeRateFields, setIsExchangeRateFields] = useState(false);
   const [enableExchangeRateModal, setEnableExchangeRateModal] = useState(false);
  
-  // const openModal = (
-  //   enableExchangeRateModal = false,
-  //   newCurrencyModal = false
-  // ) => {
-  //   setEnableExchangeRateModal(enableExchangeRateModal);
-  // };
-
+  
+  
   const closeModal = () => {
     setEnableExchangeRateModal(false);
-   
   }
 
 

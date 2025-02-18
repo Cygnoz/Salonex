@@ -147,6 +147,8 @@ function AddSupplierModal({ page, }: Props) {
   const { request: getOrganization } = useApi("get", 5004);
   const { request: getTax } = useApi("get", 5009);
  //const { setsupplierResponse } = useContext(SupplierResponseContext)!;
+ console.log(currencyData);
+ 
   const [rows, setRows] = useState([
     {
       salutation: "",
@@ -178,16 +180,17 @@ function AddSupplierModal({ page, }: Props) {
   );
 
   // check account number
-  const [reEnterAccountNumbers, setReEnterAccountNumbers] = useState(
+   const [reEnterAccountNumbers, setReEnterAccountNumbers] = useState(
     supplierdata.bankDetails.map(() => "")
-  );
-  const [isAccountNumberSame, setIsaccountNumbersame] = useState(
+   );
+   
+   const [isAccountNumberSame, setIsaccountNumbersame] = useState(
     supplierdata.bankDetails.map(() => true)
-  );
-  const handleReEnterAccountNumberChange = (
+   );
+   const handleReEnterAccountNumberChange = (
     index: number,
     e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+   ) => {
     const newReEnterAccountNumbers = [...reEnterAccountNumbers];
     newReEnterAccountNumbers[index] = e.target.value;
     setReEnterAccountNumbers(newReEnterAccountNumbers);

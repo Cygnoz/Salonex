@@ -1,23 +1,24 @@
+import { Link } from "react-router-dom";
 import ArrowRight from "../assets/icons/ArrowRight";
+import saleIcon from "../assets/icons/BarChart";
 import building from "../assets/icons/Building";
 import itemIcon from "../assets/icons/Frame";
 import prefIcon from "../assets/icons/ListFilter";
-import RewardIcon from "../assets/icons/Vector";
-import saleIcon from "../assets/icons/BarChart";
-import purchaseIcon from "../assets/icons/ShoppingBag";
 import customization from "../assets/icons/Paint";
-import orgImg from "../assets/images/org.png";
-import itemImg from "../assets/images/image 49.png";
-import taxImg from "../assets/images/image 47.png";
-import prefImg from "../assets/images/image 47 (1).png";
-import rewardImg from "../assets/images/image 48.png";
-import saleImg from "../assets/images/image 51.png";
-import purchaseImg from "../assets/images/image 45.png";
-import customizationImg from "../assets/images/image 50.png";
-import { Link } from "react-router-dom";
 import Shirt from "../assets/icons/Shirt";
-import orders from '../assets/images/orders.png'
+import purchaseIcon from "../assets/icons/ShoppingBag";
+import RewardIcon from "../assets/icons/Vector";
+import purchaseImg from "../assets/images/image 45.png";
+import prefImg from "../assets/images/image 47 (1).png";
+import taxImg from "../assets/images/image 47.png";
+import rewardImg from "../assets/images/image 48.png";
+import itemImg from "../assets/images/image 49.png";
+import customizationImg from "../assets/images/image 50.png";
+import saleImg from "../assets/images/image 51.png";
+import orders from '../assets/images/orders.png';
+import orgImg from "../assets/images/org.png";
 const Settings = () => {
+   
   const data = [
     {
       page: "Organization",

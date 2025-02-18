@@ -6,10 +6,14 @@ import toast  from 'react-hot-toast';
 import axios from 'axios';
 import useApi from '../../Hooks/useApi';
 import { endpoints } from '../../Services/apiEndpoints';
+import { useOrganization } from '../../context/OrgContext';
+import { useRegularApi } from '../../context/ApiContext';
 
 type Props = {}
 
 function Otp({}: Props) {
+  const {refreshOrg}=useOrganization()
+  const {refreshContext}=useRegularApi()
   const navigate = useNavigate();
   const location = useLocation();
   const { request: verifyOtp } = useApi("post", 5004);
@@ -87,8 +91,16 @@ function Otp({}: Props) {
 
       if (response.response?.data.success) {
         toast.success(response.response?.data.message || 'OTP verified successfully!');
-        localStorage.setItem('authToken', response.response.data.token);
-        navigate('/'); // Redirect to the home/dashboard
+        sessionStorage.setItem('authToken', response.response.data.token);
+        if(sessionStorage.getItem("authToken")){
+          refreshOrg(); 
+          refreshContext()
+        }
+        // Wait for token storage before making the API call
+        setTimeout(() => {
+          // Fetch organization data after a small delay
+          navigate('/dashboard'); // Redirect after fetching data
+        }, 500);
       } else {
         const errorMessage = response.response?.data.message || 'OTP verification failed.';
         setError(errorMessage);

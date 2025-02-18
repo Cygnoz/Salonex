@@ -52,7 +52,7 @@ export const endpoints = {
     GET_ALL_SALES_ORDER: "get-all-sales-order",
   
     // Organisation Invoices
-    ADD_INVOICE_SETTINGS: "add-invoice-settings",
+    ADD_ADDITIONAL_DETAILS: "add-invoice-settings",
     GET_SETTINGS: "get-settings",
     ADD_PAYMENT_TERMS: `add-payment-terms`,
     EDIT_PAYMENT_TERMS: `edit-payment-terms/:id`,

@@ -1,16 +1,16 @@
 import { useState } from "react";
 import ArrowUpRightIcon from "../assets/icons/ArrowUpRightIcon";
 import BookingIcon from "../assets/icons/BookingIcon";
+import Calender from "../assets/icons/Calender";
+import ChevronRight from "../assets/icons/ChevronRight";
+import ClockIcon from "../assets/icons/ClockIcon";
 import CustomerIcon from "../assets/icons/CustomerIcon";
 import NewCustomerIcon from "../assets/icons/NewCustomerIcon";
 import RupeesIcon from "../assets/icons/RupeesIcon";
-import SearchBarPos from "../Components/SearchBarPos";
-import DateInput from "../Components/DateInput";
-import Calender from "../assets/icons/Calender";
-import ClockIcon from "../assets/icons/ClockIcon";
+import faceBgImage from "../assets/images/Rectangle 2.png";
 import Button from "../Components/Button";
-import faceBgImage from "../assets/images/Rectangle 2.png"
-import ChevronRight from "../assets/icons/ChevronRight";
+import DateInput from "../Components/DateInput";
+import SearchBarPos from "../Components/SearchBarPos";
 
 const cards = [
   {
@@ -81,6 +81,7 @@ const customers = [
 
 
 function DashBoard() {
+   
   const [searchValue, setSearchValue] = useState<string>("");
   const [activeTab, setActiveTab] = useState("Upcoming");
   return (
