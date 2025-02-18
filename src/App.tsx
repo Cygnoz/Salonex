@@ -26,29 +26,37 @@ const App: React.FC = () => {
   const routes = [
     {
       path: "/",
+      element: <Login />,
+    },
+    {
+      path: "/otp",
+      element: <Otp />,
+    },
+    {
+      // path: "/",
       element: <Layout />,
       children: [
-        { path: "/", element: <Dashboard /> },
-        { path: "purchase/*", element: <PurchaseRoutes /> },
-        { path: "customer/*", element: <CustomerRoutes /> },
-        { path: "itemhub/*", element: <ItemMasterRoutes /> },
-        { path: "order/*", element: <OrderRoutes /> },
-        { path: "internalOrder/*", element: <InternalOrderRoutes /> },
-        { path: "sales/*", element: <SaleRoutes /> },
-        { path: "accountant/*", element: <AccountsRoutes /> },
-        { path: "expense/*", element: <ExpenseRoutes /> },
-        { path: "supplier/*", element: <SupplierRoutes /> },
-        { path: "staffs/*", element: <StaffRoutes /> },
-        { path: "report/*", element: <ReportRoutes /> },  
-        { path: "booking/*", element: <BookingRoutes /> },  
+        { path: "/dashboard", element: <Dashboard /> },
+        { path: "/purchase/*", element: <PurchaseRoutes /> },
+        { path: "/customer/*", element: <CustomerRoutes /> },
+        { path: "/itemhub/*", element: <ItemMasterRoutes /> },
+        { path: "/order/*", element: <OrderRoutes /> },
+        { path: "/internalOrder/*", element: <InternalOrderRoutes /> },
+        { path: "/sales/*", element: <SaleRoutes /> },
+        { path: "/accountant/*", element: <AccountsRoutes /> },
+        { path: "/expense/*", element: <ExpenseRoutes /> },
+        { path: "/supplier/*", element: <SupplierRoutes /> },
+        { path: "/staffs/*", element: <StaffRoutes /> },
+        { path: "/report/*", element: <ReportRoutes /> },
+        { path: "/booking/*", element: <BookingRoutes /> },
       ],
     },
     {
-      path: "/",
+      // path: "/",
       element: <SettingsLayout />,
       children: [
         { path: "", element: <div></div> },
-        { path: "settings/*", element: <SettingsRoutes /> },
+        { path: "/settings/*", element: <SettingsRoutes /> },
       ],
     },
     {
@@ -58,14 +66,6 @@ const App: React.FC = () => {
     {
       path: "/posreciept",
       element: <PosReceipt />,
-    },
-    {
-      path: "/login",
-      element: <Login/>,
-    },
-    {
-      path: "/otp",
-      element:<Otp/> ,
     },
     {
       path: "*",
@@ -87,4 +87,5 @@ const App: React.FC = () => {
     </Suspense>
   );
 };
+
 export default App;
