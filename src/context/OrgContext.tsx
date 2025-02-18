@@ -24,7 +24,6 @@ export const OrganizationProvider: React.FC<{ children: ReactNode }> = ({ childr
       if (!error && response) {
         setOrganizationData(response.data);
         sessionStorage.setItem('organization', JSON.stringify(response.data));
-        console.log(response.data, 'Organization data fetched');
       }
     } catch (error) {
       console.log('Error in fetching Organization', error);

@@ -10,6 +10,8 @@ import Button from "../Button";
 import PrinterIcon from "../../assets/icons/PrinterIcon";
 import AddSupplierModal from "../../Modules/Supplier/AddSupplierModal";
 import NewCustomer from "../../Modules/Customer/NewCustomer";
+// import Modal from "../modal/Modal";
+// import ConfirmModal from "../modal/ConfirmModal";
 
 interface Column {
   id: string;
@@ -59,7 +61,7 @@ const Table: React.FC<TableProps> = ({
     setRowsPerPage(Number(event.target.value));
     setCurrentPage(1); // Reset to first page when rows per page changes
   };
-
+  
   const filteredData = Array.isArray(data)
     ? data
       .slice()
@@ -280,7 +282,9 @@ const Table: React.FC<TableProps> = ({
 
         </div>
 
-
+        {/* <Modal open={isModal} onClose={handleModalToggle}className="w-[30%]" >
+        <ConfirmModal prompt="Are you sure want to delete this currency"  action={onDelete} onClose={handleModalToggle}/>
+      </Modal> */}
     </div>
   );
 };

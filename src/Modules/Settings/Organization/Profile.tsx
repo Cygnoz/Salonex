@@ -475,7 +475,7 @@ const Profile = () => {
 
         <div className="flex my-4 gap-4">
           <Button variant="primary" className="pl-12 pr-12" size="sm" type="submit">
-            Save
+            Update
           </Button>
 
           <Button variant="secondary" size="sm" className="pl-12 pr-12">
