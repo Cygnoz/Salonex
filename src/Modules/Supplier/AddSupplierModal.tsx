@@ -20,6 +20,7 @@ import EyeOffIcon from "../../assets/icons/EyeOffIcon";
 import EditIcon from "../../assets/icons/Pen"
 import CirclePlus from "../../assets/icons/circleplus";
 import { SupplierData } from "../../Interface/Supplier";
+import { useRegularApi } from "../../context/ApiContext";
 //import { SupplierResponseContext } from "../../context/ContextShare";
 //import { SupplierResponseContext } from "../../context/ContextShare";
 
@@ -36,6 +37,12 @@ type Props = {
 
 
 function AddSupplierModal({ page, }: Props) {
+  const { refreshContext } = useRegularApi()
+  const [data, setData] = useState<{
+    country: any[];
+    currency: { label: string; value: string }[];
+  }>({ country: [], currency: [] });
+
   const initializeSupplierData = (): SupplierData => ({
     supplierProfile: "",
     salutation: "",
@@ -146,9 +153,9 @@ function AddSupplierModal({ page, }: Props) {
   const { request: getPaymentTerms } = useApi("get", 5004);
   const { request: getOrganization } = useApi("get", 5004);
   const { request: getTax } = useApi("get", 5009);
- //const { setsupplierResponse } = useContext(SupplierResponseContext)!;
- console.log(currencyData);
- 
+  //const { setsupplierResponse } = useContext(SupplierResponseContext)!;
+  //console.log(currencyData);
+
   const [rows, setRows] = useState([
     {
       salutation: "",
@@ -180,17 +187,17 @@ function AddSupplierModal({ page, }: Props) {
   );
 
   // check account number
-   const [reEnterAccountNumbers, setReEnterAccountNumbers] = useState(
+  const [reEnterAccountNumbers, setReEnterAccountNumbers] = useState(
     supplierdata.bankDetails.map(() => "")
-   );
-   
-   const [isAccountNumberSame, setIsaccountNumbersame] = useState(
+  );
+
+  const [isAccountNumberSame, setIsaccountNumbersame] = useState(
     supplierdata.bankDetails.map(() => true)
-   );
-   const handleReEnterAccountNumberChange = (
+  );
+  const handleReEnterAccountNumberChange = (
     index: number,
     e: React.ChangeEvent<HTMLInputElement>
-   ) => {
+  ) => {
     const newReEnterAccountNumbers = [...reEnterAccountNumbers];
     newReEnterAccountNumbers[index] = e.target.value;
     setReEnterAccountNumbers(newReEnterAccountNumbers);
@@ -202,7 +209,7 @@ function AddSupplierModal({ page, }: Props) {
     setIsaccountNumbersame(newIsAccountNumberSame);
   };
 
- // console.log(supplierdata, "supplierData");
+  // console.log(supplierdata, "supplierData");
 
   // add bank account
   const handleBankDetailsChange = (
@@ -225,6 +232,31 @@ function AddSupplierModal({ page, }: Props) {
       bankDetails: updatedBankDetails,
     }));
   };
+
+  useEffect(() => {
+    const filteredCountries = countryData?.map((items: any) => ({
+      ...items,
+      label: items.name,
+      value: String(items.name), // Ensure `value` is a string
+    }));
+    setData((prevData: any) => ({ ...prevData, country: filteredCountries }));
+  }, [countryData]);
+
+  useEffect(() => {
+    setData((prev) => ({
+      ...prev, // Spread the previous state to keep other properties intact
+      currency: (currencyData || []).map((currency: any) => ({
+        value: currency.currencyCode,
+        label: `${currency.currencyName} (${currency.currencyCode})`,
+      })),
+    }));
+  }, [currencyData]); // Triggered when currencyData changes
+
+
+  useEffect(() => {
+    refreshContext({ currencyData: true })
+
+  }, [])
 
   useEffect(() => {
     setShowAccountNumbers(supplierdata.bankDetails.map(() => false));
@@ -560,11 +592,11 @@ function AddSupplierModal({ page, }: Props) {
       const { response, error } = await CreateSupplier(url, supplierdata);
       console.log("err", error);
       if (response && !error) {
-        console.log("sss", response.data);
+       // console.log("sss", response.data);
 
         toast.success(response.data.message);
         setModalOpen(false);
-       //setsupplierResponse(response.data);
+        //setsupplierResponse(response.data);
         getAdditionalData();
         getAdditionalInfo();
         getOneOrganization();
@@ -814,7 +846,7 @@ function AddSupplierModal({ page, }: Props) {
                     </div>
                     <div className="grid grid-cols-3 gap-4 mt-4">
                       <div className="w-full border-0 mt-1">
-                        <PhoneNumberInput
+                        {/* <PhoneNumberInput
                           label="Work Phone"
                           name="workPhone"
                           placeholder="Enter Work Phone"
@@ -823,21 +855,35 @@ function AddSupplierModal({ page, }: Props) {
                           onChange={(value: any) =>
                             setSupplierData({ ...supplierdata, workPhone: value })
                           }
+                        /> */}
+
+                        <PhoneNumberInput
+                          label="Work Phone"
+                          name="workPhone"
+                          placeholder="Enter phone number"
+                          value={supplierdata.workPhone}
+                          onChange={(value: any) =>
+                            setSupplierData({ ...supplierdata, workPhone: value })
+                          }
+                          countryData={data?.country}
                         />
                       </div>
 
                       <div className="w-full border-0 mt-1">
-                        <PhoneNumberInput
-                          label="Mobile"
-                          name="companyPhone"
-                          placeholder="Enter phone number"
+                        
+                      <PhoneNumberInput
+                           label="Mobile"
+                           name="companyPhone"
+                           placeholder="Enter phone number"
+                         // value={supplierdata.workPhone}
                           onChange={(value: string) =>
                             handleChange({
                               target: { name: "mobile", value },
                             } as ChangeEvent<HTMLInputElement>)
                           }
-                        //   countryData={countryData}
+                          countryData={data.country}
                         />
+                       
                       </div>
 
                       <div>
@@ -961,6 +1007,19 @@ function AddSupplierModal({ page, }: Props) {
                               handleChange({ target: { name: 'currency', value } } as ChangeEvent<HTMLInputElement>)
                             }
                           /> */}
+
+                          <Select
+                            required
+                            placeholder=" Select Currency"
+
+                            label=" Currency"
+
+                            value={supplierdata.currency}
+                            onChange={(value: string) =>
+                              handleChange({ target: { name: 'currency', value } } as ChangeEvent<HTMLInputElement>)
+                            }
+                            options={data?.currency}
+                          />
 
 
                           <Select
@@ -1365,15 +1424,23 @@ function AddSupplierModal({ page, }: Props) {
                               value={supplierdata.billingPinCode}
                               onChange={handleChange}
                             />
-
-                            <PhoneNumberInput
+ <PhoneNumberInput
+                          label="Phone"
+                          name="billingPhone"
+                          placeholder="Enter Phone"
+                           value={supplierdata.billingPhone}
+                           onChange={handleBillingPhoneChange}
+                          countryData={data?.country}
+                        />
+                                {/* <PhoneNumberInput
                               label="Phone"
                               name="billingPhone"
                               placeholder="Enter Phone"
                               onChange={handleBillingPhoneChange}
                               //   countryData={countryData}
                               value={supplierdata.billingPhone}
-                            />
+                            /> */}
+
 
                             <Input
                               label="Fax Number"
@@ -1480,12 +1547,21 @@ function AddSupplierModal({ page, }: Props) {
                             />
 
 
-                            <PhoneNumberInput
+                            {/* <PhoneNumberInput
                               label="Phone"
                               value={supplierdata.shippingPhone}
                               onChange={handleShippingPhoneChange}
                             // countryData={countryData}
-                            />
+                            /> */}
+
+<PhoneNumberInput
+                          label="Phone"
+                          name="shippingPhone"
+                          placeholder="Enter Phone"
+                          value={supplierdata.shippingPhone}
+                          onChange={handleShippingPhoneChange}
+                          countryData={data?.country}
+                        />
 
 
                             <Input

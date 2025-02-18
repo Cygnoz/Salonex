@@ -4,7 +4,7 @@ import {    useEffect, useState } from "react";
 import History from "../../../assets/icons/History";
 import PaymentHistory from "./Payment History/PaymentHistory";
 import PurchaseHistory from "./Purchase History/PurchaseHistory";
-import supplierImg from "../../../assets/images/Rectangle 5454.png";
+// import supplierImg from "../../../assets/images/Rectangle 5454.png";
 import User from "../../../assets/icons/User";
 import Phone from "../../../assets/icons/Phone";
 import Mail from "../../../assets/icons/Mail";
@@ -99,7 +99,11 @@ function ViewSupplier({}: Props) {
       </div>
       <div className="  h-auto rounded-md text-textColor  px-2 mt-3 p-2">
         <div className="h-[135px] rounded-[16px] bg-[#C96E76] p-6 w-full text-sm text-start flex items- justify-center gap-20 text-[#FFFFFF]">
-          <img src={supplierImg} alt="" className="w-[120px] h-[90px]" />
+        <img
+                src={supplier?.supplierProfile || 'N/A'}
+                alt="Avatar"
+                className="w-full h-full max-w-[120px] max-h-[120px] object-cover"
+              />
           <div className="space-y-2">
             <div className="flex items-center  justify-start gap-1 font-semibold">
               {" "}
