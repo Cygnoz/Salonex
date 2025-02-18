@@ -88,7 +88,7 @@ function Otp({}: Props) {
       if (response.response?.data.success) {
         toast.success(response.response?.data.message || 'OTP verified successfully!');
         localStorage.setItem('authToken', response.response.data.token);
-        navigate('/'); // Redirect to the home/dashboard
+        navigate('/dashboard'); // Redirect to the home/dashboard
       } else {
         const errorMessage = response.response?.data.message || 'OTP verification failed.';
         setError(errorMessage);

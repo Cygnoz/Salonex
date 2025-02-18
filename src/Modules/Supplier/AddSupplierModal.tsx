@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Button from "../../Components/Button";
 import Modal from "../../Components/modal/Modal";
 import Plus from "../../assets/icons/Plus";
@@ -817,7 +817,7 @@ function AddSupplierModal({ page, }: Props) {
                           placeholder="Enter Work Phone"
                           value={supplierdata.workPhone}
                           country={"india"}
-                          onChange={(value) =>
+                          onChange={(value:any) =>
                             setSupplierData({ ...supplierdata, workPhone: value })
                           }
                         />
