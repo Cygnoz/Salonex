@@ -12,8 +12,6 @@ interface CheckboxProps {
 const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
   ({ label, error, required, checked = false, onChange }, ref) => {
     const [isChecked, setIsChecked] = useState(checked);
-
- 
     useEffect(() => {
       setIsChecked(checked);
     }, [checked]);
@@ -21,7 +19,7 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
     const handleToggle = () => {
       const newChecked = !isChecked;
       setIsChecked(newChecked);
-      onChange?.(newChecked); 
+      onChange?.(newChecked);
     };
 
     return (
@@ -31,7 +29,7 @@ const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
             ref={ref}
             onClick={handleToggle}
             className={`mr-2 w-4 h-4 border rounded flex items-center justify-center cursor-pointer 
-            ${isChecked ? "bg-[#c78000] border-[#c78000]" : "border-borderColor"} 
+            ${isChecked ? "bg-[#E69CB3] border-[#c78000]" : "border-borderColor"} 
             ${error ? "border-[#BC0000]" : ""}`}
           >
             {isChecked && <CheckMark />}
