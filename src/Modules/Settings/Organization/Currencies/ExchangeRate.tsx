@@ -3,7 +3,7 @@ import ChevronLeft from "../../../../assets/icons/ChevronLeft";
 import Trash from "../../../../assets/icons/Trash";
 import Banner from "../Banner";
 import Button from "../../../../Components/Button";
-import CirclePlus from "../../../../assets/icons/CirclePlus";
+import CirclePlus from "../../../../assets/icons/circleplus";
 import Modal from "../../../../Components/modal/Modal";
 import Input from "../../../../Components/Form/Input";
 import { useState } from "react";
@@ -59,7 +59,7 @@ const ExchangeRate = ({}: Props) => {
       <div className="flex mb-3 gap-5">
         <Link to={"/settings/organization/currencies"}>
           <div className="flex justify-center items-center h-11 w-11 bg-[#f3f3f3] rounded-full">
-            <ChevronLeft color={"#0B1320"} strokeWidth="3" />
+            <ChevronLeft color={"#0B1320"}  />
           </div>
         </Link>
         <div className="flex justify-center items-center">

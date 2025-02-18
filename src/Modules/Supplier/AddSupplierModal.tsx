@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Button from "../../Components/Button";
 import Modal from "../../Components/modal/Modal";
 import Plus from "../../assets/icons/Plus";
@@ -178,16 +178,17 @@ function AddSupplierModal({ page, }: Props) {
   );
 
   // check account number
-  const [reEnterAccountNumbers, setReEnterAccountNumbers] = useState(
+   const [reEnterAccountNumbers, setReEnterAccountNumbers] = useState(
     supplierdata.bankDetails.map(() => "")
-  );
-  const [isAccountNumberSame, setIsaccountNumbersame] = useState(
+   );
+   
+   const [isAccountNumberSame, setIsaccountNumbersame] = useState(
     supplierdata.bankDetails.map(() => true)
-  );
-  const handleReEnterAccountNumberChange = (
+   );
+   const handleReEnterAccountNumberChange = (
     index: number,
     e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+   ) => {
     const newReEnterAccountNumbers = [...reEnterAccountNumbers];
     newReEnterAccountNumbers[index] = e.target.value;
     setReEnterAccountNumbers(newReEnterAccountNumbers);
@@ -817,7 +818,7 @@ function AddSupplierModal({ page, }: Props) {
                           placeholder="Enter Work Phone"
                           value={supplierdata.workPhone}
                           country={"india"}
-                          onChange={(value) =>
+                          onChange={(value:any) =>
                             setSupplierData({ ...supplierdata, workPhone: value })
                           }
                         />

@@ -284,7 +284,9 @@ const Table: React.FC<TableProps> = ({
         </div>
       </div>
 
-
+        {/* <Modal open={isModal} onClose={handleModalToggle}className="w-[30%]" >
+        <ConfirmModal prompt="Are you sure want to delete this currency"  action={onDelete} onClose={handleModalToggle}/>
+      </Modal> */}
     </div>
   );
 };

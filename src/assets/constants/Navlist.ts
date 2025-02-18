@@ -16,7 +16,7 @@ export const navList = [
   {
     nav: "Dashboard",
     icon: HomeIcon,
-    route: "/",
+    route: "/dashboard",
   },
   {
     nav: "Item hub",
