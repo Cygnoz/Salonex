@@ -22,6 +22,7 @@ export const navList = [
     nav: "Item hub",
     icon: Scissors,
     route: "/itemHub",
+   
   },
   {
     nav: "Booking",
