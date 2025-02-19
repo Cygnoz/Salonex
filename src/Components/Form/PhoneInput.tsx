@@ -10,7 +10,7 @@ const PhoneNumberInput: React.FC<any> = ({
   error = "",
   name = "phoneNumber",
   label,
-  value,
+  value="+91",
   placeholder,
 }) => {
   const [selectedCountry, setSelectedCountry] = useState<any | null>(null);
@@ -29,6 +29,9 @@ const PhoneNumberInput: React.FC<any> = ({
       if (country) {
         setSelectedCountry(country);
       }
+    } else if (countryData?.length) {
+      // Set default country to the first item in the list
+      setSelectedCountry(countryData[0]);
     }
   }, [value, countryData]);
 

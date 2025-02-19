@@ -211,7 +211,7 @@ const InvoiceINOrg = () => {
       console.log("Form Data:", data);
       try {
         const { response, error } = await updateAdditionalInfo(
-          endpoints.ADD_ADDITIONAL_DETAILS,
+          endpoints.ADD_INVOICE_SETTINGS,
           data
         );
         if (response && !error) {

@@ -28,12 +28,20 @@ const Layout = ({ }: Props) => {
     <div className="flex">
       <SideBar activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
       <div className="w-[100%] h-[100vh] overflow-y-scroll hide-scrollbar">
+      <div
+        className="fixed top-0 z-50 "
+        style={{
+          width: "calc(100% - 7%)" , 
+          left:  "7%", // Adjust based on sidebar width
+        }}
+      >
         <Header />
+      </div>
         <div className="px-6">
           {shouldShowSubHeader && activeIndex !== null && navList[activeIndex]?.subhead && (
             <SubHeader activeIndex={activeIndex} />
           )}
-          <div className={navList[activeIndex ?? 0]?.subhead ? "my-3" : "my-0"}>
+          <div className={navList[activeIndex ?? 0]?.subhead ? "mt-10" : "my-0 mt-20"}>
             <Outlet />
           </div>
         </div>

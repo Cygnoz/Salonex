@@ -17,7 +17,7 @@ function Header({ }: Props) {
   };
 
   return (
-    <div className="w-full p-4 flex items-start">
+    <div className="w-full p-4 flex items-start bg-[#F8F4F4]">
       <div className="relative w-[498px]">
         <LenseIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         <input
