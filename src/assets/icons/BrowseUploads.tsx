@@ -2,7 +2,7 @@
 
 type Props = {color?:any};
 
-const BrowseUploads = ({color}:Props) => {
+const BrowseUploads = ({}:Props) => {
   return (
     <div>
       <svg
