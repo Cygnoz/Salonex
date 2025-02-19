@@ -113,7 +113,7 @@ const Settings = () => {
   ];
 
   return (
-    <div className="-mt-5">
+    <div className="">
       <h1 className="text-lg font-bold text-[#2C3E50]">Settings</h1>
       <p className="text-[#495160]  text-xs  ">
         Lorem ipsum dolor sit amet consectetur. Commodo enim odio fringilla{" "}

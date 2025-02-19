@@ -11,7 +11,7 @@ import * as Yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useApi from "../../../../Hooks/useApi";
-import { endpoints } from "../../../../Services/apiEdpoints";
+import { endpoints } from "../../../../Services/apiEndpoints";
 import toast from "react-hot-toast";
 import { useRegularApi } from "../../../../context/ApiContext";
 type Props = {

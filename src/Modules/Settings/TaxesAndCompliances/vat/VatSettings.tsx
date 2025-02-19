@@ -1,14 +1,78 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../../../../Components/Form/Input";
 import Button from "../../../../Components/Button";
+import { VATDetails } from "../../../../Interface/VATDetails";
+import { useForm } from "react-hook-form";
+import { useRegularApi } from "../../../../context/ApiContext";
+import useApi from "../../../../Hooks/useApi";
+import { endpoints } from "../../../../Services/apiEndpoints";
+import toast from "react-hot-toast";
 
 type Props = {}
 
+
 function VatSettings({ }: Props) {
   const [isVatRegistered, setIsVatRegistered] = useState(true);
+  const { request: createVatSettings } = useApi("post", 5004);
+  const {allTaxData,refreshContext}=useRegularApi()
   const handleToggle = () => {
     setIsVatRegistered(!isVatRegistered);
   };
+
+ 
+   
+
+  const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+      } = useForm<VATDetails>({
+         defaultValues:  {
+          taxType: "VAT",
+        }
+      });
+       const setFormValues = (data: VATDetails) => {
+            Object.keys(data).forEach((key) => {
+              setValue(key as keyof VATDetails, data[key as keyof VATDetails]);
+            });
+          };
+          
+          useEffect(() => {
+            refreshContext({ allTaxData: true });
+          
+            if (allTaxData) {
+              
+              const body: VATDetails = {
+                taxType:allTaxData?.taxType,
+                tinNumber: allTaxData?.tinNumber||"" ,
+                vatBusinessLegalName: allTaxData?.vatBusinessLegalName||"" ,
+                vatBusinessTradeName: allTaxData?.vatBusinessTradeName|| "",
+                vatNumber: allTaxData?.vatNumber|| "",
+                vatRegisteredDate: allTaxData?.vatRegisteredDate || "",
+              };
+          
+              setFormValues(body);
+            }
+          }, [allTaxData]);
+
+          const onSubmit = async (data: VATDetails) => {
+            console.log("data",data);
+            
+            try {
+              
+              const { response, error } = await createVatSettings(endpoints.ADD_NEW_TAX,data);
+        
+              if (response && !error) {
+                toast.success(response.data.message || "Success!");
+                refreshContext({allTaxData:true})
+              } else {
+                toast.error(error.response?.data?.message || "An error occurred.");
+              }
+            } catch (err) {
+              console.error("Unexpected error:", err);
+            }
+          };
 
   return (
     <div>
@@ -31,36 +95,40 @@ function VatSettings({ }: Props) {
       <div>
         {isVatRegistered && (
           <div className="p-6 rounded-lg bg-white mt-4">
-            <form className="flex justify-between gap-4">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div  className="flex justify-between gap-4">
               <div className="text-[#4B5C79] text-sm w-[50%]">
                 <div>
                   <label htmlFor="vatNumber">VAT Number</label>
                   <div className="mt-1.5">
                   <Input
-                    type="text"
-                    name="vatNumber"
-                    placeholder="Enter VAT Number"
-                    />
+            required
+             placeholder="Enter tax name" 
+             value={watch("vatNumber")}
+             {...register("vatNumber")}
+             />
                     </div>
                 </div>
                 <div className="mt-5">
                   <label htmlFor="vatBusinessTradeName">Business Trade Name</label>
                   <div className="mt-1.5">
                   <Input
-                    type="text"
-                    name="vatBusinessTradeName"
-                    placeholder="Enter Business Trade Name"
-                    />
+            required
+             placeholder="Enter tax name"
+             value={watch("vatBusinessTradeName")} 
+             {...register("vatBusinessTradeName")}
+             />
                     </div>
                 </div>
                 <div className="mt-5">
                   <label htmlFor="tinNumber">TIN Number</label>
                   <div className="mt-1.5">
                   <Input
-                    type="text"
-                    name="tinNumber"
-                    placeholder="Enter TIN Number"
-                    />
+            required
+            value={watch("tinNumber")}
+             placeholder="Enter tax name" 
+             {...register("tinNumber")}
+             />
                     </div>
                 </div>
               </div>
@@ -70,10 +138,11 @@ function VatSettings({ }: Props) {
                   <label htmlFor="vatBusinessLegalName">Business Legal Name</label>
                   <div className="mt-1.5">
                   <Input
-                    type="text"
-                    name="vatBusinessLegalName"
-                    placeholder="Enter Business Legal Name"
-                    />
+            required
+            value={watch("vatBusinessLegalName")}
+             placeholder="Enter tax name" 
+             {...register("vatBusinessLegalName")}
+             />
                     </div>
                 </div>
                 <div className="mt-5">
@@ -82,19 +151,24 @@ function VatSettings({ }: Props) {
                   </label>
                   <div className="mt-1.5">
                   <Input
-                    type="date"
-                    name="vatRegisteredDate"
-                    placeholder="Select Date"
-                    />
+                  type="date"
+            required
+            value={watch("vatRegisteredDate")}
+             placeholder="Enter tax name" 
+             {...register("vatRegisteredDate")}
+             />
                     </div>
                 </div>
-                <div className="flex justify-end mt-6">
-                  <Button size="sm" className="text-sm pl-10 pr-10" type="submit">
+               
+              </div>
+              </div>
+            
+            <div className="flex justify-end mt-6">
+                  <Button  size="sm" className="text-sm pl-10 pr-10" type="submit">
                     Save
                   </Button>
                 </div>
-              </div>
-            </form>
+                </form>
           </div>
         )}
       </div>

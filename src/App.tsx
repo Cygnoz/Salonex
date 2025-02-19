@@ -17,7 +17,7 @@ import NoAccess from "./context/NoAccess";
 import Login from "./pages/Login/Login";
 import Otp from "./pages/Login/Otp";
 import PosReceipt from "./pages/pos/PosReceipt";
-import { useResponse } from "./context/ResponseContext";
+
 const Layout = lazy(() => import("./layout/Layout"));
 const Dashboard = lazy(() => import("./pages/DashBoard"));
 const Pos = lazy(() => import("./pages/pos/Pos"));
@@ -47,7 +47,6 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 };
 
 const App: React.FC = () => {
-  const {loading}=useResponse()
   const routes = useRoutes([
     {
       path: "/",
@@ -96,8 +95,7 @@ const App: React.FC = () => {
   ]);
 
   return (
-    <Suspense fallback={<LoadingOverlay />}>
-      {loading && <LoadingOverlay />} {/* Show loading overlay when loading */}
+    <Suspense fallback={<LoadingOverlay/>}>
       {routes}
     </Suspense>
   );

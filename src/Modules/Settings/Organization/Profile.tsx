@@ -29,7 +29,7 @@ const Profile = () => {
     industry: { label: string; value: string }[];
     dateSplit: { label: string; value: string }[];
     financialYear: { label: string; value: string }[];
-     timezones: { label: string; value: string }[];
+     timezones: { label: string; value: string;timeZoneExp:string }[];
      currency:{ label: string; value: string }[];
   }>({ country: [], state: [],dateFormate:[],industry:[],dateSplit:[],financialYear:[],timezones:[],currency:[] });
 
@@ -168,11 +168,19 @@ const Profile = () => {
       })) || [],
       timezones: (settingsAdditionalDatas?.timezones || []).map((timezone: any) => ({
         value: timezone.zone,
+        timeZoneExp:timezone?.timeZone,
         label: timezone.zone + " - " + timezone.description,
       })) || [],
     }));
   }, [settingsAdditionalDatas]);
-  
+
+  useEffect(()=>{
+    const filteredZone=data.timezones.find((time)=>time.value===watch("timeZone"))
+    if(filteredZone){
+      setValue("timeZoneExp",filteredZone.timeZoneExp)
+    }
+  },[watch("timeZone")])
+
 
   useEffect(() => {
     setData((prev) => ({
@@ -209,7 +217,7 @@ const Profile = () => {
 
 
   return (
-    <div className="  overflow-y-scroll hide-scrollbar h-[100vh]">
+    <div className="">
       <Banner seeOrgDetails />
 
       {/* FORM */}

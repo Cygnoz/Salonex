@@ -2,14 +2,10 @@ import Button from "../../../../Components/Button";
 import Modal from "../../../../Components/modal/Modal";
 import accountsBgImage from "../../../../assets/images/bankBgImage.png";
 
-type TaxRate = {
-  _id: string;
-  TaxName: string;
-  Rate: string;
-};
+
 
 type Props = {
-  vatRate: TaxRate | null;
+  vatRate: any;
   open: boolean;
   onClose: () => void;
 };
@@ -34,13 +30,13 @@ function ViewTaxDetailsVat({ vatRate, open, onClose }: Props) {
         <p>
           Tax Name{" "}
           <span className="ms-2 font-bold text-base text-[#303F58]">
-            {vatRate?.TaxName}
+            {vatRate?.taxName}
           </span>
         </p>
         <p className="mt-2.5">
           Rate(%){" "}
           <span className="ms-2 font-bold text-base text-[#303F58]">
-            {vatRate?.Rate}
+            {vatRate?.taxRate}
           </span>
         </p>
       </div>

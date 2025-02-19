@@ -3,7 +3,7 @@ import Banner from "../Organization/Banner"
 import Input from "../../../Components/Form/Input";
 import Button from "../../../Components/Button";
 import useApi from "../../../Hooks/useApi";
-import { endpoints } from "../../../Services/apiEdpoints";
+import { endpoints } from "../../../Services/apiEndpoints";
 import toast from "react-hot-toast";
 import CheveronDown from "../../../assets/icons/CheveronDown";
 import { useRegularApi } from "../../../context/ApiContext";
