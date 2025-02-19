@@ -17,13 +17,26 @@ import NoAccess from "./context/NoAccess";
 import Login from "./pages/Login/Login";
 import Otp from "./pages/Login/Otp";
 import PosReceipt from "./pages/pos/PosReceipt";
+import { useResponse } from "./context/ResponseContext";
 const Layout = lazy(() => import("./layout/Layout"));
 const Dashboard = lazy(() => import("./pages/DashBoard"));
 const Pos = lazy(() => import("./pages/pos/Pos"));
 const SettingsLayout = lazy(() => import("./layout/Settings/SettingsLayout"));
 
+const LoadingOverlay = () => {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-80 z-[9999]">
+      <div className="relative w-16 h-16">
+        {/* Spinning Loader */}
+        <div className="absolute inset-0 border-[7px]  border-[#C96E76] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    </div>
+  );
+};
+
 // Wrapper component to handle authentication
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+  
   const isAuthenticated = sessionStorage.getItem("authToken");
 
   if (!isAuthenticated) {
@@ -34,6 +47,7 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 };
 
 const App: React.FC = () => {
+  const {loading}=useResponse()
   const routes = useRoutes([
     {
       path: "/",
@@ -82,7 +96,8 @@ const App: React.FC = () => {
   ]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingOverlay />}>
+      {loading && <LoadingOverlay />} {/* Show loading overlay when loading */}
       {routes}
     </Suspense>
   );
