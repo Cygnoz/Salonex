@@ -80,7 +80,7 @@ const Table: React.FC<TableProps> = ({
 
   const visibleColumns = columns.filter((col) => col.visible);
   const skeletonColumns = [...visibleColumns, {}, {}, {}];
-
+  
   return (
     <div className="border border-b bg-white rounded-lg">
       <div className="flex items-center gap-4 justify-between px-6 mt-6 mb-4">

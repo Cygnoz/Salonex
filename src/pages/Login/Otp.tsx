@@ -8,18 +8,23 @@ import useApi from '../../Hooks/useApi';
 import { endpoints } from '../../Services/apiEndpoints';
 import { useOrganization } from '../../context/OrgContext';
 import { useRegularApi } from '../../context/ApiContext';
+import { useResponse } from '../../context/ResponseContext';
 
 type Props = {}
 
 function Otp({}: Props) {
   const {refreshOrg}=useOrganization()
   const {refreshContext}=useRegularApi()
+  const {loading}=useResponse()
   const navigate = useNavigate();
   const location = useLocation();
   const { request: verifyOtp } = useApi("post", 5004);
   useEffect(() => {
     inputRefs[0].current?.focus();
   }, []);
+
+
+  
 
   // Extract email from location state or set a default for testing purposes
   const email = location.state?.email || '';
@@ -93,14 +98,17 @@ function Otp({}: Props) {
         toast.success(response.response?.data.message || 'OTP verified successfully!');
         sessionStorage.setItem('authToken', response.response.data.token);
         if(sessionStorage.getItem("authToken")){
-          refreshOrg(); 
+          refreshOrg();
           refreshContext()
         }
         // Wait for token storage before making the API call
-        setTimeout(() => {
-          // Fetch organization data after a small delay
-          navigate('/dashboard'); // Redirect after fetching data
-        }, 500);
+     
+         setTimeout(() => {
+          if(!loading){
+            navigate('/dashboard')
+          }
+         }, 1500);
+        
       } else {
         const errorMessage = response.response?.data.message || 'OTP verification failed.';
         setError(errorMessage);

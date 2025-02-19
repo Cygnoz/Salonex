@@ -79,7 +79,7 @@ const CurrencyModal: React.FC<Props> = ({ editItem }) => {
       const api = editItem ? editCurrency : CreateNewCurrency;
       const url =
         editItem ? `${endpoints.EDIT_CURRENCIES}` : endpoints.ADD_CURRENCIES;
-
+      
       const { response, error } = await api(url, body);
 
       if (response && !error) {

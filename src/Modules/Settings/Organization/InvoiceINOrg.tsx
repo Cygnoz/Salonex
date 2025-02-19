@@ -195,13 +195,15 @@ const InvoiceINOrg = () => {
   
 
   const setFormValues = (data: AdditionalInformation) => {
-      Object.keys(data).forEach((key) => {
+      Object?.keys(data)?.forEach((key) => {
         setValue(key as keyof AdditionalInformation, data[key as keyof AdditionalInformation]);
       });
     };
 
     useEffect(()=>{
-      setFormValues(settingsData?.invoice)
+      if(settingsData){
+        setFormValues(settingsData?.invoice)
+      }
     },[settingsData])
 
    const onSubmit: SubmitHandler<AdditionalInformation> = async (data, event) => {

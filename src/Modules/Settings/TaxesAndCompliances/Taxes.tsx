@@ -25,7 +25,7 @@ function Taxes({}: Props) {
       if (!error && response) {
         const gstTaxRates = response.data;
         const taxType = gstTaxRates?.taxType || "";
-        setTaxType(taxType);
+        setTaxType("VAT");
         console.log(taxType);
       }
     } catch (error) {

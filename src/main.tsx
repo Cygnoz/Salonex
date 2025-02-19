@@ -1,4 +1,4 @@
-import React from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
@@ -6,17 +6,20 @@ import { BrowserRouter } from "react-router-dom";
 import { ApiProvider } from "./context/ApiContext.tsx";
 import { OrganizationProvider } from "./context/OrgContext.tsx";
 import { ResponseProvider } from "./context/ResponseContext.tsx";
+import ContextShare from "./context/ContextShare.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  <StrictMode>
     <BrowserRouter>
-      <ApiProvider>
+    <ContextShare>
         <OrganizationProvider>
           <ResponseProvider>
+          <ApiProvider>
             <App />
+            </ApiProvider>
           </ResponseProvider>
         </OrganizationProvider>
-      </ApiProvider>
+      </ContextShare>
     </BrowserRouter>
-  </React.StrictMode>
+  </StrictMode>
 );

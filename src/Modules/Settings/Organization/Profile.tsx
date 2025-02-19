@@ -120,7 +120,7 @@ const Profile = () => {
       ...items,
       label: items.name,
       value: String(items.name), // Ensure `value` is a string
-    }));
+    })) || [];
     setData((prevData: any) => ({ ...prevData, country: filteredCountries }));
   }, [countryData]);
 
@@ -132,11 +132,11 @@ const Profile = () => {
         (country: any) => country.name === selectedCountry
       );
 
-      const transformedStates = filteredStates.flatMap((country: any) =>
+      const transformedStates = filteredStates?.flatMap((country: any) =>
         country.states.map((state: any) => ({
           label: state,
           value: state,
-        }))
+        }))|| []
       );
       setData((prevData: any) => ({ ...prevData, state: transformedStates }));
     }

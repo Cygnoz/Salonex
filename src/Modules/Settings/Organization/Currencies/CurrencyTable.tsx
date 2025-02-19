@@ -58,7 +58,7 @@ const CurrencyTable = () => {
           </tr>
         </thead>
         <tbody className="text-dropdownText text-center text-xs">
-          {currencyData.map((item: any, index: number) => (
+          {currencyData?.map((item: any, index: number) => (
             <tr className="relative" key={index}>
               {/* Currency Name & Code */}
               <td className="py-4 px-4  border-y border-tableBorder">
