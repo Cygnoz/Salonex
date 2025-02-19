@@ -42,38 +42,34 @@ const SettingsSidebar = ({}: Props) => {
   };
 
   return (
-    <div className="overflow-y-scroll h-[100vh]  py-6 hide-scrollbar col-span-3 border-neutral-300 text-textColor border-r-2 px-7 border  bg-white w-[27%]">
-      <button onClick={handleBackClick} className="flex border border-[#CECECE] py-[12px] px-[12px]  rounded-lg ">
+    <div className="fixed h-[92vh] pt-5 pb-16 hide-scrollbar col-span-3 border-neutral-300 text-textColor border-r-2 px-7 border bg-white w-[15%]">
+      {/* Back Button */}
+      <button onClick={handleBackClick} className="flex border border-[#CECECE] py-[12px] px-[12px] rounded-lg">
         <ChevronLeft color="#495160" className="h-5 w-5 me-2" />
         <p className="text-sm text-[#495160] text-[14px] font-semibold">Back</p>
       </button>
+  
+      {/* Search Bar & Header */}
       <div className="relative mt-6">
-        <p className="text-[16px] text-[#0B1320] ">
-          <b>Settings</b>
-        </p>
+        <p className="text-[16px] text-[#0B1320] font-bold">Settings</p>
         <div className="mt-4">
-          <SearchBar
-            placeholder="Search"
-            onSearchChange={setSearch}
-            searchValue={search}
-          />
+          <SearchBar placeholder="Search" onSearchChange={setSearch} searchValue={search} />
         </div>
       </div>
-
-      <div className=" ">
+  
+      {/* Scrollable Settings List */}
+      <div className=" overflow-y-auto h-[calc(92vh-180px)] hide-scrollbar">
         {settingsList.map((main, mainIndex) => (
           <div key={main.nav}>
             <div
-              className={`relative flex items-center text-lg gap-3 -mx-2 p-2 mt-5 mb-2 rounded-lg cursor-pointer ${
-                selectedMain === mainIndex || selectedSub.mainIndex === mainIndex
-                  ? "bg-[#F7E9EA]"
-                  : ""
+              className={`relative flex items-center text-lg gap-3   p-2 mt-5 mb-2 rounded-lg cursor-pointer ${
+                selectedMain === mainIndex || selectedSub.mainIndex === mainIndex ? "bg-[#F7E9EA] " : ""
               }`}
             >
               {main.icon && <main.icon color={"#495160"} />}
               <p className="font-semibold text-sm text-[#495160]">{main.nav}</p>
             </div>
-
+  
             <ul>
               {main.subhead.map((sub, subIndex) => (
                 <Link to={sub.subRoute || "#"} key={sub.headName}>
@@ -85,7 +81,7 @@ const SettingsSidebar = ({}: Props) => {
                     }`}
                     onClick={() => handleSubClick(mainIndex, subIndex)}
                   >
-                   <div className=""> {sub.headName}</div>
+                    <div className="">{sub.headName}</div>
                   </li>
                 </Link>
               ))}
@@ -95,6 +91,7 @@ const SettingsSidebar = ({}: Props) => {
       </div>
     </div>
   );
+  
 };
 
 export default SettingsSidebar;

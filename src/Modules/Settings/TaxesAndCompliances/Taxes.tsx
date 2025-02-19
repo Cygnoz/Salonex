@@ -3,41 +3,26 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../Components/Button";
 import GSTComponent from "./gst/GSTComponent";
 import VATComponent from "./vat/VATComponent";
-import useApi from "../../../Hooks/useApi";
-import { endpoints } from "../../../Services/apiEndpoints";
 import Banner from "../Organization/Banner";
 import RadioButton from "../../../Components/Form/RadioButton";
+import { useRegularApi } from "../../../context/ApiContext";
 
 type Props = {};
 
 function Taxes({}: Props) {
+  const {allTaxData,refreshContext}=useRegularApi()
   const [selected, setSelected] = useState<string>("GST");
   const [taxType, setTaxType] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const { request: AllTaxGst } = useApi("get", 5004);
 
-  const fetchAllTaxGst = async () => {
-    try {
-      const url = `${endpoints.GET_ALL_TAX}`;
-      const { response, error } = await AllTaxGst(url);
-      if (!error && response) {
-        const gstTaxRates = response.data;
-        const taxType = gstTaxRates?.taxType || "";
-        setTaxType("VAT");
-        console.log(taxType);
-      }
-    } catch (error) {
-      console.error("Error fetching tax data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
-    fetchAllTaxGst();
-  }, []);
+    if(allTaxData){
+      setTaxType(allTaxData?.taxType)
+      refreshContext({allTaxData:true})
+    }
+  }, [allTaxData]);
 
   const handleProceed = () => {
     if (selected === "GST") {
@@ -50,14 +35,6 @@ function Taxes({}: Props) {
   const handleChange = (value: string) => {
     setSelected(value);
   };
-
-  if (loading) {
-    return (
-      <div className="p-5">
-        <p className="mt-5">Loading...</p>
-      </div>
-    );
-  }
 
   if (taxType === "GST") {
     return <GSTComponent />;

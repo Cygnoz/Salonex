@@ -3,7 +3,7 @@ import Input from "../../../../Components/Form/Input";
 import Button from "../../../../Components/Button";
 import { useForm } from "react-hook-form";
 import { GstDetails } from "../../../../Interface/GSTDetails";
-import { endpoints } from "../../../../Services/apiEdpoints";
+import { endpoints } from "../../../../Services/apiEndpoints";
 import useApi from "../../../../Hooks/useApi";
 import toast from "react-hot-toast";
 import Checkbox from "../../../../Components/Form/Checkbox";
