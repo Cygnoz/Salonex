@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ChevronLeft from "../../../assets/icons/ChevronLeft";
-import { useState } from "react";
+import {    useEffect, useState } from "react";
 import History from "../../../assets/icons/History";
 import PaymentHistory from "./Payment History/PaymentHistory";
 import PurchaseHistory from "./Purchase History/PurchaseHistory";
-import supplierImg from "../../../assets/images/Rectangle 5454.png";
+// import supplierImg from "../../../assets/images/Rectangle 5454.png";
 import User from "../../../assets/icons/User";
 import Phone from "../../../assets/icons/Phone";
 import Mail from "../../../assets/icons/Mail";
@@ -15,10 +15,63 @@ import BoxIcon from "../../../assets/icons/BoxIcon";
 import Button from "../../../Components/Button";
 import Pen from "../../../assets/icons/Pen";
 import AddPaymentModal from "./AddPaymentModal";
+//import { SupplierDetailsContext, SupplierResponseContext } from "../../../context/ContextShare";
+import useApi from "../../../Hooks/useApi";
+import { SupplierData } from "../../../Interface/Supplier";
+import { endpoints } from "../../../Services/apiEndpoints";
+//import Supplier from "../../../pages/Supplier";
+//import { SupplierDetailsContext, SupplierResponseContext } from "../../../context/ContextShare";
+// import { SupplierResponseContext } from "../../../context/ContextShare";
 
 type Props = {};
 
+// interface Status {
+//   status: string;
+// }
+
 function ViewSupplier({}: Props) {
+ // const {setSupplierDetails} = useContext(SupplierDetailsContext)!;
+  const { request: getOneSupplier } = useApi("get", 5009);
+  const { id } = useParams<{ id: string }>();
+  const [supplier, setSupplier] = useState<SupplierData | null>(null);
+  //const { supplierResponse } = useContext(SupplierResponseContext)!;
+ // const [statusData, setStatusData] = useState<Status>({ status: "" });
+  console.log("idd",id);
+
+  const getOneSupplierData = async () => {
+    if (!id) return; // Ensure id is present before making the API call
+  
+    try {
+      const url = `${endpoints.GET_ONE_SUPPLIER}/${id}`;
+      console.log("Fetching supplier from:", url);
+  
+      const body = { organizationId: "INDORG0001" };
+      const { response, error } = await getOneSupplier(url, body);
+  
+      if (error) {
+        console.error("API error:", error);
+        return;
+      }
+  
+      if (response) {
+        console.log("Supplier data:", response.data);
+        setSupplier(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching supplier:", error);
+    }
+  };
+  
+  useEffect(() => {
+    console.log("useEffect id:", id);
+    if (id) {
+      getOneSupplierData();
+    }
+  }, [id]);
+  
+
+    
+    
   const [activeTab, setActiveTab] = useState<string>("paymentHistory");
 
   const handleTabSwitch = (tabName: string) => {
@@ -46,40 +99,44 @@ function ViewSupplier({}: Props) {
       </div>
       <div className="  h-auto rounded-md text-textColor  px-2 mt-3 p-2">
         <div className="h-[135px] rounded-[16px] bg-[#C96E76] p-6 w-full text-sm text-start flex items- justify-center gap-20 text-[#FFFFFF]">
-          <img src={supplierImg} alt="" className="w-[120px] h-[90px]" />
+        <img
+                src={supplier?.supplierProfile || 'N/A'}
+                alt="Avatar"
+                className="w-full h-full max-w-[120px] max-h-[120px] object-cover"
+              />
           <div className="space-y-2">
             <div className="flex items-center  justify-start gap-1 font-semibold">
               {" "}
               <User size="14" color="#FFFFFF" />
-              <p> Dani Olmo</p>
+              <p>{supplier?.supplierDisplayName || 'N/A'}</p>
             </div>
             <div className="flex justify-start items-center gap-1 ">
               {" "}
               <Phone size={14} color="#FFFFFF" />
               <span>
-                <p>+91 98954 25487</p>
+                <p>{supplier?.workPhone || 'N/A'}</p>
               </span>
             </div>
             <div className="flex justify-start items-center gap-1">
               {" "}
               <Mail size={14} color="#FFFFFF" />
               <span>
-                <p>Dani@gmail.com</p>
+                <p>{supplier?.supplierEmail || 'N/A'}</p>
               </span>
             </div>
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-start gap-1 font-semibold">
               {" "}
-              <Home /> Address
+              <Home /> {supplier?.billingAddressStreet1 || 'N/A'}
             </div>
             <div className=" ">
               {" "}
-              <p>54B Thornridge , Shiloh </p>
+              <p>{supplier?.billingAddressStreet2 || 'N/A'}</p>
             </div>
             <div className="">
               {" "}
-              <p>Hawaii 81254</p>
+              <p>{supplier?.shippingAddressStreet1 || 'N/A'}</p>
             </div>
           </div>
           <div className="space-y-2">
@@ -89,7 +146,7 @@ function ViewSupplier({}: Props) {
             </div>
             <div className="flex items-center justify-center gap-1">
               {" "}
-              <p>2548BG454</p>
+              <p>{supplier?.gstinUin  || 'N/A'}</p>
             </div>
           </div>
           <div className="flex items-center justify-center gap-1">
@@ -97,7 +154,7 @@ function ViewSupplier({}: Props) {
               <HandIcon />
               <div className="space-y-1">
                 <p className="font-bold">Credit Balance</p>
-                <p className="text-xs">₹ 2548</p>
+                <p className="text-xs">₹ {supplier?.creditOpeningBalance  || 'N/A'}</p>
               </div>
             </div>
           </div>{" "}
