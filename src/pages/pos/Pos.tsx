@@ -3,9 +3,9 @@ import PosHeader from "./PosHeader";
 import ServicesIcon from "../../assets/icons/ServicesIcon";
 import ProductsIcon from "../../assets/icons/ProductsIcon";
 import AddItemsPos from "./AddItemsPos";
-import useApi from "../../Hooks/useApi";
+// import useApi from "../../Hooks/useApi";
 // import { endponits } from "../../Services/apiEndpoints";
-import { endpoints } from "../../Services/apiEndpoints";
+// import { endpoints } from "../../Services/apiEndpoints";
 import serviceImage from "../../assets/Images/serv.png";
 import SearchBar from "../../Components/SearchBar";
 import bgImage from "../../assets/Images/posservices.png";
@@ -23,15 +23,21 @@ type Props = {};
 function Pos({ }: Props) {
   const [tabSwitch, setTabSwitch] = useState<string>("products");
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
-  const [goodsItems, setGoodsItems] = useState<any[]>([]);
-  const [serviceItems, setServiceItems] = useState<any[]>([]);
-  const [allCategoryData, setAllCategoryData] = useState<any[]>([]);
+  const [goodsItems,
+    //  setGoodsItems
+    ] = useState<any[]>([]);
+  const [serviceItems, 
+    // setServiceItems
+  ] = useState<any[]>([]);
+  const [allCategoryData,
+    //  setAllCategoryData
+    ] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchValueModal, setSearchValueModal] = useState<string>("");
 
   // const { request: GetAllItems } = useApi("get", 5003);
-  const { request: fetchAllCategories } = useApi("put", 5003);
+  // const { request: fetchAllCategories } = useApi("put", 5003);
 
   useEffect(() => {
     const fetchAllItems = async () => {

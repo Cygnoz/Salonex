@@ -16,8 +16,8 @@ type Props = {}
 function NewInvoice({}: Props) {
     const [selected, setSelected] = useState<string>("Cash");
     const [isInterState] = useState<boolean>(false);
-    const [state, setState] = useState<[]>([]);
-    const [isNonTaxable] = useState<boolean>(false);
+    // const [state, setState] = useState<[]>([]);
+    // const [isNonTaxable] = useState<boolean>(false);
     const [selectedCustomer, setSelectedCustomer] = useState<any>([]);
      const [Customers] = useState<[] | any>([
         {

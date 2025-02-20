@@ -10,7 +10,12 @@ type Props = {
   allAccounts?: any;
 };
 
-const ViewMore = ({ state, setState, page, allAccounts }: Props) => {
+const ViewMore = ({ 
+  // state,
+  //  setState, 
+   page,
+    // allAccounts
+   }: Props) => {
   const [viewDetails, setViewDetails] = useState<boolean>(false);
 
   return (

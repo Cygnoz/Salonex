@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ArrowUpRightIcon from "../assets/icons/ArrowUpRightIcon";
 import BookingIcon from "../assets/icons/BookingIcon";
 import Calender from "../assets/icons/Calender";
@@ -11,7 +11,6 @@ import faceBgImage from "../assets/images/Rectangle 2.png";
 import Button from "../Components/Button";
 import DateInput from "../Components/DateInput";
 import SearchBarPos from "../Components/SearchBarPos";
-import { useRegularApi } from "../context/ApiContext";
 
 const cards = [
   {

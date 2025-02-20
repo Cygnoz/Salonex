@@ -13,9 +13,9 @@ import ExpenseFilterCards from "./ExpenseFilterCards";
 import BrowseUploads from "../../assets/icons/BrowseUploads";
 
 import { List } from "../../assets/icons/List";
-import { endpoints } from "../../Services/apiEndpoints";
+// import { endpoints } from "../../Services/apiEndpoints";
 import BackIcon from "../../assets/icons/BackIcon";
-import { toast } from "react-hot-toast";
+// import { toast } from "react-hot-toast";
 import useApi from "../../Hooks/useApi";
 import RadioButton from "../../Components/Form/RadioButton";
 // import ExpenseFilterCards from "./ExpenseFilterCards";
@@ -127,153 +127,165 @@ function AddExpensePage({}: Props) {
 
   // const { request: AllAccounts } = useApi("get", 5001);
   const { request: AllSuppliers } = useApi("get", 5009);
-  const { request: AddExpenses } = useApi("post", 5008);
+  // const { request: AddExpenses } = useApi("post", 5008);
   // const { request: getAllExpenseCategory } = useApi("get", 5008);
   // const { request: getTax } = useApi("get", 5004);
   // const { request: getCountries } = useApi("get", 5004);
   // const { request: getOrg } = useApi("get", 5004);
   // const { request: getPrefix } = useApi("get", 5008);
 
-  const [countryData, setcountryData] = useState<any | any>([]);
+  const [countryData, 
+    // setcountryData
+  ] = useState<any | any>([]);
   const [searchValue, setSearchValue] = useState<string>("");
   const [supplierData, setSupplierData] = useState<[]>([]);
-  const [taxRate, setTaxRate] = useState<[] | any>([]);
+  const [taxRate,
+    //  setTaxRate
+    ] = useState<[] | any>([]);
   const [selecteSupplier, setSelecetdSupplier] = useState<any | []>([]);
   // const {organization} = useOrganization()
   const [placeOfSupplyList, setPlaceOfSupplyList] = useState<any | []>([]);
-  const [organization, setOrganization] = useState<any | []>([]);
+  const [organization,
+    //  setOrganization
+    ] = useState<any | []>([]);
   const [selectedTax, setSelectedTax] = useState<any>("");
   const [destinationList, setDestinationList] = useState<any | []>([]);
-  const [categories, setCategories] = useState<any | []>([]);
+  const [categories,
+    //  setCategories
+    ] = useState<any | []>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [Itemize, setItemize] = useState<boolean>(true);
-  const [prefix, setPrefix] = useState<any>(null);
+  const [prefix, 
+    // setPrefix
+  ] = useState<any>(null);
   const [openDropdownIndex, setOpenDropdownIndex] = useState<string | null>(
     null
   );
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const [accountData, setAccountData] = useState({
+  const [accountData, 
+    // setAccountData
+  ] = useState({
     paidThrough: [],
     liabilities: [],
   });
 
-  const handleAddExpense = async () => {
-    try {
-      let hasErrors = false;
+  // const handleAddExpense = async () => {
+  //   try {
+  //     let hasErrors = false;
 
-      const updatedErrors: any = {
-        expenseDate: !expenseData.expenseDate,
-        paidThrough: !expenseData.paidThrough,
-        gstTreatment:
-          selectedSection === "expense" ? !expenseData.gstTreatment : false,
-        distance: selectedSection === "mileage" ? !expenseData.distance : false,
-        ratePerKm:
-          selectedSection === "mileage" ? !expenseData.ratePerKm : false,
-      };
+  //     const updatedErrors: any = {
+  //       expenseDate: !expenseData.expenseDate,
+  //       paidThrough: !expenseData.paidThrough,
+  //       gstTreatment:
+  //         selectedSection === "expense" ? !expenseData.gstTreatment : false,
+  //       distance: selectedSection === "mileage" ? !expenseData.distance : false,
+  //       ratePerKm:
+  //         selectedSection === "mileage" ? !expenseData.ratePerKm : false,
+  //     };
 
-      if (selectedSection === "expense" && expenseData.gstTreatment) {
-        if (
-          [
-            "Registered Business - Regular",
-            "Registered Business - Composition",
-            "Special Economic Zone",
-            "Deemed Export",
-            "Tax Deductor",
-            "SEZ Developer",
-          ].includes(expenseData.gstTreatment)
-        ) {
-          if (!expenseData.destinationOfSupply) {
-            updatedErrors.destinationOfSupply = true;
-          }
-          if (!expenseData.sourceOfSupply) {
-            updatedErrors.sourceOfSupply = true;
-          }
-          if (!expenseData.gstin) {
-            updatedErrors.gstin = true;
-          }
-          if (!expenseData.invoice) {
-            updatedErrors.invoice = true;
-          }
-        }
-      }
+  //     if (selectedSection === "expense" && expenseData.gstTreatment) {
+  //       if (
+  //         [
+  //           "Registered Business - Regular",
+  //           "Registered Business - Composition",
+  //           "Special Economic Zone",
+  //           "Deemed Export",
+  //           "Tax Deductor",
+  //           "SEZ Developer",
+  //         ].includes(expenseData.gstTreatment)
+  //       ) {
+  //         if (!expenseData.destinationOfSupply) {
+  //           updatedErrors.destinationOfSupply = true;
+  //         }
+  //         if (!expenseData.sourceOfSupply) {
+  //           updatedErrors.sourceOfSupply = true;
+  //         }
+  //         if (!expenseData.gstin) {
+  //           updatedErrors.gstin = true;
+  //         }
+  //         if (!expenseData.invoice) {
+  //           updatedErrors.invoice = true;
+  //         }
+  //       }
+  //     }
 
-      if (selectedSection === "expense" && expenseData.gstTreatment) {
-        if (
-          ["Unregistered Business", "Consumer"].includes(
-            expenseData.gstTreatment
-          )
-        ) {
-          if (!expenseData.destinationOfSupply) {
-            updatedErrors.destinationOfSupply = true;
-          }
-          if (!expenseData.sourceOfSupply) {
-            updatedErrors.sourceOfSupply = true;
-          }
-        }
-      }
-      if (selectedSection === "expense" && expenseData.gstTreatment) {
-        if (["Overseas"].includes(expenseData.gstTreatment)) {
-          if (!expenseData.destinationOfSupply) {
-            updatedErrors.destinationOfSupply = true;
-          }
-        }
-      }
+  //     if (selectedSection === "expense" && expenseData.gstTreatment) {
+  //       if (
+  //         ["Unregistered Business", "Consumer"].includes(
+  //           expenseData.gstTreatment
+  //         )
+  //       ) {
+  //         if (!expenseData.destinationOfSupply) {
+  //           updatedErrors.destinationOfSupply = true;
+  //         }
+  //         if (!expenseData.sourceOfSupply) {
+  //           updatedErrors.sourceOfSupply = true;
+  //         }
+  //       }
+  //     }
+  //     if (selectedSection === "expense" && expenseData.gstTreatment) {
+  //       if (["Overseas"].includes(expenseData.gstTreatment)) {
+  //         if (!expenseData.destinationOfSupply) {
+  //           updatedErrors.destinationOfSupply = true;
+  //         }
+  //       }
+  //     }
 
-      if (selectedSection === "expense" && expenseData.gstTreatment) {
-        if (
-          [
-            "Registered Business - Regular",
-            "Special Economic Zone",
-            "Deemed Export",
-            "Tax Deductor",
-            "SEZ Developer",
-          ].includes(expenseData.gstTreatment)
-        ) {
-          expenseData.expense.forEach((expense) => {
-            if (!expense.taxGroup) {
-              updatedErrors[`Tax Group`] = true;
-            }
-          });
-        }
-      }
+  //     if (selectedSection === "expense" && expenseData.gstTreatment) {
+  //       if (
+  //         [
+  //           "Registered Business - Regular",
+  //           "Special Economic Zone",
+  //           "Deemed Export",
+  //           "Tax Deductor",
+  //           "SEZ Developer",
+  //         ].includes(expenseData.gstTreatment)
+  //       ) {
+  //         expenseData.expense.forEach((expense) => {
+  //           if (!expense.taxGroup) {
+  //             updatedErrors[`Tax Group`] = true;
+  //           }
+  //         });
+  //       }
+  //     }
 
-      if (expenseData.expense && Array.isArray(expenseData.expense)) {
-        expenseData.expense.forEach((expense) => {
-          if (!expense.amount) {
-            updatedErrors[`expense amount`] = true;
-          }
-          if (!expense.expenseAccount) {
-            updatedErrors[`expense Account`] = true;
-          }
-        });
-      }
+  //     if (expenseData.expense && Array.isArray(expenseData.expense)) {
+  //       expenseData.expense.forEach((expense) => {
+  //         if (!expense.amount) {
+  //           updatedErrors[`expense amount`] = true;
+  //         }
+  //         if (!expense.expenseAccount) {
+  //           updatedErrors[`expense Account`] = true;
+  //         }
+  //       });
+  //     }
 
-      const emptyFields = Object.keys(updatedErrors).filter(
-        (key) => updatedErrors[key as keyof typeof updatedErrors]
-      );
+  //     const emptyFields = Object.keys(updatedErrors).filter(
+  //       (key) => updatedErrors[key as keyof typeof updatedErrors]
+  //     );
 
-      hasErrors = emptyFields.length > 0;
+  //     hasErrors = emptyFields.length > 0;
 
-      if (hasErrors) {
-        const fieldNames = emptyFields.join(", ");
-        toast.error(`Please fill in the following fields: ${fieldNames}`);
-        return;
-      }
+  //     if (hasErrors) {
+  //       const fieldNames = emptyFields.join(", ");
+  //       toast.error(`Please fill in the following fields: ${fieldNames}`);
+  //       return;
+  //     }
 
-      const url = `${endpoints}`;
-      const { response, error } = await AddExpenses(url, expenseData);
+  //     const url = `${endpoints}`;
+  //     const { response, error } = await AddExpenses(url, expenseData);
 
-      if (response) {
-        toast.success(response.data.message);
-        navigate("/expense/home");
-      } else {
-        toast.error(error?.response?.data?.message || "An error occurred.");
-      }
-    } catch (error) {
-      console.error("Error in handleAddExpense:", error);
-      toast.error("An unexpected error occurred.");
-    }
-  };
+  //     if (response) {
+  //       toast.success(response.data.message);
+  //       navigate("/expense/home");
+  //     } else {
+  //       toast.error(error?.response?.data?.message || "An error occurred.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error in handleAddExpense:", error);
+  //     toast.error("An unexpected error occurred.");
+  //   }
+  // };
 
   const toggleDropdown = (key: string | null) => {
     setOpenDropdownIndex(key === openDropdownIndex ? null : key);
@@ -316,11 +328,11 @@ function AddExpensePage({}: Props) {
     }
   };
 
-  const handleButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
+  // const handleButtonClick = () => {
+  //   if (fileInputRef.current) {
+  //     fileInputRef.current.click();
+  //   }
+  // };
 
   const filterByDisplayName = (
     data: any[],

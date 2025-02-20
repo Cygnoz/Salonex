@@ -1,7 +1,7 @@
 
 type Props = {};
 
-const Gst = (props: Props) => {
+const Gst = ({}: Props) => {
   return (
     <div>
       <svg

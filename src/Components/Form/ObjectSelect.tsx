@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import CheveronDown from "../../assets/icons/CheveronDown";
 import SearchBar from "../SearchBar";
 
@@ -31,10 +31,8 @@ const ObjectSelect = ({
   placeholder = "Select",
   selectedOption,
   onSelect,
-  renderOptionContent,
   searchKey,
   displayFields, 
-  NewItem
 }: ObjectSelectProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [searchValue, setSearchValue] = useState("");

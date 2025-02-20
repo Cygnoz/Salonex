@@ -3,8 +3,8 @@ import Button from "../../Components/Button";
 import Modal from "../../Components/modal/Modal";
 import defaultCustomerImage from "../../assets/Images/Rectangle 5558.png";
 import Info from "../../assets/icons/Info";
-import { useNavigate } from "react-router-dom";
-import useApi from "../../Hooks/useApi";
+// import { useNavigate } from "react-router-dom";
+// import useApi from "../../Hooks/useApi";
 // import toast from "react-hot-toast";
 // import { endponits } from "../../Services/apiEndpoints";
 // import { useOrganization } from "../../context/OrganizationContext";
@@ -59,8 +59,10 @@ type Props = {
   discountType: any, discount: any, subtotal: any, discounts: any
 };
 
-function PosPayment({ selectedItems, total, selectedCustomer, selectedMethodLabel, quantities, discountType, discount, subtotal
-  , discounts
+function PosPayment({ selectedItems, total, selectedCustomer, 
+  // selectedMethodLabel,
+   quantities, discountType, discount, subtotal
+  // , discounts
 }: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [paidAmount, setPaidAmount] = useState<any>("");
@@ -192,10 +194,10 @@ function PosPayment({ selectedItems, total, selectedCustomer, selectedMethodLabe
     setPaidAmount(amount.replace("₹ ", ""));
   };
 
-  const navigate = useNavigate();
-  const handleGoBack = () => {
-    navigate("/posreciept");
-  };
+  // const navigate = useNavigate();
+  // const handleGoBack = () => {
+  //   navigate("/posreciept");
+  // };
 
   // const { request: newSalesInvoiceApi } = useApi("post", 5007);
 
