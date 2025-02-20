@@ -147,13 +147,15 @@ const CategoryModal = ({ onClose }: Props) => {
         <div className="grid grid-cols-3 gap-4 p-4">
           {allcategoryData?.map((category) => (
             <div key={category.id} className="p-3 bg-[#FFFFFF]">
-              <div className="w-24 h-28">
-                <img
-                  className="w-32 h-24"
-                  src={category.uploadImage}
-                  alt={category.categoriesName}
-                />
-              </div>
+              {category.uploadImage && ( // Conditionally render image only if it exists
+        <div className="w-24 h-28">
+          <img
+            className="w-32 h-24"
+            src={category.uploadImage}
+            alt={category.categoriesName}
+          />
+        </div>
+      )}
               <h1 className="text-sm font-semibold text-[#2C3E50] my-1">
                 {category.categoriesName}
               </h1>
