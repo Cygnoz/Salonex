@@ -6,6 +6,7 @@ import { endpoints } from "../../../Services/apiEndpoints";
 import { useEffect, useState } from "react";
 import useApi from "../../../Hooks/useApi";
 import toast from "react-hot-toast";
+import { useResponse } from "../../../context/ResponseContext";
 
 type Props = {};
 
@@ -21,10 +22,7 @@ interface Account {
 function BankHome({ }: Props) {
   const [accountData, setAccountData] = useState<Account[]>([]);
   const [oneAccountData, setOneAccountData] = useState<any>({});
-  const [loading, setLoading] = useState({
-    skeleton: false,
-    noDataFound: false,
-  });
+  const {loading,setLoading}=useResponse()
 
   const { request: AllAccounts } = useApi("get", 5001);
   const { request: fetchOneItem } = useApi("get", 5001);
@@ -33,19 +31,19 @@ function BankHome({ }: Props) {
 
   const fetchAllAccounts = async () => {
     try {
-      setLoading({ ...loading, skeleton: true, noDataFound: false });
+      setLoading(true);
       const url = `${endpoints.Get_ALL_Acounts}`;
       const { response, error } = await AllAccounts(url);
 
       if (!error && response) {
         setAccountData(response.data.filter((account: Account) => account.accountSubhead === "Bank"));
-        setLoading({ ...loading, skeleton: false });
       } else {
-        setLoading({ ...loading, skeleton: false, noDataFound: true });
       }
     } catch (error) {
       console.error("Error fetching accounts:", error);
-      setLoading({ ...loading, skeleton: false, noDataFound: true });
+      
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -121,7 +119,7 @@ function BankHome({ }: Props) {
           data={accountData}
           searchPlaceholder={"Search account"}
           searchableFields={["accountName", "accountCode", "accountSubhead", "accountHead"]}
-          loading={loading.skeleton}
+          loading={loading}
           isPrint
           onRowClick={handleNavigate}
           onDelete={handleDelete}

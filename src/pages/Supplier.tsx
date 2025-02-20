@@ -34,7 +34,6 @@ function Supplier({ }: Props) {
   const { request: AllSuppliers } = useApi("get", 5009);
  // const { supplierResponse } = useContext(SupplierResponseContext)!;
  const {loading,setLoading}=useResponse()
-  
   const fetchAllSuppliers = async () => {
     try {
       setLoading(true);
@@ -51,7 +50,7 @@ function Supplier({ }: Props) {
   };
   useEffect(() => {
     fetchAllSuppliers();
-  }, [AllSuppliers]);
+  }, []);
 
   const HandleOnSave = () => {
     fetchAllSuppliers();
@@ -153,6 +152,9 @@ function Supplier({ }: Props) {
     }
   };
 
+  console.log("ddsas",loading);
+  
+
   const CustomerDetails = [
     { icon: <MaleIcon />, title: "All Suppliers", number: supplierData.length },
     { icon: <CheckActive />, title: "Active Suppliers", number: activeSuppliers },
@@ -185,7 +187,7 @@ function Supplier({ }: Props) {
         onDelete={handleDelete}
         // onEditClick={handleEdit}
         searchPlaceholder="Search Supplier"
-        loading={loading.skelton}
+        loading={loading}
         searchableFields={["companyName", "supplierDisplayName", "supplierEmail"]}
         renderActions={(item: any) => (
           <div onClick={() => getOneItem(item)}>
