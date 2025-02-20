@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import BackIcon from "../../assets/icons/BackIcon";
 import { useEffect, useState } from "react";
-import { endpoints } from "../../Services/apiEdpoints";
+import { endpoints } from "../../Services/apiEndpoints";
 import useApi from "../../Hooks/useApi";
 
 type Props = {};
