@@ -10,6 +10,7 @@ import useApi from "../../../../Hooks/useApi";
 import toast from "react-hot-toast";
 import Trash from "../../../../assets/icons/Trash";
 import { useEffect } from "react";
+import { useRegularApi } from "../../../../context/ApiContext";
 // import { data } from "react-router-dom";
 
 type Props = {
@@ -27,8 +28,7 @@ const validationSchema = Yup.object({
 const CategoryAddModal = ({onClose,editId}: Props) => {
   const { request: addCategory } = useApi("post", 5003);
  const { request: updatecategoryRequest } = useApi("put", 5003);
- const {request: getAcategory}=useApi("get", 5003)
-
+ const {refreshContext,bmcrData}=useRegularApi()
   const {
     register,
     handleSubmit,
@@ -53,28 +53,17 @@ const CategoryAddModal = ({onClose,editId}: Props) => {
 
   useEffect(() => {
     if (editId) {
-      (async () => {
-        try {
-          const { response, error } = await getAcategory(`${endpoints.GET_ONE_BRMC}/${editId}`);
-          if (response && !error) {
-            console.log(response.data);
-           
-            const body = {
-              ...response.data,
-              name:response.data.categoriesName
-            }
-            
-            setFormValues(body);
-        
-          } else {
-            toast.error(error.response.data.message);
-          }
-        } catch (err) {
-          console.error("Error fetching region data:", err);
+      refreshContext({bmcrId:editId})
+      if(bmcrData){
+        const body = {
+          ...bmcrData,
+          name:bmcrData.categoriesName
         }
-      })();
+        
+        setFormValues(body);
+      }
     }
-  }, [editId]);
+  }, [editId,bmcrData]);
 
   console.log(editId);
   
@@ -90,7 +79,8 @@ const CategoryAddModal = ({onClose,editId}: Props) => {
         toast.success(`category ${editId ? "updated" : "added"} successfully!`);
         console.log(response.data);
         onClose();
-        
+        const type={ type: "category" }
+    refreshContext({bmcrType:type})
       } else {
         toast.error(error.response.data.message);
       }
