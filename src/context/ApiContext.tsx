@@ -53,6 +53,7 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
       if (!options || options.allTaxData) {
         fetchPromises.push(getAllTaxData(endpoints.GET_ALL_TAX).then(response => ({ allTaxData: response?.response?.data || null })));
       }
+      
 
       const results = await Promise.all(fetchPromises);
       const newData: any = results.reduce((acc, result) => ({ ...acc, ...result }), {});

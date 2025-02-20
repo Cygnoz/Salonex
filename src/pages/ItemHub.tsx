@@ -49,7 +49,7 @@ function ItemHub({ }: Props) {
                  Plan Based on Discounts and Counts
                   </p>
                   <div  >
-                  <Button className="mt-2">Explore <ArrowUpRight/></Button>
+                  <Button className="mt-2">Explore <ArrowUpRight color="#FFFFFF"/></Button>
                 </div>
                  
                 </div>
@@ -74,7 +74,7 @@ function ItemHub({ }: Props) {
                
               </div>
               <div  >
-                  <Button className="mt-2 bg-[#EBEBEB]">Explore <ArrowUpRight/></Button>
+                  <Button className="mt-2 bg-[#EBEBEB]">Explore <ArrowUpRight color="#FFFFFF"/></Button>
                   <img src={bg2} className="w-96 h-44 right-96 object-contain ml-96 -mt-3" alt="" />
                 </div>
                
@@ -96,7 +96,7 @@ function ItemHub({ }: Props) {
               
               </div>
               <div  onClick={() => navigate("/itemhub/products-home")}>
-                  <Button className="mt-2">Explore <ArrowUpRight/></Button>
+                  <Button className="mt-2">Explore <ArrowUpRight color="#FFFFFF"/></Button>
                 </div>
                 <img src={bg3} className="w-96 h-44 right-96 object-contain ml-80 -mt-3" alt="" />
             </div>
