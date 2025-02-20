@@ -12,6 +12,7 @@ import useApi from "../../../../Hooks/useApi";
 import { endpoints } from "../../../../Services/apiEndpoints";
 import toast from "react-hot-toast";
 import ConfirmModal from "../../../../Components/Table/ConfirmModal";
+import { useRegularApi } from "../../../../context/ApiContext";
 // import { useResponse } from "../../../../context/ResponseContext";
 
 type Props = {
@@ -19,7 +20,7 @@ type Props = {
 };
 
 const CategoryModal = ({ onClose }: Props) => {
-  const { request: fetchAllcategorys } = useApi("put", 5003);
+  const {allbmcrData,refreshContext}=useRegularApi()
   const { request: deletecategoryRequest } = useApi("delete", 5003);
   const [editId, setEditId] = useState<string | null>(null);4
  // const {loading,setLoading}=useResponse()
@@ -52,6 +53,8 @@ const CategoryModal = ({ onClose }: Props) => {
   const closeDeleteModal = () => {
     setSelectedCategoryId(null);
     setIsDeleteModalOpen(false);
+    const type={ type: "category" }
+    refreshContext({bmcrType:type})
   };
 
   const handleEdit = (id?: string) => {
@@ -61,26 +64,7 @@ const CategoryModal = ({ onClose }: Props) => {
   
  
 
-  const loadcategorys = async () => {
-    try {
-     // setLoading(true)
-      const url = `${endpoints.GET_ALL_BRMC}`;
-      const body = { type: "category" };
-      const { response, error } = await fetchAllcategorys(url, body);
-     
-      if (!error && response) {
-        setAllcategoryData(response.data);
-        fetchAllcategorys
-      } else {
-        console.error("Failed to fetch category data.");
-      }
-    } catch (error) {
-      toast.error("Error in fetching category data.");
-      console.error("Error in fetching category data", error);
-    }finally{
-      //setLoading(false)
-    }
-  };
+ 
   const handleDelete = async () => {
     if (!selectedCategoryId) return;
 
@@ -102,8 +86,15 @@ const CategoryModal = ({ onClose }: Props) => {
   };
 
   useEffect(() => {
-    loadcategorys();
-  }, []);
+    // loadcategorys();
+    const type={ type: "category" }
+    refreshContext({bmcrType:type})
+    if(allbmcrData){
+      setAllcategoryData(allbmcrData);
+    }
+  }, [allbmcrData]);
+
+  
 
   return (
     <>
