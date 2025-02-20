@@ -6,7 +6,7 @@ import PrinterIcon from "../../../assets/icons/PrinterIcon"
 import TrashIcon from "../../../assets/icons/TrashIcon"
 import useApi from "../../../Hooks/useApi"
 import { useEffect, useState } from "react"
-import { endpoints } from "../../../Services/apiEdpoints"
+import { endpoints } from "../../../Services/apiEndpoints"
 
 type Props = {}
 

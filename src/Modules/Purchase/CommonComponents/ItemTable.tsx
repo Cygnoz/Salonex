@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import useApi from "../../../Hooks/useApi";
 import toast from "react-hot-toast";
-import { endpoints } from "../../../Services/apiEndpoints";
 import CheveronDown from "../../../assets/icons/CheveronDown";
 import SearchBar from "../../../Components/SearchBar";
 import { Link } from "react-router-dom";
 import CirclePlus from "../../../assets/icons/circleplus";
-import TrashIcon from "../../../assets/icons/TrashIcon";
+import Trash from "../../../assets/icons/Trash";
 
 type Props = {
   state?: any;
@@ -35,14 +34,20 @@ type Row = {
   itemIgstAmount: number | string;
   itemVatAmount: number | string;
   taxPreference: string;
+  purchaseAccountId: string;
 };
 
-const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
+const ItemTable = ({
+  state,
+  setState,
+  isInterState,
+  oneOrganization,
+}: Props) => {
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
   const [openDropdownType, setOpenDropdownType] = useState<string | null>(null);
   const [searchValue, setSearchValue] = useState<string>("");
   const [items, setItems] = useState<any>([]);
-  const { request: getAllItemsRequest } = useApi("get", 5003);
+  const { request: getAllItemsReq } = useApi("get", 5003);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [rows, setRows] = useState<Row[]>([
     {
@@ -63,6 +68,8 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
       itemIgstAmount: "",
       itemVatAmount: "",
       taxPreference: "",
+      purchaseAccountId: "",
+
     },
   ]);
 
@@ -102,6 +109,8 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
       itemIgstAmount: "",
       itemVatAmount: "",
       taxPreference: "",
+      purchaseAccountId: "",
+
     };
     const updatedRows = [...rows, newRow];
     setRows(updatedRows);
@@ -110,7 +119,6 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
   const handleItemSelect = (item: any, index: number) => {
     setOpenDropdownId(null);
     setOpenDropdownType(null);
-
     const newRows = [...rows];
     newRows[index].itemName = item.itemName;
     newRows[index].itemImage = item.itemImage;
@@ -121,6 +129,7 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
     newRows[index].itemSgst = item.sgst;
     newRows[index].itemIgst = item.igst;
     newRows[index].taxPreference = item.taxPreference;
+    newRows[index].purchaseAccountId = item.purchaseAccountId;
 
     const costPrice = Number(newRows[index].itemCostPrice);
     const itemDiscount = Number(newRows[index].itemDiscount);
@@ -154,7 +163,6 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
       : cgstAmount + sgstAmount;
 
     setRows(newRows);
-
     setState?.((prevData: any) => ({
       ...prevData,
       items: newRows.map((row) => {
@@ -164,6 +172,7 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
       }),
     }));
   };
+
 
   const calculateDiscountPrice = (
     totalCostPrice: number,
@@ -299,23 +308,45 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
     }));
   };
 
+  // const getAllItems = async () => {
+  //   try {
+  //     const url = `${endpoints.GET_ALL_ITEMS_SALES}`;
+
+  //     const apiResponse = await getAllItemsRequest(url);
+  //     const { response, error } = apiResponse;
+  //     console.log("response", response);
+
+  //     if (!error && response) {
+  //       setItems(response.data);
+  //     } else {
+  //       console.log(error);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching items:", error);
+  //   }
+  // };
+
+
   const getAllItems = async () => {
     try {
-      const url = `${endpoints.GET_ALL_ITEM}`;
-      const apiResponse = await getAllItemsRequest(url);
-      // console.log(apiResponse, "api response");
-      const { response, error } = apiResponse;
 
+      const url = `http://localhost:5003/get-all-item-xs`;
+      const { response, error } = await getAllItemsReq(url);
+      console.log("response", response);
       if (!error && response) {
         setItems(response.data);
-        // console.log(response);
+
       } else {
         console.log(error);
       }
     } catch (error) {
-      console.error("Error fetching items:", error);
+      console.error(error);
     }
   };
+
+  useEffect(() => {
+    getAllItems();
+  }, []);
 
   const removeRow = (index: number) => {
     if (rows.length > 1) {
@@ -345,6 +376,7 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
         itemIgstAmount: "",
         itemVatAmount: "",
         taxPreference: "",
+        purchaseAccountId: "",
       };
 
       setRows([defaultRow]);
@@ -533,9 +565,7 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
     });
   }, []);
 
-  useEffect(() => {
-    getAllItems();
-  }, []);
+
 
   const newPurchaseOrderTableHead = [
     "Sl.No.",
@@ -550,13 +580,16 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
   return (
     <div>
       <div>
-        <div className="rounded-lg border-2 border-tableBorder mt-5">
-          <table className="min-w-full bg-white rounded-lg relative pb-4 border-dropdownText">
-            <thead className="text-[12px] text-center text-dropdownText">
-              <tr className="bg-[#faf7f2]">
+        <div className="  mt-5">
+          <table className="min-w-full w-full border  bg-white  relative pb-4 ">
+            <thead className="text-[12px] text-center text-dropdownText rounded-lg">
+              <tr
+                className="bg-[#faf7f2] p-2  rounded-lg
+              "
+              >
                 {newPurchaseOrderTableHead?.map((item, index) => (
                   <th
-                    className="py-2.5 px-4 font-medium border-b text-[#495160] border-tableBorder relative"
+                    className="py-2.5 px-1  font-medium border-b text-[#495160] border-tableBorder relative"
                     key={index}
                   >
                     {item}
@@ -581,7 +614,7 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
                         <div className="cursor-pointer gap-2 grid grid-cols-12 appearance-none items-center justify-center h-9 text-zinc-400 bg-white text-sm">
                           <div className="flex items-start col-span-4">
                             <img
-                              className="rounded-full h-10 w-10 "
+                              className="rounded-full h-8 w-8 "
                               src={row.itemImage}
                               alt=""
                             />
@@ -591,7 +624,7 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
                           </div>
                         </div>
                       ) : (
-                        <div className="cursor-pointer flex appearance-none items-center justify-center h-9 text-zinc-400 bg-white text-sm">
+                        <div className="cursor-pointer whitespace-nowrap flex appearance-none items-center justify-center h-9 text-zinc-400 bg-white text-sm">
                           <p>Type or click</p>
                           <CheveronDown color="currentColor" />
                         </div>
@@ -601,7 +634,7 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
                       openDropdownType === "searchProduct" && (
                         <div
                           ref={dropdownRef}
-                          className="absolute z-10 bg-white shadow rounded-md mt-1 p-2 w-[30%] space-y-1 h-72 overflow-scroll hide-scrollbar"
+                          className="absolute z-10 bg-white shadow rounded-md mt-1 p-2 w-[35%]  space-y-1 h-72 overflow-scroll hide-scrollbar"
                         >
                           <SearchBar
                             searchValue={searchValue}
@@ -615,14 +648,14 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
                                 className="grid grid-cols-12 gap-1 p-2 hover:bg-gray-100 cursor-pointer border border-slate-400 rounded-lg bg-lightPink hover:bg-lightRose"
                                 onClick={() => handleItemSelect(item, index)}
                               >
-                                <div className="col-span-2 flex justify-center">
+                                <div className="col-span-3 flex justify-center">
                                   <img
-                                    className="rounded-full h-10"
+                                    className="rounded-full h-10 w-10 object-cover"
                                     src={item.itemImage}
                                     alt="Img"
                                   />
                                 </div>
-                                <div className="col-span-10 flex">
+                                <div className="col-span-9 flex">
                                   <div className="text-start flex-row space-y-1">
                                     <p className="font-bold text-sm text-black">
                                       {item.itemName}
@@ -644,7 +677,7 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
                           <div>
                             <Link to={"/inventory/Item/new"}>
                               <button className="bg-darkGreen text-darkRed rounded-lg py-4 px-6 flex items-center text-sm font-bold border-slate-400 border gap-2 w-full hover:bg-lightRed">
-                                <CirclePlus color="darkRed" size={20} />
+                                <CirclePlus color="#0b4a4c" size={20} />
                                 <p> Add New Item</p>
                               </button>
                             </Link>
@@ -729,7 +762,9 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
                           className="text-xs appearance-none w-[60px] p-1 text-zinc-400 bg-white border border-inputBorder rounded-lg"
                         >
                           <option value="percentage">%</option>
-                          <option value="currency"></option>
+                          <option value="currency">
+                            {oneOrganization.baseCurrency}
+                          </option>
                         </select>
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                           <CheveronDown color="gray" />
@@ -755,25 +790,23 @@ const ItemTable = ({ state, setState, isInterState, isNonTaxable }: Props) => {
                       className="text-center flex justify-center gap-2"
                       onClick={() => removeRow(index)}
                     >
-                      <TrashIcon color="#EA1E4F" />
+                      <Trash color="darkRed" />
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-
         </div>
         <button
           type="button"
           className="text-[#0b9d56]  rounded-lg py-5 flex gap-1 items-center text-sm font-bold"
           onClick={addRow}
         >
-          <CirclePlus color={"#975359"} size={18} />
-          <span className="text-[#975359]"> Add Item</span>
+          <CirclePlus color={"#0b9d56"} size={18} />
+          Add Item
         </button>
       </div>
-
     </div>
   );
 };

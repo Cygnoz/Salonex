@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import Table from "../../../Components/Table/Table";
 import NewBankModal from "./NewBankModal";
-import { endpoints } from "../../../Services/apiEdpoints";
+import { endpoints } from "../../../Services/apiEndpoints";
 import { useEffect, useState } from "react";
 import useApi from "../../../Hooks/useApi";
 import toast from "react-hot-toast";

@@ -8,7 +8,7 @@ import bgImg2 from "../../../assets/images/Ribbon-3.png"
 import CheveronDown from "../../../assets/icons/CheveronDown"
 import Pen from "../../../assets/icons/Pen"
 import toast from "react-hot-toast"
-import { endpoints } from "../../../Services/apiEdpoints"
+import { endpoints } from "../../../Services/apiEndpoints"
 import useApi from "../../../Hooks/useApi"
 
 type Props = { page?: string, accountData: any; fetchAllAccounts: () => void };

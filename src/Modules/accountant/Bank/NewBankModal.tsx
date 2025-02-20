@@ -7,7 +7,7 @@ import CheveronDown from "../../../assets/icons/CheveronDown";
 import bgImg1 from "../../../assets/images/Savings-bro 1 (1).png"
 import bgImg2 from "../../../assets/images/Ribbon-3.png"
 import toast from "react-hot-toast";
-import { endpoints } from "../../../Services/apiEdpoints";
+import { endpoints } from "../../../Services/apiEndpoints";
 import useApi from "../../../Hooks/useApi";
 import Pen from "../../../assets/icons/Pen";
 import { useRegularApi } from "../../../context/ApiContext";

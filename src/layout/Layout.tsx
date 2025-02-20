@@ -37,11 +37,11 @@ const Layout = ({ }: Props) => {
       >
         <Header />
       </div>
-        <div className="px-6">
+        <div className="px-6 mt-20">
           {shouldShowSubHeader && activeIndex !== null && navList[activeIndex]?.subhead && (
             <SubHeader activeIndex={activeIndex} />
           )}
-          <div className={navList[activeIndex ?? 0]?.subhead ? "mt-10" : "my-0 mt-20"}>
+          <div className={navList[activeIndex ?? 0]?.subhead ? "mt-4" : "my-0 mt-20"}>
             <Outlet />
           </div>
         </div>

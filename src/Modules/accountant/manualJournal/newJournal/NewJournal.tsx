@@ -11,7 +11,7 @@ import journalBgImage from "../../../../assets/images/journalBgImage.png"
 import CirclePlus from "../../../../assets/icons/circleplus"
 import useApi from "../../../../Hooks/useApi"
 import { useOrganization } from "../../../../context/OrgContext"
-import { endpoints } from "../../../../Services/apiEdpoints"
+import { endpoints } from "../../../../Services/apiEndpoints"
 import CheveronDown from "../../../../assets/icons/CheveronDown"
 
 type Props = { page?: string };

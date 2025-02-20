@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import Table from "../../../Components/Table/Table"
 import NewCashModal from "./NewCashModal"
 import toast from "react-hot-toast";
-import { endpoints } from "../../../Services/apiEdpoints";
+import { endpoints } from "../../../Services/apiEndpoints";
 import { useEffect, useState } from "react";
 import useApi from "../../../Hooks/useApi";
 
