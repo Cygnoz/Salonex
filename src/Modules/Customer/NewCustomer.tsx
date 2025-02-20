@@ -20,7 +20,8 @@ type Props = { page?: string; id?: string };
 const NewCustomer = ({ page, id }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(1);
-
+  console.log(id);
+  
   const handleNext = () => {
     if (activeTab < 5) {
       setActiveTab(activeTab + 1);

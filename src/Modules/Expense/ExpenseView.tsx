@@ -1,13 +1,11 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Button from "../../Components/Button";
 import Pen from "../../assets/icons/Pen";
 
 import { useEffect, useState } from "react";
-import useApi from "../../Hooks/useApi";
-import { endpoints } from "../../Services/apiEndpoints";
+// import useApi from "../../Hooks/useApi";
 import CheveronLeftIcon from "../../assets/icons/ChevronLeft";
-import DollarSign from "../../assets/icons/Dollarsign";
 import { ExpenseDollar } from "../../assets/icons/ExpenseDollar";
 import { PrintIcon } from "../../assets/icons/PrintIcon";
 
@@ -16,9 +14,9 @@ type Props = {};
 const ExpenseView = ({}: Props) => {
   const [expense, setExpense] = useState<any | []>([]);
   const [expensedata, setExpenseData] = useState<any | []>([]);
-  const { request: getExpense } = useApi("get", 5008);
+  // const { request: getExpense } = useApi("get", 5008);
 
-  const { id } = useParams();
+  // const { id } = useParams();
 
   const historyData = [
     {

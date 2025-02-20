@@ -31,8 +31,8 @@ const Layout = ({ }: Props) => {
       <div
         className="fixed top-0 z-50 "
         style={{
-          width: "calc(100% - 7%)" , 
-          left:  "7%", // Adjust based on sidebar width
+          width: "calc(100% - 9%)" , 
+          left:  "9%", // Adjust based on sidebar width
         }}
       >
         <Header />

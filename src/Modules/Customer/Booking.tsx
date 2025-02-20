@@ -1,11 +1,9 @@
-import { useState } from 'react';
-import CustomerProfile from "../../assets/images/CustomerProfile.png"
-import Pipette from '../../assets/icons/Pipette';
-import Calender from '../../assets/icons/Calender';
 import CalendarDays from '../../assets/icons/CalendarDays';
-import Trash from '../../assets/icons/Trash';
-import PencilLine from '../../assets/icons/PencilLine';
 import Eye from '../../assets/icons/Eye';
+import PencilLine from '../../assets/icons/PencilLine';
+import Pipette from '../../assets/icons/Pipette';
+import Trash from '../../assets/icons/Trash';
+import CustomerProfile from "../../assets/images/CustomerProfile.png";
 
 
 

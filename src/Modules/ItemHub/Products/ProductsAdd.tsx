@@ -13,7 +13,7 @@ import Button from "../../../Components/Button"
 import { useState } from "react"
 
 type Props = {
-    onClose: () => void;
+    onClose?: () => void;
 }
 
 const ProductsAdd = ({ onClose }: Props) => {

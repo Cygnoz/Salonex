@@ -4,15 +4,17 @@ import Modal from "../../Components/modal/Modal";
 import SearchBar from "../../Components/SearchBar";
 import defaultCustomerImage from "../../assets/Images/Rectangle 5558.png";
 // import { endponits } from "../../Services/apiEndpoints";
-import useApi from "../../Hooks/useApi";
+// import useApi from "../../Hooks/useApi";
 import Button from "../../Components/Button";
 
 type Props = { onButtonClick: (data: string) => void; };
 
 function SelectCustomerModal({ onButtonClick }: Props) {
-  const [customerData, setCustomerData] = useState<any>([]);
+  const [customerData, 
+    // setCustomerData
+  ] = useState<any>([]);
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
-  const { request: AllCustomers } = useApi("get", 5002);
+  // const { request: AllCustomers } = useApi("get", 5002);
   const [isModalOpen, setModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>("");
 
