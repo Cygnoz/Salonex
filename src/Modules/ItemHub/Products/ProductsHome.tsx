@@ -8,6 +8,7 @@ import ManufactureModal from "./Manufacture/ManufactureModal";
 import BrandModal from "./Brand/BrandModal";
 import RackModal from "./Rack/RackModal";
 import { useNavigate } from "react-router-dom";
+import ProductView from "./ProductView";
 
 
 
@@ -15,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 type Props = {}
 
 function ProductsHome({ }: Props) {
+   
     const Navigate = useNavigate();
     // // State to manage modal visibility
   const [isModalOpen, setIsModalOpen] = useState({
@@ -22,7 +24,8 @@ function ProductsHome({ }: Props) {
     ManufacturaddForm:false,
     brandaddForm:false,
     RackaddForm:false,
-    productsaddForm:false
+    productsaddForm:false,
+    view:false
     
   });
 
@@ -32,7 +35,8 @@ function ProductsHome({ }: Props) {
     ManufacturaddForm=false,
     brandaddForm=false,
     RackaddForm=false,
-    productsaddForm=false
+    productsaddForm=false,
+    view=false
     
   ) => {
     setIsModalOpen((prev) => ({
@@ -41,7 +45,8 @@ function ProductsHome({ }: Props) {
       ManufacturaddForm,
       brandaddForm,
       RackaddForm,
-      productsaddForm
+      productsaddForm,
+      view
      
     }));
   
@@ -65,7 +70,10 @@ function ProductsHome({ }: Props) {
     ]
 
     const handleRowClick = () => {
-        //navigate(`customerview`);
+        handleModalToggle(false,false,false,false,false,true)
+           
+         
+         
     };
 
     const handleDelete = (id: string) => {
@@ -103,9 +111,7 @@ function ProductsHome({ }: Props) {
 
                     </div>
                    
-                    {/* <div  onClick={() => navigate("/itemHub/products")}>
-               <Button className="mt-2">Explore <ArrowUpRight/></Button>
-             </div> */}
+                
                 </div>
 
 
@@ -117,7 +123,7 @@ function ProductsHome({ }: Props) {
                             <p className="text-[#2C3E50] font-bold text-sm">Add Category</p>
                         </div>
                         <div>
-                            <div onClick={()=>handleModalToggle(true,false,false,false,false)} className="rounded-full bg-black w-12 h-12 flex items-center justify-center">
+                            <div onClick={()=>handleModalToggle(true,false,false,false,false,false)} className="rounded-full bg-black w-12 h-12 flex items-center justify-center">
                                 <ArrowUpRightIcon color="#FFE1AD" />
                             </div>
                         </div>
@@ -133,7 +139,7 @@ function ProductsHome({ }: Props) {
                             <p className="text-[#2C3E50] font-bold text-sm">Manage Manufacture</p>
                         </div>
                         <div>
-                            <div onClick={()=>handleModalToggle(false,true,false,false,false)} className="rounded-full bg-black w-12 h-12 flex items-center justify-center">
+                            <div onClick={()=>handleModalToggle(false,true,false,false,false,false)} className="rounded-full bg-black w-12 h-12 flex items-center justify-center">
                                 <ArrowUpRightIcon color="#FFE1AD" />
                             </div>
                         </div>
@@ -149,7 +155,7 @@ function ProductsHome({ }: Props) {
                             <p className="text-[#2C3E50] font-bold text-sm">Manage Brand</p>
                         </div>
                         <div>
-                            <div onClick={()=>handleModalToggle(false,false,true,false,false)} className="rounded-full bg-black w-12 h-12 flex items-center justify-center">
+                            <div onClick={()=>handleModalToggle(false,false,true,false,false,false)} className="rounded-full bg-black w-12 h-12 flex items-center justify-center">
                                 <ArrowUpRightIcon color="#FFE1AD" />
                             </div>
                         </div>
@@ -165,7 +171,7 @@ function ProductsHome({ }: Props) {
                             <p className="text-[#2C3E50] font-bold text-sm">Manage Rack</p>
                         </div>
                         <div>
-                            <div onClick={()=>handleModalToggle(false,false,false,true,false)} className="rounded-full bg-black w-12 h-12 flex items-center justify-center">
+                            <div onClick={()=>handleModalToggle(false,false,false,true,false,false)} className="rounded-full bg-black w-12 h-12 flex items-center justify-center">
                                 <ArrowUpRightIcon color="#FFE1AD" />
                             </div>
                         </div>
@@ -206,6 +212,9 @@ function ProductsHome({ }: Props) {
       </Modal>
       <Modal open={isModalOpen.RackaddForm} onClose={() => handleModalToggle()} className="w-[50%]">
         <RackModal  onClose={() => handleModalToggle()} />
+      </Modal>
+      <Modal open={isModalOpen.view} onClose={() => handleModalToggle()} className="w-[45%]">
+        <ProductView  onClose={() => handleModalToggle()} />
       </Modal>
         </>
         )
