@@ -2,7 +2,6 @@ import React, { createContext, useContext, useEffect, useState, useCallback, use
 import useApi from "../Hooks/useApi";
 import { endpoints } from "../Services/apiEndpoints";
 import { InputCurrencyData } from "../Interface/InputCurrencyData";
-import { useResponse } from "./ResponseContext";
 
 type ApiContextType = {
   settingsAdditionalDatas?: any;
@@ -29,14 +28,12 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
   const [currencyData, setCurrencyData] = useState<any>(null);
   const [settingsData, setSettingsData] = useState<any>(null);
   const [allTaxData, setAllTaxData] = useState<any>(null);
-  const {loading,setLoading}=useResponse()
   const prevDataRef = useRef<any>(null);
 
   // Fetching Data Function
   const fetchData = useCallback(async (options?: { settingsAdditionalDatas?: boolean; countryData?: boolean; currencyData?: boolean; settingsData?: boolean; allTaxData?: boolean }) => {
     try {
       const fetchPromises = [];
-      setLoading(true)
 
       if (!options || options.settingsAdditionalDatas) {
         fetchPromises.push(getAdditionalData(endpoints.GET_ADDITIONAL_DATA).then(response => ({ settingsAdditionalDatas: response?.response?.data[0] || null })));
@@ -67,8 +64,6 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-    }finally{
-      setLoading(false)
     }
   }, [getAdditionalData, getCountryData, getCurrencyData, getSettingsData, getAllTaxData]);
 
@@ -92,9 +87,8 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
     currencyData,
     settingsData,
     allTaxData,
-    loading,
     refreshContext
-  }), [settingsAdditionalDatas, settingsData, countryData, currencyData, allTaxData, refreshContext,loading]);
+  }), [settingsAdditionalDatas, settingsData, countryData, currencyData, allTaxData, refreshContext]);
 
   return <ApiContext.Provider value={contextValue}>{children}</ApiContext.Provider>;
 };

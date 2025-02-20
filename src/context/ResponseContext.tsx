@@ -13,6 +13,7 @@ const ResponseContext = createContext<ResponseContextType | undefined>(undefined
 // Context provider component
 export const ResponseProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  
   return (
     <ResponseContext.Provider value={{ loading,setLoading }}>
       {children}

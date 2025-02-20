@@ -8,14 +8,12 @@ import useApi from '../../Hooks/useApi';
 import { endpoints } from '../../Services/apiEndpoints';
 import { useOrganization } from '../../context/OrgContext';
 import { useRegularApi } from '../../context/ApiContext';
-import { useResponse } from '../../context/ResponseContext';
 
 type Props = {}
 
 function Otp({}: Props) {
   const {refreshOrg}=useOrganization()
   const {refreshContext}=useRegularApi()
-  const {loading}=useResponse()
   const navigate = useNavigate();
   const location = useLocation();
   const { request: verifyOtp } = useApi("post", 5004);
@@ -103,11 +101,9 @@ function Otp({}: Props) {
         }
         // Wait for token storage before making the API call
      
-         setTimeout(() => {
-          if(!loading){
+      
             navigate('/dashboard')
-          }
-         }, 1500);
+        
         
       } else {
         const errorMessage = response.response?.data.message || 'OTP verification failed.';
