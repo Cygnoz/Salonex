@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import Trash2 from "../../../assets/icons/Trash2";
 import CheveronDown from "../../../assets/icons/CheveronDown";
 import SearchBar from "../../../Components/SearchBar";
 import toast from "react-hot-toast";
 import useApi from "../../../Hooks/useApi";
 import { endpoints } from "../../../Services/apiEndpoints";
 import CirclePlus from "../../../assets/icons/circleplus";
-import TrashIcon from "../../../assets/icons/TrashIcon";
 
 type Row = {
   itemImage?: string;
@@ -25,6 +25,8 @@ type Row = {
   itemVatAmount: number | string;
   taxPreference: string;
   stock: number | string;
+  purchaseAccountId:string;
+
 };
 
 type Props = {
@@ -76,6 +78,8 @@ const DebitNoteTable = ({
       itemVatAmount: "",
       taxPreference: "",
       stock: "",
+      purchaseAccountId:"",
+
     },
   ]);
 
@@ -114,6 +118,8 @@ const DebitNoteTable = ({
       itemVatAmount: "",
       taxPreference: "",
       stock: "",
+      purchaseAccountId:"",
+
     };
     const updatedRows = [...rows, newRow];
     setRows(updatedRows);
@@ -134,6 +140,7 @@ const DebitNoteTable = ({
     newRows[index].itemAmount = item.itemAmount;
     newRows[index].itemCostPrice = item.itemCostPrice;
     newRows[index].taxPreference = item.taxPreference;
+    newRows[index].purchaseAccountId=item.purchaseAccountId
 
     if (item.returnQuantity) {
       newRows[index].stock = item.itemQuantity - item.returnQuantity;
@@ -299,6 +306,8 @@ const DebitNoteTable = ({
         itemPurchaseQuantity: "",
         taxPreference: "",
         stock: "",
+        purchaseAccountId:"",
+
       };
 
       // Reset rows to default row
@@ -435,6 +444,8 @@ const DebitNoteTable = ({
         itemPurchaseQuantity: "",
         taxPreference: "",
         stock: "",
+        purchaseAccountId:"",
+
       };
 
       setRows([defaultRow]);
@@ -632,7 +643,7 @@ const DebitNoteTable = ({
                     className="text-center flex justify-center gap-2"
                     onClick={() => removeRow(index)}
                   >
-                    <TrashIcon color="#EA1E4F" />
+                    <Trash2 color="darkRed" />
                   </div>
                 </td>
               </tr>
@@ -643,10 +654,10 @@ const DebitNoteTable = ({
       <div className="w-[60%] mt-0">
         <button
           type="button"
-          className="bg-darkGreen text-[#975359] rounded-lg py-4 px-1 flex items-center text-sm font-bold"
+          className="bg-darkGreen text-[#0b9d56] rounded-lg py-4 px-1 flex items-center text-sm font-bold"
           onClick={addRow}
         >
-          <CirclePlus color="#975359" size={20} />
+          <CirclePlus color="#0b9d56" size={20} />
           Add Item
         </button>
       </div>
