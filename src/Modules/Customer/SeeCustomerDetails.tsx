@@ -4,14 +4,20 @@ import SquereScissorIcon from "../../assets/icons/SquereScissorIcon"
 import History from "../../assets/icons/History"
 import LineChart from "../../assets/icons/LineChart"
 import NewsPaperIcon from "../../assets/icons/NewsPaperIcon"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Overview from "./Overview"
 import ItemMeasurement from "./Booking"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import ChevronLeft from "../../assets/icons/ChevronLeft"
 import PaymentHistory from "./PaymentHistory"
 import WalletTransaction from "./WalletTransaction"
 import ReferalBonus from "./ReferalBonus"
+import { endpoints } from "../../Services/apiEndpoints"
+import toast from "react-hot-toast"
+import useApi from "../../Hooks/useApi"
+import Button from "../../Components/Button"
+import PencilLine from "../../assets/icons/PencilLine"
+import NewCustomer from "./NewCustomer"
 
 
 const SeeCustomerDetails = () => {
@@ -20,6 +26,32 @@ const SeeCustomerDetails = () => {
 
 
 
+
+  const [customerData, setCustomerdata] = useState<any>([]);
+  const { request: customer } = useApi("get", 5002);
+
+  const { id } = useParams();
+
+  const getOne = async () => {
+    try {
+      const url = `${endpoints.GET_ONE_CUSTOMER}/${id}`;
+      const { response, error } = await customer(url);
+      if (!error && response) {
+        console.log(customerData);
+        
+        setCustomerdata(response.data);
+      } else {
+        toast.error(error.response.data.message);
+      }
+    } catch (error) {
+      toast.error("Error in fetching one item data.");
+      console.error("Error in fetching one item data", error);
+    }
+  };
+
+  useEffect(() => {
+    getOne();
+  }, []);
 
 
 
@@ -40,7 +72,8 @@ const SeeCustomerDetails = () => {
   
   return (
     <div>
-      <div className="flex">
+      <div className="flex ">
+        <div>
         <Link to={"/customer"}>
           <div
             style={{ borderRadius: "50%" }}
@@ -49,14 +82,26 @@ const SeeCustomerDetails = () => {
             <ChevronLeft color="#0F172A"  />
           </div>
         </Link>
-        <p className="text-[#0B1320] text-[16px] mx-2 mt-1.5  font-bold">Customer Overview</p>
+       
+       </div>
+      </div>
+      <div className="flex justify-between">
+      <div>
+      <p className="text-[#0B1320] text-[16px] mx-2 mt-1.5  font-bold">Customer Overview</p>
+        </div>
+
+        <div onClick={() => <NewCustomer page="edit"  />}>
+  <Button>
+    <PencilLine /> Edit
+  </Button>
+</div>
 
       </div>
 
 
       
 
-      <div className="gap-6 bg-white p-2 my-2 rounded-2xl">
+      <div className="gap-6 bg-white p-2 my-3 rounded-2xl">
         <div className="flex max-w-full">
           {sideBarHead.map((item, index) => (
             <div
@@ -81,7 +126,7 @@ const SeeCustomerDetails = () => {
           {/* Pass the required props to the Overview component */}
           {selectedTab === "Overview" && (
             <Overview
-            // customerData={customerData}
+          customerData={customerData}
             // statusData={statusData}
             // customerId={customerId}
             // handleStatusSubmit={handleStatusSubmit}
