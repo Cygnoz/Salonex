@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import BrowseUploads from "../../../../assets/icons/BrowseUploads";
 import Button from "../../../../Components/Button";
 import Input from "../../../../Components/Form/Input";
-import { CategoryData } from "../../../../Interface/ProductCategory";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as Yup from "yup";
 import { endpoints } from "../../../../Services/apiEndpoints";
@@ -10,6 +9,8 @@ import useApi from "../../../../Hooks/useApi";
 import toast from "react-hot-toast";
 import Trash from "../../../../assets/icons/Trash";
 import { useEffect } from "react";
+import { useRegularApi } from "../../../../context/ApiContext";
+import { BrandData } from "../../../../Interface/ProductBrand";
 
 type Props = {
     onClose: () => void;
@@ -17,7 +18,7 @@ type Props = {
 }
 
 const validationSchema = Yup.object({
-  name: Yup.string().required("Category name is required"),
+  name: Yup.string().required("Brand name is required"),
   
 
 });
@@ -26,7 +27,7 @@ const validationSchema = Yup.object({
 const BrandAddModal = ({onClose,editId}: Props) => {
   const { request: addBrand} = useApi("post", 5003);
  const { request: updateBrandRequest } = useApi("put", 5003);
- const {request: getABrand}=useApi("get", 5003)
+ const {refreshContext,bmcrData}=useRegularApi()
 
   const {
     register,
@@ -35,44 +36,40 @@ const BrandAddModal = ({onClose,editId}: Props) => {
     watch,
     setValue,
 
-  } = useForm<CategoryData>({
+  } = useForm<BrandData>({
     resolver: yupResolver(validationSchema),
     defaultValues:{
       type:'brand'
     }
   });
 
-  const setFormValues = (data: CategoryData) => {
+  const setFormValues = (data: BrandData) => {
     Object.keys(data).forEach((key) => {
-      setValue(key as keyof CategoryData, data[key as keyof CategoryData]);
+      setValue(key as keyof BrandData, data[key as keyof BrandData]);
     });
   };
 
   useEffect(() => {
     if (editId) {
-      (async () => {
-        try {
-          const { response, error } = await getABrand(`${endpoints.GET_ONE_BRMC}/${editId}`);
-          if (response && !error) {
-            console.log(response.data);
-           
-            
-            
-            setFormValues(response.data);
-          } else {
-            toast.error(error.response.data.message);
-          }
-        } catch (err) {
-          console.error("Error fetching region data:", err);
+      refreshContext({bmcrId:editId})
+      if(bmcrData){
+        console.log(bmcrData);
+        
+        const body = {
+          ...bmcrData,
+          name:bmcrData.brandName
         }
-      })();
+        
+        setFormValues(body);
+      }
     }
-  }, [editId]);
+  }, [editId,bmcrData]);
+
 
   console.log(editId);
   
 
-  const onSubmit: SubmitHandler<CategoryData> = async (data) => {
+  const onSubmit: SubmitHandler<BrandData> = async (data) => {
     try {
       //const { response, error } = await addCategory(endpoints.ADD_BRMC, data);
       const apiCall = editId ? updateBrandRequest : addBrand;
@@ -83,6 +80,8 @@ const BrandAddModal = ({onClose,editId}: Props) => {
         toast.success(`Brand ${editId ? "updated" : "added"} successfully!`);
         console.log(response.data);
         onClose();
+        const type={ type: "brand" }
+        refreshContext({bmcrType:type})
       } else {
         toast.error(error.response.data.message);
       }
@@ -112,13 +111,13 @@ const BrandAddModal = ({onClose,editId}: Props) => {
   };
     
   return (
-    <div className="p-4  bg-[#F8F4F4]">
+    <div className="p-4  bg-[#F8F4F4] rounded-lg">
            <div className="flex justify-between items-center mb-4 px-3">
        
        <div className='flex'>
      
       
-       <h1 className="text-base font-bold text-deepStateBlue">{editId?'Edit':'Add'} Category</h1>
+       <h1 className="text-base font-bold text-deepStateBlue">{editId?'Edit':'Add'} Brand</h1>
       
        </div>
 

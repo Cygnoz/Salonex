@@ -31,7 +31,7 @@ const ProductsAdd = ({ onClose }: Props) => {
                         <img src={bg} className="w-8" alt="Back to Home Icon" />
                     </div>
                     <div className='ms-4'>
-                        <h1 className="text-base font-bold text-deepStateBlue">Manage Brand</h1>
+                        <h1 className="text-base font-bold text-deepStateBlue">Retail product</h1>
                         <h1 className="text-xs font-medium text-deepStateBlue">organize and update brand information for your products.</h1>
                     </div>
                 </div>

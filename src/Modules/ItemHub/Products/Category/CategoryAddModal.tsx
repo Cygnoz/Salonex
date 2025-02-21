@@ -65,7 +65,7 @@ const CategoryAddModal = ({onClose,editId}: Props) => {
     }
   }, [editId,bmcrData]);
 
-  console.log(editId);
+  //console.log(editId);
   
 
   const onSubmit: SubmitHandler<CategoryData> = async (data) => {
@@ -111,7 +111,7 @@ const CategoryAddModal = ({onClose,editId}: Props) => {
    
     
   return (
-    <div className="p-4  bg-[#F8F4F4]">
+    <div className="p-4  bg-[#F8F4F4] rounded-lg">
            <div className="flex justify-between items-center mb-4 px-3">
        
        <div className='flex'>
