@@ -13,6 +13,7 @@ import useApi from '../../../../Hooks/useApi';
 import { endpoints } from '../../../../Services/apiEndpoints';
 import toast from 'react-hot-toast';
 import ConfirmModal from '../../../../Components/Table/ConfirmModal';
+import NoRecords from '../../../../Components/Norecords';
 
 
 type Props = {
@@ -144,37 +145,43 @@ const BrandModal = ({ onClose }: Props) => {
         </div>
 
         <div className="grid grid-cols-3 gap-4 p-4">
-  {allcategoryData?.map((category) => (
-    <div key={category.id} className="p-3 bg-[#FFFFFF]">
-      {category.uploadImage && ( // Conditionally render image only if it exists
-        <div className="w-24 h-28">
-          <img
-            className="w-32 h-24"
-            src={category.uploadImage}
-            alt={category.categoriesName}
-          />
-        </div>
-      )}
-      <h1 className="text-sm font-semibold text-[#2C3E50] my-1">
-        {category.brandName}
-      </h1>
-      <h1 className="text-xs text-[#818894] font-normal">
-        {category.description}
-      </h1>
-      <div className="flex my-1 gap-1">
-        <div onClick={() => handleEdit(category.id)}>
-          <PencilLine color="#3C7FBC" />
-        </div>
-        <div
-          onClick={() => openDeleteModal(category.id)}
-          className="cursor-pointer"
-        >
-          <TrashIcon />
+  {allcategoryData?.length > 0 ? (
+    allcategoryData.map((category) => (
+      <div key={category.id} className="p-3 bg-[#FFFFFF]">
+        {category.uploadImage && (
+          <div className="w-24 h-28">
+            <img
+              className="w-32 h-24"
+              src={category.uploadImage}
+              alt={category.categoriesName}
+            />
+          </div>
+        )}
+        <h1 className="text-sm font-semibold text-[#2C3E50] my-1">
+          {category.brandName}
+        </h1>
+        <h1 className="text-xs text-[#818894] font-normal">
+          {category.description}
+        </h1>
+        <div className="flex my-1 gap-1">
+          <div onClick={() => handleEdit(category.id)}>
+            <PencilLine color="#3C7FBC" />
+          </div>
+          <div
+            onClick={() => openDeleteModal(category.id)}
+            className="cursor-pointer"
+          >
+            <TrashIcon />
+          </div>
         </div>
       </div>
-    </div>
-  ))}
+    ))
+  ) : (
+    <NoRecords />
+  )}
 </div>
+
+
 
       </div>
 

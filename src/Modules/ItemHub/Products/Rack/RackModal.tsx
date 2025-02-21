@@ -14,6 +14,7 @@ import { endpoints } from '../../../../Services/apiEndpoints';
 import toast from 'react-hot-toast';
 import ConfirmModal from '../../../../Components/Table/ConfirmModal';
 import RackAddModal from './RackAddModal';
+import NoRecords from '../../../../Components/Norecords';
 
 
 type Props = {
@@ -141,34 +142,33 @@ const RackModal = ({ onClose }: Props) => {
            </div>
          </div>
          <div className="grid grid-cols-3 gap-4 p-4">
-         {allcategoryData?.map((rackk) => (
-           <div key={rackk.id} className="p-3 bg-[#FFFFFF]">
-             
-             <h1 className="text-sm font-semibold text-[#2C3E50] my-1">
-               {rackk.rackName}
-             </h1>
-             <h1 className="text-xs text-[#818894] font-normal">
-               {rackk.description}
-             </h1>
-             <div className="flex my-1 gap-1">
-             <div onClick={() => handleEdit(rackk.id)}>
- <PencilLine color="#3C7FBC" />
+  {allcategoryData?.length > 0 ? (
+    allcategoryData.map((rackk) => (
+      <div key={rackk.id} className="p-3 bg-[#FFFFFF]">
+        <h1 className="text-sm font-semibold text-[#2C3E50] my-1">
+          {rackk.rackName}
+        </h1>
+        <h1 className="text-xs text-[#818894] font-normal">
+          {rackk.description}
+        </h1>
+        <div className="flex my-1 gap-1">
+          <div onClick={() => handleEdit(rackk.id)}>
+            <PencilLine color="#3C7FBC" />
+          </div>
+          <div
+            onClick={() => openDeleteModal(rackk.id)}
+            className="cursor-pointer"
+          >
+            <TrashIcon />
+          </div>
+        </div>
+      </div>
+    ))
+  ) : (
+    <NoRecords />
+  )}
 </div>
 
-
-               <div
-                 onClick={() => openDeleteModal(rackk.id)}
-                 className="cursor-pointer"
-               >
-                 <TrashIcon />
-               </div>
-             </div>
-           </div>
-           
-         ))}
-       </div>
-
-       
 
    </div>
    <Modal open={isModalOpen.addForm} onClose={() => handleModalToggle()} className="w-[35%]">

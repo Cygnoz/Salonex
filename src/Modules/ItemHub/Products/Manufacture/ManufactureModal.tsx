@@ -14,6 +14,7 @@ import useApi from '../../../../Hooks/useApi';
 import { endpoints } from '../../../../Services/apiEndpoints';
 import toast from 'react-hot-toast';
 import ConfirmModal from '../../../../Components/Table/ConfirmModal';
+import NoRecords from '../../../../Components/Norecords';
 
 
 type Props = {
@@ -142,67 +143,34 @@ const ManufactureModal = ({ onClose }: Props) => {
             </div>
           </div>
           <div className="grid grid-cols-3 gap-4 p-4">
-          {allcategoryData?.map((manufacture) => (
-            <div key={manufacture.id} className="p-3 bg-[#FFFFFF]">
-              
-              <h1 className="text-sm font-semibold text-[#2C3E50] my-1">
-                {manufacture.manufacturerName}
-              </h1>
-              <h1 className="text-xs text-[#818894] font-normal">
-                {manufacture.description}
-              </h1>
-              <div className="flex my-1 gap-1">
-              <div onClick={() => handleEdit(manufacture.id)}>
-  <PencilLine color="#3C7FBC" />
+  {allcategoryData?.length > 0 ? (
+    allcategoryData.map((manufacture) => (
+      <div key={manufacture.id} className="p-3 bg-[#FFFFFF]">
+        <h1 className="text-sm font-semibold text-[#2C3E50] my-1">
+          {manufacture.manufacturerName}
+        </h1>
+        <h1 className="text-xs text-[#818894] font-normal">
+          {manufacture.description}
+        </h1>
+        <div className="flex my-1 gap-1">
+          <div onClick={() => handleEdit(manufacture.id)}>
+            <PencilLine color="#3C7FBC" />
+          </div>
+          <div
+            onClick={() => openDeleteModal(manufacture.id)}
+            className="cursor-pointer"
+          >
+            <TrashIcon />
+          </div>
+        </div>
+      </div>
+    ))
+  ) : (
+    <NoRecords />
+  )}
 </div>
 
-
-                <div
-                  onClick={() => openDeleteModal(manufacture.id)}
-                  className="cursor-pointer"
-                >
-                  <TrashIcon />
-                </div>
-              </div>
-            </div>
-            
-          ))}
-        </div>
-
-          {/* <div className="grid grid-cols-3 gap-4 p-4">
-          <div className='p-3 bg-[#FFFFFF]'>
-           
-            <h1 className='text-sm font-semibold text-[#2C3E50] my-1'>Hair</h1>
           
-            <h1 className='text-xs text-[#818894] font-normal'>Includes haircuts, styling, coloring, and treatments for healthy hair</h1>
-            <div className='flex my-1 gap-1'>
-                <div><PencilLine color='#3C7FBC'/></div>
-              <div>  <TrashIcon/></div>
-            </div>
-          </div>
-
-          <div className='p-3 bg-[#FFFFFF]'>
-           
-            <h1 className='text-sm font-semibold text-[#2C3E50] my-1'>Hair</h1>
-          
-            <h1 className='text-xs text-[#818894] font-normal'>Includes haircuts, styling, coloring, and treatments for healthy hair</h1>
-            <div className='flex my-1 gap-1'>
-                <div><PencilLine color='#3C7FBC'/></div>
-              <div>  <TrashIcon/></div>
-            </div>
-          </div>
-
-          <div className='p-3 bg-[#FFFFFF]'>
-           
-            <h1 className='text-sm font-semibold text-[#2C3E50] my-1'>Hair</h1>
-          
-            <h1 className='text-xs text-[#818894] font-normal'>Includes haircuts, styling, coloring, and treatments for healthy hair</h1>
-            <div className='flex my-1 gap-1'>
-                <div><PencilLine color='#3C7FBC'/></div>
-              <div>  <TrashIcon/></div>
-            </div>
-          </div>
-          </div> */}
 
     </div>
     <Modal open={isModalOpen.addForm} onClose={() => handleModalToggle()} className="w-[35%]">
