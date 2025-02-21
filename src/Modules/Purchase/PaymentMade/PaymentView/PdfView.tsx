@@ -97,7 +97,7 @@ function PdfView({ data, organization }: Props) {
             </p>
             <p className="font-normal text-xs ">Payment Date</p>
             <p className="text-xs  font-semibold text-end text-text_primary">
-              {data?.paymentdate ? data?.paymentDate : "-"}
+              {data?.paymentDate ? data?.paymentDate : "-"}
             </p>
             <p className="font-normal text-xs ">Reference Number</p>
             <p className="text-xs font-semibold text-end text-text_primary">

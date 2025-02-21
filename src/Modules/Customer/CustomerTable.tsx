@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import Table from "../../Components/Table/Table"
-
+ 
 type Props = {}
-
+ 
 function CustomerTable({ }: Props) {
     // Example columns for the table
     const columns = [
@@ -18,21 +18,21 @@ function CustomerTable({ }: Props) {
         { id: "3", Name: "John ", CompanyName: "787456", Contact: "11223344", email: "john@example.com", Status: "Active" },
         { id: "4", Name: "Jos", CompanyName: "54456", Contact: "11223344", email: "john@example.com", Status: "In Active" },
     ]
-
+ 
     const navigate = useNavigate();
-
+ 
     const handleRowClick = () => {
         navigate(`customerview`);
     };
-
+ 
     const handleDelete = (id: string) => {
         alert(`Delete clicked for ID: ${id}`);
     };
-
+ 
     const handleEditClick = (id: string) => {
         alert(`Edit clicked for ID: ${id}`);
     };
-
+ 
     const renderColumnContent = (colId: string, item: any) => {
         if (colId === "Status") {
             return (
@@ -69,5 +69,6 @@ function CustomerTable({ }: Props) {
         </div>
     )
 }
-
+ 
 export default CustomerTable
+ 

@@ -24,6 +24,8 @@ function PaymentView({ }: Props) {
       const url = `${endpoints.GET_PAYMENT}/${id}`;
       const apiResponse = await getPayment(url);
       const { response, error } = apiResponse;
+      console.log('response', response);
+      
       if (!error && response) {
         setPaymentData(response.data);
       } else {
