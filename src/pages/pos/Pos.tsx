@@ -3,41 +3,26 @@ import PosHeader from "./PosHeader";
 import ServicesIcon from "../../assets/icons/ServicesIcon";
 import ProductsIcon from "../../assets/icons/ProductsIcon";
 import AddItemsPos from "./AddItemsPos";
-// import useApi from "../../Hooks/useApi";
-// import { endponits } from "../../Services/apiEndpoints";
-// import { endpoints } from "../../Services/apiEndpoints";
 import serviceImage from "../../assets/Images/serv.png";
 import SearchBar from "../../Components/SearchBar";
 import bgImage from "../../assets/Images/posservices.png";
 import PackagesIcon from "../../assets/icons/PackagesIcon";
-import bgimage from "../../assets/images/Rectangle 32.png"
+// import bgimage from "../../assets/images/Rectangle 32.png"
 import Modal from "../../Components/modal/Modal";
 import staffIcon from "../../assets/images/StaffIcon.png";
 import SearchBarPos from "../../Components/SearchBarPos";
 import defaultCustomerImage from "../../assets/Images/Rectangle 5558.png";
 import Button from "../../Components/Button";
+import { endpoints } from "../../Services/apiEndpoints";
+import useApi from "../../Hooks/useApi";
+import Info from "../../assets/icons/Info";
 
 
 type Props = {};
 
 function Pos({ }: Props) {
-  const [tabSwitch, setTabSwitch] = useState<string>("products");
-  const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
-  const [goodsItems,
-    //  setGoodsItems
-    ] = useState<any[]>([]);
-  const [serviceItems, 
-    // setServiceItems
-  ] = useState<any[]>([]);
-  const [allCategoryData,
-    //  setAllCategoryData
-    ] = useState<any[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [searchValue, setSearchValue] = useState<string>("");
   const [searchValueModal, setSearchValueModal] = useState<string>("");
 
-  // const { request: GetAllItems } = useApi("get", 5003);
-  // const { request: fetchAllCategories } = useApi("put", 5003);
 
   useEffect(() => {
     const fetchAllItems = async () => {
@@ -75,23 +60,16 @@ function Pos({ }: Props) {
     loadCategories();
   }, []);
 
-  const handleSelectCustomer = (customer: any) => {
-    setSelectedCustomer(customer);
-  };
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedItemTemp, setSelectedItemTemp] = useState<any>(null);
-  const [selectedItems, setSelectedItems] = useState<any[]>([]);
 
-  const openModal = () => setModalOpen(true);
+  // const openModal = () => setModalOpen(true);
+
+
   const closeModal = () => {
     setModalOpen(false);
     setSelectedItemTemp(null);
-  };
-
-  const handleItemClick = (item: any) => {
-    setSelectedItemTemp(item);
-    openModal();
   };
 
   const handleAddStaff = () => {
@@ -109,72 +87,7 @@ function Pos({ }: Props) {
     closeModal();
   };
 
-  const handleTabSwitch = (tabName: string) => {
-    setTabSwitch(tabName);
-    setSelectedCategory("All")
-  };
 
-  const handleCategoryClick = (categoryName: string) => {
-    setSelectedCategory(categoryName);
-  };
-  const handleRemoveItem = (itemToRemove: any) => {
-    setSelectedItems((prevItems) =>
-      prevItems.filter((item) => item.itemName !== itemToRemove.itemName)
-    );
-  };
-
-
-  const currentItems = tabSwitch === "products" ? goodsItems : serviceItems;
-  const uniqueCategories = allCategoryData.filter((category) =>
-    currentItems.some((item) => item.categories === category.categoriesName)
-  );
-
-
-  //uncomment this code to use the actual data
-
-  // const filteredItems = currentItems.filter((item: any) => {  
-  //   const matchesCategory =
-  //     selectedCategory === "All" || item.categories === selectedCategory;
-  //   const matchesSearch = item.itemName
-  //     ?.toLowerCase()
-  //     .includes(searchValue.toLowerCase());
-  //   return matchesCategory && matchesSearch;
-  // });
-
-  const dummyItems = [
-    {
-      itemName: "Water Bottle 1L",
-      itemImage: bgimage,
-      sellingPrice: 20,
-    },
-    {
-      itemName: "Sparkling Water 500ml",
-      itemImage: bgimage,
-      sellingPrice: 35,
-    },
-    {
-      itemName: "Mineral Water 5L",
-      itemImage: bgimage,
-      sellingPrice: 80,
-    },
-    {
-      itemName: "Spring Water 750ml",
-      itemImage: bgimage,
-      sellingPrice: 50,
-    },
-    {
-      itemName: "Distilled Water 1L",
-      itemImage: bgimage,
-      sellingPrice: 25,
-    },
-    {
-      itemName: "Alkaline Water 2L",
-      itemImage: bgimage,
-      sellingPrice: 60,
-    },
-  ];
-
-  const filteredItems = dummyItems; // Use this variable in your component
   const filteredCustomers = [
     {
       customerDisplayName: "alwin",
@@ -209,6 +122,101 @@ function Pos({ }: Props) {
       staffId: "Staff ID: 10091"
     },
   ]
+
+  const [tabSwitch, setTabSwitch] = useState<string>("products");
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
+  const [goodsItems, setGoodsItems] = useState<any[]>([]);
+  const [serviceItems, setServiceItems] = useState<any[]>([]);
+  const [allCategoryData, setAllCategoryData] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [selectedItems, setSelectedItems] = useState<any[]>([]);
+
+  const { request: GetAllItems } = useApi("get", 5003);
+  const { request: fetchAllCategories } = useApi("put", 5003);
+
+  useEffect(() => {
+    const fetchAllItems = async () => {
+      try {
+        const url = `${endpoints.GET_ALL_ITEMS_TABLE}`;
+        const { response, error } = await GetAllItems(url);
+        if (!error && response) {
+          const allItems = response.data;
+          setGoodsItems(allItems.filter((item: any) => item.itemType === "goods"));
+          setServiceItems(allItems.filter((item: any) => item.itemType === "service"));
+        } else {
+          console.error("Error in response:", error);
+        }
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
+
+    const loadCategories = async () => {
+      try {
+        const url = `${endpoints.GET_ALL_BRMC}`;
+        const body = { type: "category" };
+        const { response, error } = await fetchAllCategories(url, body);
+        if (!error && response) {
+          setAllCategoryData(response.data);
+        } else {
+          console.error("Failed to fetch Category data.");
+        }
+      } catch (error) {
+        console.error("Error in fetching Category data", error);
+      }
+    };
+
+    fetchAllItems();
+    loadCategories();
+  }, []);
+
+  const handleSelectCustomer = (customer: any) => {
+    setSelectedCustomer(customer);
+  };
+
+  const handleItemClick = (item: any) => {
+    setSelectedItems((prevItems) => {
+      const isAlreadySelected = prevItems.some(
+        (selected) => selected.itemName === item.itemName
+      );
+      if (isAlreadySelected) {
+        return prevItems;
+      } else {
+        return [...prevItems, item];
+      }
+    });
+  };
+
+
+  const handleTabSwitch = (tabName: string) => {
+    setTabSwitch(tabName);
+    setSelectedCategory("All")
+  };
+
+  const handleCategoryClick = (categoryName: string) => {
+    setSelectedCategory(categoryName);
+  };
+  const handleRemoveItem = (itemToRemove: any) => {
+    setSelectedItems((prevItems) =>
+      prevItems.filter((item) => item.itemName !== itemToRemove.itemName)
+    );
+  };
+
+
+  const currentItems = tabSwitch === "products" ? goodsItems : serviceItems;
+  const uniqueCategories = allCategoryData.filter((category) =>
+    currentItems.some((item) => item.categories === category.categoriesName)
+  );
+
+  const filteredItems = currentItems.filter((item: any) => {
+    const matchesCategory =
+      selectedCategory === "All" || item.categories === selectedCategory;
+    const matchesSearch = item.itemName
+      ?.toLowerCase()
+      .includes(searchValue.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
 
   return (
@@ -422,6 +430,16 @@ function Pos({ }: Props) {
 
         {/* Right Section */}
         <div className="w-[35%]">
+        <div className="bg-white py-1.5 px-4 rounded-lg flex gap-3">
+            <img src={selectedCustomer?.customerProfile || defaultCustomerImage} className="w-10 h-10 rounded-full" alt="" />
+            <p className="text-[#495160] text-xs">Customer <br />
+              <span className="text-[#37393A] text-xs font-bold">{selectedCustomer?.customerDisplayName}</span>
+            </p>
+            <div className="border border-[#DDDDDD] ms-2"></div>
+            <p className="flex justify-center items-center text-[#585953] text-xs
+           font-semibold gap-1
+           "><Info color="#585953" size={14} /> See more details</p>
+          </div>
           <AddItemsPos selectedItems={selectedItems} selectedCustomer={selectedCustomer} onRemoveItem={handleRemoveItem} />
         </div>
       </div>
