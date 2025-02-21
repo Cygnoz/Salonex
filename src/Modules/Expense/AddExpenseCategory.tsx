@@ -174,8 +174,7 @@ function AddExpenseCategory({}: Props) {
                       <p
                         className="cursor-pointer"
                         onClick={() => openModal(true, false, true)}
-                      >
-                       
+                      >                     
                         <Pen color="#818894" size={20}/>
                       </p>
                       <p
@@ -190,7 +189,6 @@ function AddExpenseCategory({}: Props) {
               ))
             )}
           </div>
-
           <Modal
             open={isOpen.add || isOpen.edit}
             onClose={() => closeModal(true, false, false)}
@@ -211,7 +209,6 @@ function AddExpenseCategory({}: Props) {
                   &times;
                 </div>
               </div>
-
               <form className="grid gap-5 mt-6">
                 <div className="w-full">
                   <label className="block text-sm mb-1 text-labelColor">
