@@ -12,6 +12,8 @@ const PaymentMade = lazy(() => import("../Modules/Purchase/PaymentMade/PaymentMa
 const DebitNote = lazy(() => import("../Modules/Purchase/DebitNote/DebitNote"));
 const NewBill = lazy(() => import("../Modules/Purchase/Bill/NewBill"));
 
+
+
 const PurchaseRoutes = () => {
   return (
     <Routes>
