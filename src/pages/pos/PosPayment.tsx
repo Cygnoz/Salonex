@@ -59,8 +59,11 @@ type Props = {
   discountType: any, discount: any, subtotal: any, discounts: any, depositAccountId: string
 };
 
-function PosPayment({ selectedItems, total, selectedCustomer, selectedMethodLabel, quantities, discountType, discount, subtotal
-  , discounts, depositAccountId
+function PosPayment({ selectedItems, total, selectedCustomer,
+  //  selectedMethodLabel,
+    quantities, discountType, discount, subtotal,
+  //  discounts, 
+  // depositAccountId
 }: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [paidAmount, setPaidAmount] = useState<any>("");
