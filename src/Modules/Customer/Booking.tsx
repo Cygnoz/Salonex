@@ -1,9 +1,10 @@
+import CustomerProfile from "../../assets/images/CustomerProfile.png"
 import CalendarDays from '../../assets/icons/CalendarDays';
-import Eye from '../../assets/icons/Eye';
-import PencilLine from '../../assets/icons/PencilLine';
-import Pipette from '../../assets/icons/Pipette';
 import Trash from '../../assets/icons/Trash';
-import CustomerProfile from "../../assets/images/CustomerProfile.png";
+import PencilLine from '../../assets/icons/PencilLine';
+import Eye from '../../assets/icons/Eye';
+import ClockIcon from "../../assets/icons/ClockIcon";
+import Pipette from "../../assets/icons/Pipette";
 
 
 
@@ -15,14 +16,14 @@ const Booking = () => {
 
 
   return (
-   
-      <div className=" grid grid-cols-12 gap-5 my-5  min-h-screen">
-        <div className=" col-span-3 ">
+
+    <div className=" grid grid-cols-12 gap-5 my-5  min-h-screen">
+   <div className=" col-span-3 ">
           {/* Upcoming Booking Section */}
-          <div className="bg-white w-[283px] h-[350px]  rounded-lg shadow-md p-6">
+          <div className="bg-white w-[320px] h-[350px]  rounded-lg shadow-md p-6">
             {/* Header Section */}
             <h2 className="text-[16px] font-semibold mb-4 text-[#495160]">Upcoming Booking</h2>
-
+ 
             {/* Staff Section */}
             <div className="flex items-center mb-4">
               <img src={CustomerProfile} className="w-10 h-10 rounded-full" alt="Staff" />
@@ -35,7 +36,7 @@ const Booking = () => {
                 {/* <span className="text-xl text-[#818894]">[Staff Icon]</span> */}
               </div>
             </div>
-
+ 
             {/* Treatment Details */}
             <div className="mb-4">
               <div className="flex items-center mb-2">
@@ -50,7 +51,7 @@ const Booking = () => {
                 scheduled.
               </p>
             </div>
-
+ 
             {/* Date and Time */}
             <div className="flex items-center justify-between bg-[#F3F8FF] p-3 rounded-md ">
               <div>
@@ -62,104 +63,108 @@ const Booking = () => {
              
             </div>
           </div>
-
-          <div className='flex items-center justify-center w-[283px]   my-5 rounded-lg text-[#495160] px-12 font-bold   h-[70px] bg-[#EED2D5]'>
+ 
+          <div className='flex items-center justify-center w-[320px]   my-5 rounded-lg text-[#495160] px-12 font-bold   h-[70px] bg-[#EED2D5]'>
             Total Bookings  <span className='ms-10'>07</span>
           </div>
           </div>
 
+      {/* Booking List Section */}
+      <div className="col-span-9">
+        {/* Search and Filters */}
+        <div className="flex items-center justify-between mb-4">
+          <input
+            type="text"
+            placeholder="Search phone or customers"
+            className="w-1/2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+          />
+          <div className="flex items-center space-x-4">
+            <button className="px-4 py-2 bg-white text-gray-600 rounded-lg">December 11</button>
+            <button className="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg">Week</button>
+            <button className="p-2 bg-pink-500 text-white rounded-lg">
+              {/* Calendar Icon */}
+            </button>
+          </div>
+        </div>
 
-          {/* Booking List Section */}
-          <div className="col-span-9 ">
-            <div className="flex items-center  justify-between mb-4">
-              <input
-                type="text"
-                placeholder="Search phone or customers"
-                className="w-1/2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-              />
-              <div className="flex items-center space-x-4">
-                <button className="flex items-center px-4 py-2 bg-[#FFFFFF] text-white rounded-lg">
-                  {/* December 11 <FaCalendarAlt className="ml-2" /> */}
+        {/* Booking Rows */}
+        <div className="space-y-4">
+          {[...Array(5)].map((_, index) => (
+            <div key={index} className="flex items-center justify-between bg-white rounded-lg p-4 shadow">
+              {/* Date Section */}
+              <div className="flex flex-col items-center w-16 bg-gray-100 rounded-lg p-2">
+                <p className="text-sm font-semibold text-green-600">Wed</p>
+                <p className="text-xl font-bold text-green-600">24</p>
+              </div>
+
+              {/* Mechanic Section */}
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-[#C7DDFF] rounded-full flex items-center justify-center text-white font-bold">
+                 <p className="text-[#000000] text-xs"> AR</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">Staff</p>
+                  <p className="font-semibold text-xs text-gray-900">Ronald J</p>
+                </div>
+              </div>
+
+              {/* Service Section */}
+              <div className="flex items-center space-x-1 space-y-3">
+                {/* <CarIcon color="#6E7072"/> */}
+                <div className="flex flex-col">
+                  <p className="text-xs text-gray-500">Service</p>
+                  <p className="font-semibold text-xs text-gray-900">Dandruff Treatement</p>
+                </div>
+              </div>
+
+              {/* Date & Time */}
+              <div className="flex items-center space-x-1 space-y-3">
+                <CalendarDays  color="#6E7072"/>
+                <div className="flex flex-col">
+                  <p className="text-xs text-gray-500">Date</p>
+                  <p className="font-semibold text-xs text-gray-900">5/30/14</p>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-1 space-y-3">
+                <ClockIcon/>
+                <div className="flex flex-col">
+                  <p className="text-xs text-gray-500">Time</p>
+                  <p className="font-semibold text-xs text-gray-900">07.35 AM</p>
+                </div>
+              </div>
+
+             
+
+              {/* Status Badge */}
+               {/* Service Section */}
+               <div className="flex items-center space-x-1 space-y-3">
+                {/* <CarIcon color="#6E7072"/> */}
+                <div className="flex flex-col">
+                  <p className="text-xs text-gray-500">Status</p>
+                  <p className="font-semibold border bg-[#F6C396] rounded-md p-1 text-xs text-gray-900">Pending</p>
+                </div>
+              </div>
+
+              {/* Actions Section */}
+              <div className="flex items-center space-x-2">
+                <button className="p-2 bg-gray-200 text-gray-600 rounded-full hover:bg-gray-200">
+                  <Eye color="#6E7072" size={16} />
                 </button>
-                <button className="flex items-center px-4 py-2 bg-gray-100 text-gray-600 rounded-lg">
-                  {/* Week <FaCalendarAlt className="ml-2" /> */}
+                <button className="p-2 bg-gray-200 text-gray-600 rounded-full hover:bg-gray-200">
+                  <PencilLine color="#6E7072" size={16} />
                 </button>
-                <button className="p-2 bg-pink-500 text-white rounded-lg">
-                  {/* <FaCalendarAlt /> */}
+                <button className="p-2 bg-gray-200 text-gray-600 rounded-full hover:bg-gray-200">
+                  <Trash color="#6E7072" size={16} />
                 </button>
               </div>
             </div>
-
-            {/* Booking Rows */}
-            <div className="space-y-4">
-              {[...Array(5)].map((_, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between bg-[#FFFFFF] rounded-lg p-4"
-                >
-                  {/* Date Section */}
-                  <div className="flex flex-col items-center w-16 border bg-[#F4F4F4]">
-                  <p className="text-[12px] font-semibold text-[#6EA26D]">Wed</p>
-                    <p className="text-[24px] font-bold text-[#6EA26D]">24</p>
-                  </div>
-
-                  {/* Staff Section */}
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full text-[#000000] text-[12px] font-bold p-1">SA</div>
-                    <div>
-                      <p className="text-xs text-[#6E7072]">Staff</p>
-                      <p className="font-semibold text-xs text-[#37393A]">Aman Rasheed</p>
-
-                    </div>
-                  </div>
-
-                  {/* Service Section */}
-                  <div>
-                    <p className="text-xs text-[#6E7072]">Service</p>
-                    <p className="font-semibold text-xs text-[#37393A]">Dandruff Treatment</p>
-                  </div>
-
-                  {/* Date */}
-                  <div>
-                    <p className="text-sm text-gray-500">Date</p>
-                    <p className="font-semibold text-xs text-[#37393A]">5/30/14</p>
-                  </div>
-                   
-                  {/* Time Section */}
-                  <div>
-                    <p className="text-xs text-[#6E7072]">Time</p>
-                    <p className="font-semibold text-xs text-[#37393A]">07:38 AM</p>
-                  </div>
-
-                  {/* Status Section */}
-                  <div>
-                    <p
-                      className={`px-3 py-1 rounded-lg text-white text-sm font-medium ${index === 0 ? "bg-yellow-500" : "bg-blue-500"
-                        }`}
-                    >
-                      {index === 0 ? "Pending" : "Completed"}
-                    </p>
-                  </div>
-
-                  {/* Actions Section */}
-                  <div className="flex items-center space-x-2">
-                    <button className="p-2 bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200">
-                     <Trash/>
-                    </button>
-                    <button className="p-2 bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200">
-                    <PencilLine color='#6E7072'/>
-                    </button>
-                    <button className="p-2 bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200">
-                      <Eye color='#6E7072'/>
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-       
+          ))}
+        </div>
       </div>
-   
+
+    </div>
+
   );
 };
 

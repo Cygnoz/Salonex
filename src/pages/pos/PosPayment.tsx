@@ -56,13 +56,11 @@ const initialSalesQuoteState: any = {
 
 type Props = {
   selectedItems: any[]; total: number; selectedCustomer: any; selectedMethodLabel: any; quantities: { [key: string]: number; };
-  discountType: any, discount: any, subtotal: any, discounts: any
+  discountType: any, discount: any, subtotal: any, discounts: any, depositAccountId: string
 };
 
-function PosPayment({ selectedItems, total, selectedCustomer, 
-  // selectedMethodLabel,
-   quantities, discountType, discount, subtotal
-  // , discounts
+function PosPayment({ selectedItems, total, selectedCustomer, selectedMethodLabel, quantities, discountType, discount, subtotal
+  , discounts, depositAccountId
 }: Props) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [paidAmount, setPaidAmount] = useState<any>("");

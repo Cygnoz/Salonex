@@ -274,12 +274,13 @@ const NewDebitNote = ({ page }: Props) => {
     } else {
       newErrors.paymentMode = false;
     }
-
-    if (debitNoteState.depositAccountId.trim() === "" && debitNoteState.paymentMode === "Cash") {
-      newErrors.depositTo = true;
-      missingFields.push("Deposit To");
-    } else {
-      newErrors.depositTo = false;
+    if (page !== "edit") {
+      if (debitNoteState.depositAccountId.trim() === "" && debitNoteState.paymentMode === "Cash") {
+        newErrors.depositTo = true;
+        missingFields.push("Deposit To");
+      } else {
+        newErrors.depositTo = false;
+      }
     }
 
     if (missingFields.length > 0) {
@@ -426,7 +427,11 @@ const NewDebitNote = ({ page }: Props) => {
           </div>
         </Link>
         <div className="flex justify-center items-center">
-          <h4 className="font-bold text-base text-[#0B1320]">Create Debit Note</h4>
+          <h4 className="font-bold text-base text-[#0B1320]">
+            {
+              page === "edit" ? "Edit Debit Note" : "Create Debit Note"
+            }
+           </h4>
         </div>
       </div>
       <div className="grid grid-cols-12 gap-4 max-h-[90vh] overflow-scroll hide-scrollbar ">
@@ -454,7 +459,7 @@ const NewDebitNote = ({ page }: Props) => {
               {openDropdownIndex === "supplier" && (
                 <div
                   ref={dropdownRef}
-                  className="absolute z-10 bg-white  shadow  rounded-[12px] mt-1 p-2 w-[30%] space-y-1 max-h-72 overflow-y-auto  hide-scrollbar"
+                  className="absolute z-10 bg-white  shadow  rounded-[12px] mt-1 p-2 w-[20%] space-y-1 max-h-72 overflow-y-auto  hide-scrollbar"
                 >
                   <SearchBar
                     searchValue={searchValue}
