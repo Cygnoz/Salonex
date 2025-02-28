@@ -30,12 +30,12 @@ server.use(helmet());
 server.use(express.json());
 server.use(organizationRouter);
 
-const PORT = process.env.PORT || 5004;
+const PORT = process.env.PORT || 6004;
 
 server.get('/', (req, res) => {
-    res.status(200).json("Dev Bill BIZZ server started - Organization v2");
+    res.status(200).json("Dev Saloonex server started - Organization v1");
 });
 
 server.listen(PORT, () => {
-    console.log(`BillBIZZ server Organization started at port : ${PORT}`);
+    console.log(`Saloonex server Organization started at port : ${PORT}`);
 });

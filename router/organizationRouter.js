@@ -6,6 +6,8 @@ const organizationController = require("../controller/organizationController");
 const billBizzClientCont = require("../controller/Client creation/billBizzClientCont")
 const sewnexClientCont = require("../controller/Client creation/sewnexClientCont")
 
+const saloonexClientCont = require("../controller/Client creation/saloonexController")
+
 
 const currencyController = require("../controller/settings/currencyController")
 const paymentTermCont = require("../controller/settings/paymentTermCont")
@@ -131,6 +133,7 @@ router.delete('/delete-organization/:organizationId',nexVerifyToken,organization
 router.delete('/delete-all',nexVerifyToken,billBizzClientCont.deleteAll)
 
 
+router.delete('/delete-all-saloonex',saloonexClientCont.deleteAll)
 
 
 //Nex Portal
@@ -139,6 +142,8 @@ router.get('/get-one-organization-nex/:organizationId',nexVerifyToken,billBizzCl
 router.post('/create-billbizz-client',billBizzClientCont.createOrganizationAndClient)
 
 router.post('/create-sewnex-client',sewnexClientCont.createOrganizationAndClient)
+
+router.post('/create-saloonex-client',saloonexClientCont.createOrganizationAndClient)
 
 
 //Login
