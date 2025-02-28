@@ -6,7 +6,6 @@ const helmet = require('helmet');
 
 const server = express();
 const inventoryRouter = require("./router/inventoryRouter");
-const sewnexRouter = require("./router/sewnexRouter");
 require('./database/connection/connection');
 
 server.use(express.json({ limit: '10mb' })); 
@@ -27,15 +26,14 @@ server.options('*', (req, res) => {
 
 server.use(helmet()); 
 server.use(inventoryRouter); 
-server.use(sewnexRouter);
 
-const PORT = 5003
+const PORT = 6003
 
 server.get('/',(req,res)=>{
-    res.status(200).json("Dev Bill BIZZ server started - Inventory v2.0")
+    res.status(200).json("Dev Saloonex server started - Inventory v1")
 });
 
 server.listen(PORT,()=>{
-    console.log(`BillBIZZ server Inventory started at port : ${PORT}`);
+    console.log(`Saloonex server Inventory started at port : ${PORT}`);
 });
 
