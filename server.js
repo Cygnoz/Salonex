@@ -25,13 +25,13 @@ server.use(helmet());
 server.use(express.json())
 server.use(reportRouter)
 
-const PORT = 5006;
+const PORT = 6006;
 
 server.get('/',(req,res)=>{
-    res.status(200).json("Dev Bill BIZZ server started - Report v1.6")
+    res.status(200).json("Dev Saloonex server started - Report v1")
 })
 
 server.listen(PORT,()=>{
-    console.log(`BillBIZZ server Report started at port : ${PORT}`);
+    console.log(`Saloonex server Report started at port : ${PORT}`);
 
 })
