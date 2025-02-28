@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import CopyIcon from '../../assets/icons/CopyIcon';
 import letterImage from '../../assets/images/pink-envelope-with-blank-card-paper-plane 1.png'
 import Button from '../../Components/Button';
@@ -7,6 +8,11 @@ type Props = {
 }
 
 const SentInviteModal = ({onClose}: Props) => {
+    const navigate = useNavigate();
+
+  const handleAddAppointment = () => {
+    navigate("/booking/bookappointment");
+  };
   return (
     <div>
         <div className="p-6">
@@ -34,7 +40,7 @@ const SentInviteModal = ({onClose}: Props) => {
             </div>
 
             <div className='flex justify-end mt-4'>
-                <Button size='sm' className='w-20 h-8 items-center flex justify-center rounded-xl'>Done</Button>
+                <Button onClick={handleAddAppointment} size='sm' className='w-20 h-8 items-center flex justify-center rounded-xl'>Done</Button>
             </div>
         </div>
     </div>

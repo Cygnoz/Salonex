@@ -102,15 +102,13 @@ function BookingHome({ }: Props) {
   const [isModalOpen, setIsModalOpen]=useState({
     viewBooking:false,
     sentInvite:false,
-    newBooking:false,
   })
 
-  const handleModalToggle=(viewBooking=false, sentInvite=false,newBooking=false,)=>{
+  const handleModalToggle=(viewBooking=false, sentInvite=false,)=>{
     setIsModalOpen((prev)=>({
       ...prev,
       viewBooking,
       sentInvite,
-      newBooking,
     }))
   }
   const navigate = useNavigate();
@@ -126,12 +124,11 @@ function BookingHome({ }: Props) {
           <p className="mt-2">Add and Manage your Services, Products & Package</p>
         </div>
         <div className="flex gap-2">
-          <Button onClick={()=>handleModalToggle(false,true,false)} variant="secondary" className="text-xs font-semibold h-1">
+          <Button onClick={()=>handleModalToggle(false,true)} variant="secondary" className="text-xs font-semibold h-1">
             <SendIcon />
             Sent Invite  
             </Button>
           <Button
-            // onClick={()=>handleModalToggle(false,false,true)}
             onClick={handleAddExpenseClick}
             variant="primary"
             className="flex items-center"
@@ -368,7 +365,7 @@ function BookingHome({ }: Props) {
               <div className="bg-[#F2F2F2] w-8 h-8 rounded-xl p-2 cursor-pointer">
                 <PencilLine size={14} color="#6E7072" />
               </div>
-              <div onClick={()=>handleModalToggle(true,false,false)} className="bg-[#F2F2F2] w-8 h-8 rounded-xl p-2 cursor-pointer">
+              <div onClick={()=>handleModalToggle(true,false)} className="bg-[#F2F2F2] w-8 h-8 rounded-xl p-2 cursor-pointer">
                 <Eye size={14} color="#6E7072" />
               </div>
             </div>

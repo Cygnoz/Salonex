@@ -13,6 +13,8 @@ import beardstyling from '../../assets/images/Rectangle 32.png'
 import skinpolishing from '../../assets/images/Rectangle 2.png'
 import keratin from '../../assets/images/Rectangle 13.png'
 import Scissors from "../../assets/icons/Scissors";
+import DateInput from "../../Components/DateInput";
+import Input from "../../Components/Form/Input";
 
 type Props = {
     // onClose: () => void;
@@ -34,6 +36,96 @@ const NewBookingForm = ({ page }: Props) => {
     ];
 
     const hasMoreThanSix = services.some((service) => service.id > 6);
+
+    const stylists = [
+        {
+            id: 1,
+            name: "Cody Fisher",
+            specialization: "Dandruff Treatment",
+            image: haircut,
+        },
+        {
+            id: 2,
+            name: "Jane Doe",
+            specialization: "Hair Coloring",
+            image: haircut,
+        },
+        {
+            id: 3,
+            name: "John Smith",
+            specialization: "Scalp Treatment",
+            image: haircut,
+        },
+        {
+            id: 4,
+            name: "Cody Fisher",
+            specialization: "Dandruff Treatment",
+            image: haircut,
+        },
+        {
+            id: 5,
+            name: "Jane Doe",
+            specialization: "Hair Coloring",
+            image: haircut,
+        },
+        {
+            id: 6,
+            name: "John Smith",
+            specialization: "Scalp Treatment",
+            image: haircut,
+        },
+        {
+            id: 7,
+            name: "Cody Fisher",
+            specialization: "Dandruff Treatment",
+            image: haircut,
+        },
+        {
+            id: 8,
+            name: "Jane Doe",
+            specialization: "Hair Coloring",
+            image: haircut,
+        },
+    ];
+    const [selected, setSelected] = useState<Record<number, boolean>>({});
+
+    const handleCheckboxChange = (id: number) => {
+        setSelected((prev: Record<number, boolean>) => ({
+            ...prev,
+            [id]: !prev[id] || false, // Ensure a boolean value
+        }));
+    };
+
+    const days = [
+        { id: 1, day: "Mon", date: 6 },
+        { id: 2, day: "Tue", date: 7 },
+        { id: 3, day: "Wed", date: 8 },
+        { id: 4, day: "Thu", date: 9 },
+        { id: 5, day: "Fri", date: 10 },
+        { id: 6, day: "Sat", date: 11 },
+        { id: 7, day: "Sun", date: 12 },
+    ];
+
+    const [daySelected, setDaySelected] = useState<number | null>(null);
+
+    const handleSelect = (id: number) => {
+        setDaySelected(id === daySelected ? null : id);
+    };
+
+    const timeSlots = [
+        { id: 1, time: "08:00 AM" },
+        { id: 2, time: "09:00 AM" },
+        { id: 3, time: "10:00 AM" },
+        { id: 4, time: "11:00 AM" },
+        { id: 5, time: "12:00 PM" },
+        { id: 6, time: "01:00 PM" },
+        { id: 7, time: "02:00 PM" },
+    ];
+    const [timeSelected, setTimeSelected] = useState<number | null>(null);
+    const handleTimeSelect = (id: number) => {
+        setTimeSelected(id === timeSelected ? null : id)
+    }
+
 
     return (
         <div>
@@ -128,6 +220,52 @@ const NewBookingForm = ({ page }: Props) => {
                 </div>
 
                 <div className="bg-[#FFFFFF] rounded-xl p-6 mt-4">
+                    <div className="flex justify-between">
+                        <p className="text-[#37393A] text-sm font-bold">Choose Date & Time</p>
+                        <div className="w-[20%]">
+                            <DateInput className="bg-[#F7F7F7] border-0" />
+                        </div>
+                    </div>
+                    <div className="flex gap-10">
+                        {days.map(({ id, day, date }) => (
+                            <div
+                                key={id}
+                                onClick={() => handleSelect(id)}
+                                className={`rounded-lg gap-1 py-2 px-4 w-14 h-[52px] text-center my-4 cursor-pointer transition-all ${daySelected === id
+                                    ? "bg-[#B5636A] text-white" // Selected style
+                                    : "bg-[#F7F7F7] text-[#4F5152]"
+                                    }`}
+                            >
+                                <p className={`text-xs font-normal ${daySelected === id ? "text-white" : "text-[#6E7072]"}`}>
+                                    {day}
+                                </p>
+                                <p className={`text-sm font-bold ${daySelected === id ? "text-white" : "text-[#4F5152]"}`}>
+                                    {date}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="flex flex-wrap gap-4">
+                        {timeSlots.map(({ id, time }) => (
+                            <div
+                                key={id}
+                                onClick={() => handleTimeSelect(id)}
+                                className={`rounded-3xl p-2 w-20 h-9 text-center flex justify-center cursor-pointer transition-all ${timeSelected === id
+                                    ? "bg-[#E9F4FF] border border-[#1E90FF]" // Selected style
+                                    : "bg-[#F2F5F8]"
+                                    }`}
+                            >
+                                <p className="text-[#4F5152] text-xs font-bold">
+                                    {time.split(" ")[0]}{" "}
+                                    <span className="text-[#4F5152] text-[9px] font-bold">{time.split(" ")[1]}</span>
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="bg-[#FFFFFF] rounded-xl p-6 my-4">
                     <p className="text-[#37393A] text-sm font-bold">Select Staff</p>
                     <div className="flex mt-3">
                         <div className="w-[50%] bg-[#F7F7F7]">
@@ -138,17 +276,100 @@ const NewBookingForm = ({ page }: Props) => {
                             />
                         </div>
                     </div>
-
-                    <div className="bg-[#FAF1F1] rounded-lg px-4 py-3 my-4 w-36 h-40">
-                        <div>
-                            <img className="rounded-full w-12 h-12" src={haircut} alt="haircut" />
-                            <div className="flex items-center">
-                                <Scissors color="#4F5152" size={12}/>
-                            <p>Specialization</p>
+                    <div className="flex gap-3">
+                        {stylists.map((stylist) => (
+                            <div key={stylist.id} className="bg-[#FAF1F1] rounded-lg px-4 py-3 my-4 w-36 h-40">
+                                <div className="flex flex-col items-center">
+                                    <input
+                                        checked={selected[stylist.id] || false}
+                                        onChange={() => handleCheckboxChange(stylist.id)}
+                                        className="ml-auto checked:bg-[#E69CB3] cursor-pointer" type="checkbox" />
+                                    <img className="rounded-full w-12 h-12" src={stylist.image} alt={stylist.name} />
+                                    <p className="text-[#37393A] text-xs font-bold my-1">{stylist.name}</p>
+                                    <div className="flex items-center">
+                                        <Scissors color="#4F5152" size={12} />
+                                        <p className="text-[#4F5152] text-xs font-normal my-1">Specialization</p>
+                                    </div>
+                                    <p className="text-[#37393A] text-xs font-semibold text-center">{stylist.specialization}</p>
+                                    {/* <p className="text-[#2C3E50] text-xs font-bold mt-2">&#8377; 1000</p> */}
+                                </div>
                             </div>
-                            <p className="text-[#2C3E50] text-xs font-bold">Hair Cut</p>
-                            <p className="text-[#2C3E50] text-xs font-bold mt-2">&#8377; 1000</p>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="bg-[#FFFFFF] rounded-xl p-6 my-4">
+                    <p className="text-[#37393A] text-sm font-bold">Add Details</p>
+                    <div className="grid grid-cols-6">
+                        {/* <div className="col-span-1 space-y-2"> */}
+                        <Input
+                            label="First Name"
+                            type="text"
+                            placeholder="Enter First Name"
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
+                        <Input
+                            label="First Name"
+                            type="text"
+                            placeholder="Enter First Name"
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
+                        <Input
+                            label="First Name"
+                            type="text"
+                            placeholder="Enter First Name"
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
+                        <Input
+                            label="First Name"
+                            type="text"
+                            placeholder="Enter First Name"
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
+                        <select
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-[205px] h-9"
+                            name="" id="">
+                            <option value="">Male</option>
+                            <option value="">Female</option>
+                            Select Gender
+                        </select>
+                        <Input
+                            label="First Name"
+                            type="text"
+                            placeholder="Enter First Name"
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
+
+                        {/* </div> */}
+                    </div>
+                    <div className="grid grid-cols-5">
+                        <div>
+                            <label className="text-[#495160] text-xs font-normal" htmlFor="">Select Gender</label>
+                            <select
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-[205px] h-8"
+                            name="" id="">
+                            <option value="">Male</option>
+                            <option value="">Female</option>
+                            Select Gender
+                        </select>
+
                         </div>
+                        <Input
+                            label="First Name"
+                            type="text"
+                            placeholder="Enter First Name"
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
+                        <Input
+                            label="First Name"
+                            type="text"
+                            placeholder="Enter First Name"
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
+                        <Input
+                            label="First Name"
+                            type="text"
+                            placeholder="Enter First Name"
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
+                        <Input
+                            label="First Name"
+                            type="text"
+                            placeholder="Enter First Name"
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-full" />
+
                     </div>
                 </div>
 
