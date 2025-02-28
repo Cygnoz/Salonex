@@ -25,13 +25,13 @@ server.use(helmet());
 server.use(express.json());
 server.use(accountRouter);
 
-const PORT = 5001;
+const PORT = 6001;
 
 server.get('/',(req,res)=>{
-    res.status(200).json("Dev Bill BIZZ server started - Accounts v1.6")
+    res.status(200).json("Dev Saloonex server started - Accounts v1")
 })
 
 server.listen(PORT,()=>{
-    console.log(`BillBIZZ server Accounts started at port : ${PORT}`);
+    console.log(`Saloonex server Accounts started at port : ${PORT}`);
 })
 
