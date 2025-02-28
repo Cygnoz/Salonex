@@ -4,17 +4,22 @@ import CheveronDown from "../assets/icons/CheveronDown";
 import clsx from "clsx";
 
 type DateInputProps = {
+  label?: string;
   placeholder?: string;
   value?: string;
   onChange?: (formattedDate: string) => void;
   className?: string; // ✅ Add className prop for external styling
+  required?: boolean;
 };
+
 
 export default function DateInput({
   placeholder = "Select date",
   value = "",
   onChange,
   className = "", // Default empty string to prevent undefined issues
+  label,
+  required,
 }: DateInputProps) {
   const dateRef = useRef<HTMLInputElement>(null);
 
@@ -35,30 +40,42 @@ export default function DateInput({
   };
 
   return (
-    <div
-      className={clsx(
-        "relative border flex rounded-[36px] h-9 px-2 py-1 text-xs items-center cursor-pointer",
-        className // ✅ Allow custom styles via props
+    <div>
+      {label && (
+        <label
+          htmlFor={label}
+          className="block text-xs text-[#495160] mb-1 font-normal text-deepStateBlue"
+        >
+          <p>
+            {label} {required && <span className="text-red-500">*</span>}
+          </p>
+        </label>
       )}
-      onClick={handleDateClick}
-    >
-      <div className="pointer-events-none flex items-center px-2 text-gray-700">
-        <CalenderIcon />
-      </div>
-      <span className={`flex-grow ms-1 ${value ? "text-black" : "text-gray-400"}`}>
-        {value ? value : placeholder}
-      </span>
-      <div className="pointer-events-none flex items-center px-2 text-gray-700">
-        <CheveronDown color="gray" />
-      </div>
+      <div
+        className={clsx(
+          "relative border flex rounded-[36px] h-9 px-2 py-1 text-xs items-center cursor-pointer",
+          className // ✅ Allow custom styles via props
+        )}
+        onClick={handleDateClick}
+      >
+        <div className="pointer-events-none flex items-center px-2 text-gray-700">
+          <CalenderIcon />
+        </div>
+        <span className={`flex-grow ms-1 ${value ? "text-black" : "text-gray-400"}`}>
+          {value ? value : placeholder}
+        </span>
+        <div className="pointer-events-none flex items-center px-2 text-gray-700">
+          <CheveronDown color="gray" />
+        </div>
 
-      <input
-        type="date"
-        ref={dateRef}
-        className="absolute inset-0 opacity-0 top-8 cursor-pointer"
-        value={value ? formatToInput(value) : ""}
-        onChange={(e) => onChange?.(formatToDisplay(e.target.value))}
-      />
+        <input
+          type="date"
+          ref={dateRef}
+          className="absolute inset-0 opacity-0 top-8 cursor-pointer"
+          value={value ? formatToInput(value) : ""}
+          onChange={(e) => onChange?.(formatToDisplay(e.target.value))}
+        />
+      </div>
     </div>
   );
 }

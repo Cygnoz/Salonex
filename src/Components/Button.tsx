@@ -20,7 +20,7 @@ const buttonVariants = cva("flex text-center items-center transition duration-25
         "bg-fourthiary_main hover:bg-fourthiary_hover active:bg-fourthiary_active disabled:bg-fourthiary_disabled rounded-[16px] gap-2 border border-gray-500 text-white text-sm",
     },
     size: {
-      sm: "px-3 py-[10px]",
+      sm: "px-3 py-2",
       md: "px-4 py-4 h-[42px]",
       lg: "px-7 py-3",
       xl: "px-9 py-4",
