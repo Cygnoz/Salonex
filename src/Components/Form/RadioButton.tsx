@@ -3,7 +3,7 @@ import React from "react";
 interface RadioButtonProps {
   id: string;
   name: string;
-  label: string;
+  label?: string;
   selected: string;
   className?: string;
   onChange: (value: string, name: string) => void;
