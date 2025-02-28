@@ -29,13 +29,13 @@ server.options('*', (req, res) => {
 server.use(helmet()); 
 server.use(staffRouter,expenseRouter);
 
-const PORT = 5008;
+const PORT = 6008;
 
 server.get('/',(req,res)=>{
-    res.status(200).json("Dev Bill BIZZ server started - Staff v1.6")
+    res.status(200).json("Dev Saloonex server started - Staff v1")
 })
 
 server.listen(PORT,()=>{
-    console.log(`BillBIZZ server Staff started at port : ${PORT}`);
+    console.log(`Saloonex server Staff started at port : ${PORT}`);
 })
 
