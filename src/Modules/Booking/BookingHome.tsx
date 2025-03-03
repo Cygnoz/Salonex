@@ -21,6 +21,7 @@ import ViewBooking from "./ViewBooking"
 import Modal from "../../Components/modal/Modal"
 import SentInviteModal from "./SentInviteModal"
 import { useNavigate } from "react-router-dom"
+import BookingCalendarPage from "./BookingCalendarPage"
 
 type Props = {}
 
@@ -292,7 +293,8 @@ function BookingHome({ }: Props) {
           </div>
         </div>
       </div> */}
-      <div className="space-y-4">
+      {activeHomeTab==='home'&&(
+        <div className="space-y-4">
         {appointments.map((appointment) => (
           <div key={appointment.id} className="bg-[#FFFFFF] w-full h-20 rounded-xl py-3 px-4 flex items-center">
             {/* Date Section */}
@@ -372,6 +374,12 @@ function BookingHome({ }: Props) {
           </div>
         ))}
       </div>
+      )}
+
+      {activeHomeTab==='calendar'&&(
+        <BookingCalendarPage/>
+      )}
+      
       <Modal className="" open={isModalOpen.viewBooking} onClose={()=>handleModalToggle()}>
         <ViewBooking  onClose={() => handleModalToggle()}/>
       </Modal>
