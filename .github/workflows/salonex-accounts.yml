@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up SSH Key
         run: |
@@ -19,41 +19,4 @@ jobs:
           echo "${{ secrets.SERVER_SSH_KEY }}" | base64 -d > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           echo "StrictHostKeyChecking no" > ~/.ssh/config
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-        shell: bash
-
-      - name: Deploy to Server
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF_SSH'
-            set -e  # Exit on any error
-            
-            cd ~/Salonex || exit
-
-            # Ensure repo is clean
-            git fetch --all
-            git reset --hard origin/Accounts
-
-            # Stop and remove old container
-            docker stop salonex-accounts || true
-            docker rm salonex-accounts || true
-            docker rmi salonex-accounts || true
-
-            # Create Dockerfile
-            cat <<EOF > Dockerfile
-            FROM node:22.11.0
-            WORKDIR /usr/src/app
-            COPY package*.json ./
-            RUN npm install
-            COPY . .
-            EXPOSE 6001
-            CMD ["node", "server.js"]
-            EOF
-
-            # Build and run container
-            docker build -t salonex-accounts .
-            docker run -d --name salonex-accounts -p 1001:6001 salonex-accounts
-
-            # Cleanup
-            rm Dockerfile
-          EOF_SSH
-        shell: bash
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} 
