@@ -8,7 +8,10 @@ const bmcrController = require('../controller/bmcrController');
 const itemDropdownController = require("../controller/itemDropdownController")
 const itemSettingsController = require("../controller/itemSettingsController")
 const dashboardController = require("../controller/dashboardController")
-
+const ServiceController = require('../controller/serviceController')
+const CategoryController = require('../controller/categoryController')
+const PackageController = require('../controller/packageController')
+const membershipController = require('../controller/membershipPlanController')
 
 const checkPermission = require('../controller/permission');
 const { verifyToken } = require('../controller/middleware');
@@ -60,15 +63,29 @@ router.delete('/delete-bmcr/:id',verifyToken,checkPermission('Created a New Item
 //items settings
 router.put('/add-item-settings',verifyToken,checkPermission('Added a new Setting'), itemSettingsController.addItemSettings);
 
-
-
-
-
 //Item Track
 router.get('/get-all-item-track',verifyToken,checkPermission('Viewed Item Information'), itemSettingsController.getAllItemTrack);
 router.get('/get-item-transaction/:id',verifyToken,checkPermission('Viewed Item Information'), itemSettingsController.itemTransaction);
 
 
+// service  
+router.post('/add-service',verifyToken, ServiceController.addService);
+router.get('/get-service', verifyToken,ServiceController.getAllServices);
+
+//category
+router.post('/add-category', verifyToken, CategoryController.addCategory);
+
+// Package
+router.post('/add', verifyToken, PackageController.addPackage);
+router.get('/get', verifyToken, PackageController.getAllPackages);
+
+
+// Membership Plan Routes
+router.post('/add-membership', verifyToken, membershipController.addMembershipPlan);
+router.get('/get-all-membership', verifyToken, membershipController.getAllMembershipPlan);
+router.get('/get-one-membership/:membershipId', verifyToken, membershipController.getOneMembershipPlan);
+router.put('/edit-membership/:membershipId', verifyToken, membershipController.editMembershipPlan);
+router.delete('/delete-membership/:membershipId', verifyToken, membershipController.deleteMembershipPlan);
 
 
 module.exports = router
