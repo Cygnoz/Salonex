@@ -43,7 +43,7 @@ jobs:
 
             # Build and run the container
             docker build -t salonex-accounts .
-            docker run -d --name salonex-accounts -p 1001:6001 salonex-accounts
+            docker run -d --name salonex-accounts -p 1001:5001 salonex-accounts
 
             # Cleanup Dockerfile
             rm Dockerfile
