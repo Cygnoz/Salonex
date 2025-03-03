@@ -308,19 +308,19 @@ const NewBookingForm = ({ page }: Props) => {
                             placeholder="Enter First Name"
                             className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
                         <Input
-                            label="First Name"
+                            label="Last Name"
                             type="text"
-                            placeholder="Enter First Name"
+                            placeholder="Enter Last Name"
                             className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
                         <Input
-                            label="First Name"
+                            label="Age"
                             type="text"
-                            placeholder="Enter First Name"
+                            placeholder="Enter Age"
                             className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
                         <Input
-                            label="First Name"
+                            label="Email"
                             type="text"
-                            placeholder="Enter First Name"
+                            placeholder="Enter Email"
                             className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
                         <select
                             className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-[205px] h-9"
@@ -330,15 +330,15 @@ const NewBookingForm = ({ page }: Props) => {
                             Select Gender
                         </select>
                         <Input
-                            label="First Name"
+                            label="Contact"
                             type="text"
-                            placeholder="Enter First Name"
+                            placeholder="Enter Mobile/Phone"
                             className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
 
                         {/* </div> */}
                     </div>
-                    <div className="grid grid-cols-5">
-                        <div>
+                    <div className="flex">
+                        {/* <div>
                             <label className="text-[#495160] text-xs font-normal" htmlFor="">Select Gender</label>
                             <select
                             className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-[205px] h-8"
@@ -348,27 +348,33 @@ const NewBookingForm = ({ page }: Props) => {
                             Select Gender
                         </select>
 
-                        </div>
+                        </div> */}
                         <Input
-                            label="First Name"
+                            label="Date of Birth"
+                            type="date"
+                            placeholder="Enter Date of Birth"
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
+
+                        <Input
+                            label="Blood Group"
                             type="text"
-                            placeholder="Enter First Name"
+                            placeholder="Enter Blood Group"
                             className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
                         <Input
-                            label="First Name"
+                            label="Card Number"
                             type="text"
-                            placeholder="Enter First Name"
+                            placeholder="Enter Card Number"
                             className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
                         <Input
-                            label="First Name"
+                            label="Address"
                             type="text"
-                            placeholder="Enter First Name"
+                            placeholder="Enter address"
                             className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-fit" />
-                        <Input
+                        {/* <Input
                             label="First Name"
                             type="text"
                             placeholder="Enter First Name"
-                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-full" />
+                            className="text-[#495160] text-xs font-normal border border-[#CECECE] rounded-[36px] py-2 px-3 w-full" /> */}
 
                     </div>
                 </div>
