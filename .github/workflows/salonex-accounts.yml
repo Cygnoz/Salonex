@@ -19,32 +19,42 @@ jobs:
           echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+        shell: bash
 
       - name: Deploy to Server
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF_SSH'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF_SSH'
+            set -e  # Stop on errors
+
+            # Navigate to project directory
             cd ~/Salonex
-            git checkout Accounts
-            git pull
+            
+            # Ensure we're on the correct branch and fetch updates
+            git fetch --all
+            git reset --hard origin/Accounts
+            
+            # Remove old Docker container if it exists
+            docker rm -f salonex-accounts || true
 
-            # Remove old container if it exists
-            if docker ps -a --format '{{.Names}}' | grep -q "^salonex-accounts$"; then
-              docker rm -f salonex-accounts
-            fi
+            # Remove old Docker image to free space
+            docker rmi salonex-accounts || true
 
-            # Create Dockerfile
-            echo 'FROM node:22.11.0' > Dockerfile
-            echo 'WORKDIR /usr/src/app' >> Dockerfile
-            echo 'COPY package*.json ./' >> Dockerfile
-            echo 'RUN npm install' >> Dockerfile
-            echo 'COPY . .' >> Dockerfile
-            echo 'EXPOSE 6001' >> Dockerfile
-            echo 'CMD ["node", "server.js"]' >> Dockerfile
+            # Create a fresh Dockerfile dynamically
+            cat << 'DOCKERFILE' > Dockerfile
+            FROM node:22.11.0
+            WORKDIR /usr/src/app
+            COPY package*.json ./
+            RUN npm install
+            COPY . .
+            EXPOSE 6001
+            CMD ["node", "server.js"]
+            DOCKERFILE
 
-            # Build and run the container
+            # Build and run the new container
             docker build -t salonex-accounts .
             docker run -d --name salonex-accounts -p 1001:6001 salonex-accounts
 
-            # Cleanup Dockerfile
+            # Clean up temporary Dockerfile
             rm Dockerfile
           EOF_SSH
+        shell: bash
