@@ -1,4 +1,4 @@
-name: Deploy to Ubuntu Server - Accounts
+name: Deploy to Ubuntu Server - Salonex Accounts
 
 on:
   push:
@@ -38,12 +38,12 @@ jobs:
             echo 'COPY package*.json ./' >> Dockerfile
             echo 'RUN npm install' >> Dockerfile
             echo 'COPY . .' >> Dockerfile
-            echo 'EXPOSE 6001' >> Dockerfile
+            echo 'EXPOSE 5001' >> Dockerfile
             echo 'CMD ["node", "server.js"]' >> Dockerfile
 
             # Build and run the container
             docker build -t salonex-accounts .
-            docker run -d --name salonex-accounts -p 1001:6001 salonex-accounts
+            docker run -d --name salonex-accounts -p 6001:5001 salonex-accounts
 
             # Cleanup Dockerfile
             rm Dockerfile
