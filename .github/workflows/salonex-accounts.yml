@@ -16,7 +16,49 @@ jobs:
       - name: Set up SSH Key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SERVER_SSH_KEY }}" | base64 -d > ~/.ssh/id_rsa
+          
+          # Write the SSH private key directly from GitHub secrets
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          
+          # Set correct permissions for SSH key
           chmod 600 ~/.ssh/id_rsa
+          
+          # Disable strict host key checking
           echo "StrictHostKeyChecking no" > ~/.ssh/config
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} 
+          
+          # Add the server to known hosts
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+        shell: bash
+
+      - name: Deploy to Server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF_SSH'
+            cd ~/Salonex
+
+            # Reset repository
+            git fetch --all
+            git reset --hard origin/Accounts
+
+            # Stop and remove old container if it exists
+            docker rm -f salonex-accounts || true
+            docker rmi salonex-accounts || true
+
+            # Create Dockerfile
+            cat <<EOF > Dockerfile
+            FROM node:22.11.0
+            WORKDIR /usr/src/app
+            COPY package*.json ./
+            RUN npm install
+            COPY . .
+            EXPOSE 6001
+            CMD ["node", "server.js"]
+            EOF
+
+            # Build and run the container
+            docker build -t salonex-accounts .
+            docker run -d --name salonex-accounts -p 1001:6001 salonex-accounts
+
+            # Cleanup Dockerfile
+            rm Dockerfile
+          EOF_SSH
+        shell: bash
