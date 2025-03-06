@@ -33,4 +33,14 @@ body {
   background-color: #f1f1f1; /* Light gray track */
   border-radius: 6px; /* Border radius for the track */
 }
-  
+.hide-scrollbar {
+  /* For Firefox */
+  scrollbar-width: none;
+
+  /* For Webkit-based browsers (Chrome, Edge, Safari, etc.) */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

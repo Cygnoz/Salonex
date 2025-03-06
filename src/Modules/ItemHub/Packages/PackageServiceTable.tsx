@@ -1,0 +1,310 @@
+import { useState } from "react";
+import SearchBar from "../../../Components/SearchBar";
+import Button from "../../../Components/Button";
+import PrinterIcon from "../../../assets/icons/PrinterIcon";
+import TableSkelton from "../../../Components/Table/TableSkelton";
+import TrashIcon from "../../../assets/icons/TrashIcon";
+import ConfirmModal from "../../../Components/Table/ConfirmModal";
+import NoDataFoundTable from "../../../Components/Table/NoDataFoundTable";
+import ChevronLeft from "../../../assets/icons/ChevronLeft";
+import ChevronRight from "../../../assets/icons/ChevronRight";
+import Eye from "../../../assets/icons/Eye";
+import Pen from "../../../assets/icons/Pen";
+// import TableSkelton from "./TableSkelton";
+// import Eye from "../../assets/icons/Eye";
+// import SearchBar from "../SearchBar";
+// import ChevronRight from "../../assets/icons/ChevronRight";
+// import ChevronLeft from "../../assets/icons/ChevronLeft";
+// import Button from "../Button";
+// import PrinterIcon from "../../assets/icons/PrinterIcon";
+// import TrashIcon from "../../assets/icons/Trash";
+// import Pen from "../../assets/icons/Pen";
+// import NoDataFoundTable from "./NoDataFoundTable";
+// import ConfirmModal from "./ConfirmModal";
+
+interface Column {
+  id: string;
+  label: string;
+  visible: boolean;
+}
+
+interface TableProps {
+  columns: Column[];
+  data: any[];
+  onRowClick?: (id: string) => void;
+  onDelete?: (id: string) => void;
+  renderColumnContent?: (colId: string, item: any) => JSX.Element;
+  searchPlaceholder?: string;
+  loading?: boolean;
+  searchableFields: string[];
+  setColumns?: any;
+  isDelete?: boolean;
+  isPrint?: boolean
+  onEditClick?: (id: string) => void;
+  onPrintClick?: (id: string) => void;
+  renderActions?: (item: any) => JSX.Element;
+}
+
+const PackageServiceTable: React.FC<TableProps> = ({
+  isPrint,
+  columns,
+  data,
+  onRowClick,
+  onDelete,
+  renderColumnContent,
+  searchPlaceholder,
+  loading,
+  searchableFields,
+  onEditClick,
+  onPrintClick,
+  renderActions
+}) => {
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const totalPages = Math.ceil(data.length / rowsPerPage);
+
+  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const confirmDelete = (id: string) => {
+    setDeleteId(id);
+    setConfirmModalOpen(true);
+  };
+  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setRowsPerPage(Number(event.target.value));
+    setCurrentPage(1); // Reset to first page when rows per page changes
+  };
+  const filteredData = Array.isArray(data)
+    ? data
+      .slice()
+      .reverse()
+      .filter((item) =>
+        searchableFields
+          .map((field) => item[field]?.toString().trim().toLowerCase())
+          .some((fieldValue) =>
+            fieldValue?.includes(searchValue.toLowerCase().trim())
+          )
+      )
+      .slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage)
+    : [];
+
+  const visibleColumns = columns.filter((col) => col.visible);
+  const skeletonColumns = [...visibleColumns, {}, {}, {}];
+  
+  return (
+  
+        
+           <div className="border border-b bg-white rounded-lg">
+      <div className="flex items-center gap-4 justify-between px-6 mt-6 mb-4">
+        {searchPlaceholder && <SearchBar
+          placeholder={searchPlaceholder}
+          searchValue={searchValue}
+          onSearchChange={(value) => {
+            setSearchValue(value);
+          }}
+        />}
+        {
+          isPrint && (
+            <Button size="sm" variant="secondary">
+              <PrinterIcon />
+              <p className="text-xs font-semibold">Print</p>
+            </Button>
+          )
+        }
+      </div>
+
+      <div className="overflow-x-auto mt-3 hide-scrollbar overflow-y-scroll max-h-[25rem] ">
+        <table className="min-w-full bg-white mb-5">
+          <thead className="text-[12px] text-center text-dropdownText">
+            <tr style={{ backgroundColor: "#F9F9F9" }}>
+              <th className="py-3 px-4 border-b border-tableBorder text-xs font-medium text-[#495160]">
+                No
+              </th>
+              {columns.map(
+                (col) =>
+                  col.visible && (
+                    <th
+                      key={col.id}
+                      className="py-2 px-4 text-[#495160] border-b text-xs font-medium border-tableBorder"
+                    >
+                      {col.label}
+                    </th>
+                  )
+              )}
+              <th className="py-3 px-2 font-medium text-[#495160] border-b text-xs border-tableBorder">
+                Action
+              </th>
+              <th className="py-3 px-2 font-medium border-b border-tableBorder"></th>
+            </tr>
+          </thead>
+          <tbody className="text-dropdownText text-center text-[13px]">
+            {loading ? (
+              [...Array(rowsPerPage)].map((_, idx) => (
+                <TableSkelton key={idx} columns={skeletonColumns} />
+              ))
+            ) : filteredData && filteredData.length > 0 ? (
+              filteredData.map((item, rowIndex) => (
+                <tr key={item.id} className="relative">
+                  <td className="py-2.5 px-4 border-y border-tableBorder text-[#818894]">
+                    {(currentPage - 1) * rowsPerPage + rowIndex + 1}
+                  </td>
+                  {columns.map(
+                    (col) =>
+                      col.visible && (
+                        <td
+                          key={col.id}
+                          className="py-2.5 px-4 border-y border-tableBorder text-center text-[#818894]"
+                        >
+                          {renderColumnContent
+                            ? renderColumnContent(col.id, item) || "-"
+                            : item[col.id] !== undefined &&
+                              item[col.id] !== null
+                              ? item[col.id]
+                              : "-"}
+                        </td>
+                      )
+                  )}
+                  <td className="py-3 px-4 border-b border-tableBorder text-[#495160] flex items-center justify-center gap-3">
+                    {renderActions ? (
+                      renderActions(item)
+                    ) : (
+                      onEditClick && (
+                        <button onClick={() => onEditClick(item._id)}>
+                          <Pen color={"#C88000"} />
+                        </button>
+                      )
+                    )}
+
+                    {onRowClick && (
+                      <button onClick={() => onRowClick(item._id)}>
+                        <Eye size={22} color={"#3C7FBC"} />
+                      </button>
+                    )}
+
+                    {onPrintClick && (
+                      <button onClick={() => onPrintClick(item._id)}>
+                        <PrinterIcon color="#EA1E4F" />
+                      </button>
+                    )}
+
+                    {onDelete && (
+                      <button onClick={() => confirmDelete(item._id)} aria-label="Delete">
+                        <TrashIcon color="#EA1E4F" />
+                      </button>
+                    )}
+                  </td>
+                  <td className="py-3 px-4 border-b border-tableBorder"></td>
+                </tr>
+              ))
+            ) : (
+              <NoDataFoundTable columns={columns} />
+            )}
+          </tbody>
+        </table>
+        <ConfirmModal
+          open={isConfirmModalOpen}
+          onClose={() => setConfirmModalOpen(false)}
+          onConfirm={() => {
+            if (deleteId) {
+              onDelete?.(deleteId); // Call the delete function
+              setConfirmModalOpen(false); // Close the modal after deletion
+            }
+          }}
+          message="Are you sure you want to delete?"
+        />
+        <div className="flex justify-between items-center mt-4">
+          {/* Rows per page selector on the left */}
+          <div className="flex gap-2 items-center text-[#71736B] font-medium text-xs p-5">
+            Rows per page:
+            <select
+              value={rowsPerPage}
+              onChange={handleRowsPerPageChange}
+              className="  text-sm ml-2"
+            >
+              {[5, 10, 15, 20, 25, 30].map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col items-center p-5">
+            <div className="flex justify-center items-center space-x-2 mt-4">
+              {/* Left Chevron Button */}
+              {currentPage > 1 && (
+                <button
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  className="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 transition duration-200 disabled:opacity-50"
+                  disabled={currentPage === 1}
+                >
+                  <ChevronLeft color="" />
+                </button>
+              )}
+
+              {/* Render Page Numbers */}
+              <div className="flex items-center space-x-1">
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .slice(
+                    Math.max(0, currentPage - 2),
+                    Math.min(totalPages, currentPage + 1)
+                  )
+                  .map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`px-3 py-1 rounded ${currentPage === page
+                        ? "bg-[#97998E] text-white"
+                        : "text-[#71736B] hover:bg-gray-100"
+                        }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+
+                {currentPage + 1 < totalPages && (
+                  <>
+                    <span className="px-1">...</span>
+                    <button
+                      onClick={() => setCurrentPage(totalPages)}
+                      className="px-3 py-1 rounded text-[#71736B] hover:bg-gray-100"
+                    >
+                      {totalPages}
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Right Chevron Button */}
+              {currentPage < totalPages && (
+                <button
+                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  className="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 transition duration-200 disabled:opacity-50"
+                  disabled={currentPage === totalPages || totalPages === 0}
+                >
+                  <ChevronRight />
+                </button>
+              )}
+            </div>
+
+            {/* Page Information */}
+            {/* <span className="text-xs text-[#71736B] font-medium mt-2">
+            Page {currentPage} of {totalPages || 1}
+          </span> */}
+          </div>
+
+        </div>
+      </div>
+
+        {/* <Modal open={isModal} onClose={handleModalToggle}className="w-[30%]" >
+        <ConfirmModal prompt="Are you sure want to delete this currency"  action={onDelete} onClose={handleModalToggle}/>
+      </Modal> */}
+    </div>
+
+  
+ 
+  );
+};
+
+export default PackageServiceTable;
